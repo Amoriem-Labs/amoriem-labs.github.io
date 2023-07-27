@@ -1,0 +1,415 @@
+/*
+==================
+===== GLOBAL =====
+==================
+*/
+
+:root {
+    --AmoriemWhite: #fae5c8;
+    --AmoriemBlack: #1d0c25;
+    --AmoriemPink: #f37f93;
+}
+
+@font-face {
+    font-family: Archive;
+    src: url(../fonts/Archive.otf);
+}
+
+@font-face {
+    font-family: Exo;
+    src: url(../fonts/Exo2.0-Regular.otf)
+}
+
+html {
+    scrollbar-width: none;
+    /* Hiding scrollbar in Firefox*/
+}
+
+body {
+    margin: 0;
+    -ms-overflow-style: none;
+    /* Hiding scrollbar in IE/Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    /* Hiding scrollbar in Chrome, Opera, etc. */
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+div {
+    font-family: Exo, sans-serif;
+    font-size: 2vh;
+    color: var(--AmoriemBlack)
+}
+
+/*
+==========================
+===== NAVIGATION BAR =====
+==========================
+*/
+
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--AmoriemBlack);
+    height: 10vh;
+    width: 100vw;
+    gap: 5vw;
+    z-index: 1;
+}
+
+.nav-item {
+    font-family: Exo, sans-serif;
+    font-size: 2vh;
+    color: var(--AmoriemPink);
+    text-decoration: none;
+}
+
+.this-page {
+    color: var(--AmoriemWhite);
+}
+
+.nav-item>img {
+    height: 4vh;
+}
+
+
+/*
+================
+===== HERO =====
+================
+*/
+
+.hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--AmoriemPink);
+    height: 100vh;
+    width: 100vw;
+    gap: 10vw;
+}
+
+.title {
+    font-family: Archive, sans-serif;
+    color: var(--AmoriemBlack);
+    font-size: 15vh;
+    text-shadow: 2px 2px 0px var(--AmoriemWhite);
+    z-index: 1;
+}
+
+.title:hover {
+    transform: translate(-3px, -2px);
+    text-shadow: 5px 4px 0px var(--AmoriemWhite);
+    transition: 150ms;
+}
+
+#subtitle {
+    font-size: 3vh;
+    z-index: 1;
+}
+
+#home-gif {
+    width: 35vw;
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemWhite);
+}
+
+#home-gif:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 4px 0px var(--AmoriemWhite);
+    transition: 150ms;
+}
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 13vh;
+    }
+}
+
+@media (max-width: 800px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    #home-gif {
+        width: 70vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 7vh;
+    }
+
+    #subtitle {
+        font-size: 2vh;
+    }
+
+    #home-gif {
+        width: 70vw;
+    }
+}
+
+/*
+=================
+===== PAGES =====
+=================
+*/
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--AmoriemWhite);
+    gap: 10vh;
+    padding-bottom: 10vh;
+}
+
+.page-title {
+    font-family: Archive, sans-serif;
+    color: var(--AmoriemBlack);
+    font-size: 10vh;
+    margin-top: 10vh;
+    text-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+.page-title:hover {
+    transform: translate(-3px, -2px);
+    text-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+/*
+=====================
+===== GAME PAGE =====
+=====================
+*/
+
+.game-card,
+.game-card-rev {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70vw;
+}
+
+.game-card>img,
+.game-card-rev>img {
+    width: 40vw;
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+.game-card>img:hover,
+.game-card-rev>img:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+.game-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4vh;
+    width: 27vw;
+}
+
+.game-title {
+    color: var(--AmoriemBlack);
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+.game-link,
+.contact-link {
+    background-color: var(--AmoriemPink);
+    color: var(--AmoriemBlack);
+    border: 2px solid var(--AmoriemBlack);
+    font-family: Archive, sans-serif;
+    font-size: 3vh;
+    text-decoration: none;
+    padding: 2vh;
+    border-radius: 10px;
+    box-shadow: 5px 3px 0px var(--AmoriemBlack);
+}
+
+.game-link:hover {
+    transform: translate(3px, 2px);
+    box-shadow: 2px 1px 0px var(--AmoriemBlack);
+    transition: 250ms;
+}
+
+@media (max-width: 800px) {
+    .game-card {
+        flex-direction: column;
+        width: 90vw;
+        gap: 3vh;
+        align-items: center;
+    }
+
+    .game-card-rev {
+        flex-direction: column-reverse;
+        width: 90vw;
+        gap: 3vh;
+        align-items: center;
+    }
+
+    .game-card>img,
+    .game-card-rev>img {
+        width: 70vw;
+    }
+
+    .game-text {
+        gap: 4vh;
+        width: 70vw;
+    }
+}
+
+/*
+=====================
+===== TEAM PAGE =====
+=====================
+*/
+
+.profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3vw;
+    justify-content: center;
+    width: 70vw;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+}
+
+.profile-card>img {
+    width: max(200px, 12vw);
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+.profile-card>img:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+.profile-name {
+    color: var(--AmoriemBlack);
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+/*
+=====================
+===== NEWS PAGE =====
+=====================
+*/
+
+
+.news-card {
+    display: flex;
+    gap: 3vw;
+    width: 70vw;
+}
+
+.news-card>img {
+    width: max(200px, 12vw);
+    height: max(200px, 12vw);
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+.news-card>img:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+.news-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.news-title {
+    color: var(--AmoriemBlack);
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .news-card>img {
+        display: none;
+    }
+}
+
+/*
+======================
+===== ABOUT PAGE =====
+======================
+*/
+
+#about-us-image {
+    width: 70vw;
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+#about-us-image:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+.about-us {
+    width: 70vw;
+}
+
+@media (max-width: 800px) {
+
+    #about-us-image,
+    .about-us {
+        width: 90vw;
+    }
+}
