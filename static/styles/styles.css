@@ -29,7 +29,8 @@ html {
 body {
     margin: 0;
     -ms-overflow-style: none;
-    /* Hiding scrollbar in IE/Edge */
+    background-color: var(--AmoriemWhite)
+        /* Hiding scrollbar in IE/Edge */
 }
 
 body::-webkit-scrollbar {
@@ -88,10 +89,6 @@ p {
     font-size: 2vh;
     color: var(--AmoriemPink);
     text-decoration: none;
-}
-
-.this-page {
-    color: var(--AmoriemWhite);
 }
 
 .nav-item>img {
@@ -195,7 +192,6 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: var(--AmoriemWhite);
     gap: 10vh;
     padding-bottom: 10vh;
 }
