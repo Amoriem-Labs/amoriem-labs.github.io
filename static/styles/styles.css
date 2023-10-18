@@ -9,6 +9,7 @@
     --AmoriemBlack: #1d0c25;
     --AmoriemPink: #f37f93;
     --AmoriemBrightPink: #ed1395;
+    --Canvas: #e6dccf;
 }
 
 @font-face {
@@ -301,6 +302,40 @@ p {
         gap: 4vh;
         width: 70vw;
     }
+}
+
+/*
+======================
+===== ART MUSEUM =====
+======================
+*/
+
+.art-museum {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    width: 70vw;
+}
+
+.art-piece {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.art-piece>img {
+    width: max(200px, 12vw);
+    background-color: var(--Canvas);
+    border: 5px solid var(--AmoriemBlack);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+.art-piece>img:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
 }
 
 /*
