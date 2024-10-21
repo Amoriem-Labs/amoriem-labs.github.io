@@ -32,7 +32,7 @@ html {
 body {
     margin: 0;
     -ms-overflow-style: none;
-    background-color: var(--AmoriemLightPink)
+    background-color: white;
         /* Hiding scrollbar in IE/Edge */
 }
 
@@ -80,7 +80,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--AmoriemPink);
+    background-color: var(--AmoriemLightPink);
     height: 10vh;
     width: 100vw;
     gap: 10vw;
@@ -245,17 +245,16 @@ section {
     transition: 250ms;
 }
 
-.white-body
-{
-    background-color: white;
-}
-
 /*
 =====================
 ===== HOME PAGE =====
 =====================
 */
 
+.home-body
+{
+    background-color: var(--AmoriemLightPink);
+}
 
 * {box-sizing:border-box}
 
