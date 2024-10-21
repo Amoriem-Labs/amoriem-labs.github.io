@@ -7,27 +7,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="static/styles/styles.css">
     <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
+    <script src="scripts\slideshow.js"></script>
 </head>
 
 <body>
     <div class="nav-bar">
+        <a class="nav-item" href="index.html">
+            <img src="static/images/brand/logo-darkpink.png">
+        </a>
+        <a class="nav-item" href="index.html">Home</a>
         <a class="nav-item" href="games.html">Games</a>
         <a class="nav-item" href="team.html">Team</a>
-        <a class="nav-item" href="index.html">
-            <img src="static/images/brand/amoriem_symbol_logo_white.png">
-        </a>
         <a class="nav-item" href="news.html">News</a>
         <a class="nav-item" href="about.html">About</a>
     </div>
 
-    <div class="hero">
-        <div id="title-subtitle-text">
-            <div class="title unselectable">Amoriem</div>
-            <div class="title unselectable">Labs</div>
-            <div id="subtitle" class="unselectable">Yale Undergraduate Game Dev Studio</div>
-        </div>
-        <img id="home-gif" src="static/images/home/amoriem.gif">
+    <div class="page">
+        <section class="section-1">
+            <div id="title-subtitle-text">
+                <div class="page-title" class="unselectable" style="text-align: center;">Amoriem Labs</div>
+                <div id="subtitle" class="unselectable" style="text-align: center;">Undergraduate game development studio at Yale University.</div>  
+            </div>
+        
+            <!-- Slideshow -->
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="static\images\games\rosefield-gameplay.png" style="width:100%"></img>
+                <div class="text">Rosefield Requiem</div>
+                </div>
+            
+                <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="static\images\games\echoes-of-eternity.jpg" style="width:100%"></img>
+                <div class="text">Echoes of Eternity</div>
+                </div>
+            
+                <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="static\images\games\bulldog_bash.PNG" style="width:100%"></img>
+                <div class="text">Bulldog Bash</div>
+            
+            <br>
+            
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        
+            <script>
+                let slideIndex = 0;
+                showSlides();
+                
+                function showSlides() {
+                  let i;
+                  let slides = document.getElementsByClassName("mySlides");
+                  let dots = document.getElementsByClassName("dot");
+                  for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                  }
+                  slideIndex++;
+                  if (slideIndex > slides.length) {slideIndex = 1}    
+                  for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";  
+                  dots[slideIndex-1].className += " active";
+                  setTimeout(showSlides, 5000); // Change image every 5 seconds
+                }
+            </script>
+        </section>
+
+        <section class="section-2">
+            <div class="text-and-image-container">
+                <div class="text-column">
+                    <h2>Who We Are</h2>
+                    <p>
+                        We are <span class="highlight">Amoriem Labs</span>, Yale's first and only video game development club. Led entirely by students, we unite passionate gamers, programmers, artists, musicians, storytellers, and designers to bring digital worlds to life.
+                    </p>
+                    <p>
+                        Amoriem was founded in 2019 and has been making video games ever since. 
+                        We are the place for your game design ideas and visions.
+                    </p>
+                </div>
+        
+                <div class="image-column">
+                    <img src="static/images/about/amoriem_about.jpg">
+                </div>
+            </div>
+        </section>
+
+        <section class="section-3">
+            <h1>Current Projects</h1>
+            <h2>More Details Soon!</h2>
+        </section>
     </div>
+        
+        
 </body>
 
 </html>
