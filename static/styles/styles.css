@@ -587,6 +587,17 @@ section {
     font-weight: bold;
 }
 
+#insta-title {
+    color: var(--AmoriemPink);
+    font-size: 5vh;
+    font-weight: bold;
+
+}
+
+#insta-title:hover {
+    color: var(--AmoriemBrightPink);
+}
+
 @media (max-width: 700px) {
     .news-card>img {
         display: none;
