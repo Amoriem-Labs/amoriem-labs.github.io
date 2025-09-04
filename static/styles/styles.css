@@ -422,6 +422,32 @@ section {
     width: 27vw;
 }
 
+.page-title-games {
+    font-family: Archive, sans-serif;
+    color: var(--AmoriemBlack);
+    font-size: 10vh;
+
+    margin-top: 10vh;
+    margin-bottom: -10vh;   /* reduce spacing below */
+    padding-top: 3vh;     /* keep spacing above */
+    
+    text-shadow: 2px 2px 0px var(--AmoriemPink);
+}
+
+
+.center-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+
+    width: 50vw;
+    margin: 0 auto;      /* centers the block itself */
+    align-items: center; /* centers the items inside */
+
+    margin-bottom: -20vh;   /* reduce spacing below */
+}
+
+
 .game-title {
     color: var(--AmoriemDarkPink);
     font-size: 5vh;
@@ -642,6 +668,19 @@ figcaption {
     caption-side: top;
     text-align: center;
     padding-bottom: 1em;
+}
+
+.center-text-index {
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+
+    width: 50vw;
+    margin: 0 auto;      /* centers the block itself */
+    align-items: center; /* centers the items inside */
+
+    margin-bottom: -20vh;  
+    margin-top: -40vh;
 }
 
 @media (max-width: 800px) {
