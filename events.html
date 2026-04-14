@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Events</title> | Amoriem Labs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png" />
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a class="nav-item" href="index.html">
+            <img src="static\images\brand\logo-darkpink.png">
+        </a>
+        <a class="nav-item" href="index.html">Home</a>
+        <a class="nav-item" href="games.html">Games</a>
+        <a class="nav-item" href="team.html">Team</a>
+        <a class="nav-item this-page" href="events.html">Events</a>
+        <a class="nav-item" href="about.html">About</a>
+    </div>
+
+<div class="page">
+
+    <div class="page-title unselectable">Events</div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="hackathons">Hackathons</button>
+        <button class="filter-btn" data-filter="social">Social Events</button>
+        <button class="filter-btn" data-filter="speaker">Speaker Events</button>
+    </div>
+
+    <!-- HACKATHONS 2 -->
+    <div class="text-and-image-container" data-category="hackathons">
+        <div class="text-column">
+            <h2>Girly-Pop Game Jam</h2>
+            <strong>Winner: Flower Mama: Chris Shia, Jennifer Chen, & Morgan Go</strong>
+            <b>Asset Bubble will GirlyPop: Sonam and Chi</b>
+            <b>Pop-Off!: Silas</b>
+            <b>The Girlypop Show; Sebastian</b>
+            <b>Diva’s Inferno; Byron, Angela, Sebastian, and Kayle</b>
+        </div>
+        <div class="image-column">
+            <img src="static/images/hackathons/Girl_Pop.png" width="300" alt="Instagram promotion">
+        </div>
+    </div>
+    <div class="text-and-image-container" data-category="hackathons">
+        <div class="text-column">
+            <h2>Beginner Game Jam (Classical Elements)</h2>
+            <b>Dice Magic: Alvin Shi and Alexa Jeong</b>
+            <b>In My Element: Sonam Wangchuck</b>
+            <b>Element Joyride: Chloe Parke, David Liu, and Callum Legendre</b>
+        </div>
+        <div class="image-column">
+            <img src="static/images/hackathons/Beginner_Game_Jam.png" width="300" alt="Instagram promotion">
+        </div>
+    </div>
+
+  <div class="text-and-image-container" data-category="social" style="display:none">
+    <div class="image-column">
+        <img src="static/images/Socials/Mental_Health_In_Gaming.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Socials/Indigenous_Voices.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Socials/XR Pediatrics.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Socials/Milk_And_Cookies.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Socials/Valentines_Game_Night.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Socials/Halloween Game Night.png" width="300" alt="Instagram promotion">
+    </div>
+</div>
+
+<div class="text-and-image-container" data-category="speaker" style="display:none">
+    <div class="image-column">
+        <img src="static/images/Speakers/Alumni in Games Panel (1).png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Speakers/Mike_Shah.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Speakers/ZhenZhai.png" width="300" alt="Instagram promotion">
+    </div>
+    <div class="image-column">
+        <img src="static/images/Speakers/Elena_Bertozzi.png" width="300" alt="Instagram promotion">
+    </div>
+</div>
+
+<!-- Scoped styles just for this page -->
+<style>
+    .filter-buttons {
+        display: flex;
+        gap: 1.5vw;
+        justify-content: center;
+        margin-bottom: 1vh;
+    }
+
+    .filter-btn {
+        background-color: var(--AmoriemLightPink);
+        color: var(--AmoriemBlack);
+        border: 2px solid var(--AmoriemBlack);
+        font-family: Exo, sans-serif;
+        font-size: 2.5vh;
+        padding: 1vh 2vw;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 3px 2px 0px var(--AmoriemBlack);
+        transition: 250ms;
+    }
+
+    .filter-btn:hover {
+        transform: translate(2px, 1px);
+        box-shadow: 1px 1px 0px var(--AmoriemBlack);
+    }
+
+    .filter-btn.active {
+        background-color: var(--AmoriemPink);
+        font-weight: bold;
+    }
+</style>
+
+<!-- Script just for this page -->
+<script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const containers = document.querySelectorAll('.text-and-image-container');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            containers.forEach(container => {
+                container.style.display =
+                    container.dataset.category === filter ? 'flex' : 'none';
+            });
+        });
+    });
+</script>
+
+</html>
