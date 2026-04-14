@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Events</title> | Amoriem Labs</title>
+    <title>Events | Amoriem Labs</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="static/styles/styles.css">
@@ -45,9 +45,7 @@
         <div class="image-column">
             <img src="static/images/hackathons/Girl_Pop.png" width="300" alt="Instagram promotion">
         </div>
-    </div>
-    <div class="text-and-image-container" data-category="hackathons">
-        <div class="text-column">
+                <div class="text-column">
             <h2>Beginner Game Jam (Classical Elements)</h2>
             <b>Dice Magic: Alvin Shi and Alexa Jeong</b>
             <b>In My Element: Sonam Wangchuck</b>
@@ -131,6 +129,12 @@
 <script>
     const buttons = document.querySelectorAll('.filter-btn');
     const containers = document.querySelectorAll('.text-and-image-container');
+
+    // Set initial state explicitly on load
+    containers.forEach(container => {
+        container.style.display =
+            container.dataset.category === 'hackathons' ? 'flex' : 'none';
+    });
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
