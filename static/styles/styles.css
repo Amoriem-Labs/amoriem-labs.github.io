@@ -431,7 +431,7 @@ section {
     font-size: 10vh;
 
     margin-top: 10vh;
-    margin-bottom: -10vh;   /* reduce spacing below */
+    margin-bottom:2vh;   /* reduce spacing below */
     padding-top: 3vh;     /* keep spacing above */
     
     text-shadow: 2px 2px 0px var(--AmoriemPink);
@@ -447,7 +447,7 @@ section {
     margin: 0 auto;      /* centers the block itself */
     align-items: center; /* centers the items inside */
 
-    margin-bottom: -20vh;   /* reduce spacing below */
+    margin-bottom: 2vh;   /* reduce spacing below */
 }
 
 
@@ -682,7 +682,7 @@ figcaption {
     margin: 0 auto;      /* centers the block itself */
     align-items: center; /* centers the items inside */
 
-    margin-bottom: -20vh;  
+    margin-bottom: 2vh;  
     margin-top: -40vh;
 }
 
