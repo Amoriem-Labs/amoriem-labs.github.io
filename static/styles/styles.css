@@ -12,6 +12,12 @@
     --AmoriemDarkPink: #af4474;
     --AmoriemLightPink: #ffc4d6;
     --Canvas: #e6dccf;
+
+    /* New dark-theme direction (2026 site update) */
+    --AmoriemPlum: #5a3657;
+    --AmoriemDeepPlum: #1d0c25;
+    --AmoriemMauve: #735d78;
+    --AmoriemBlush: #ebd4da;
 }
 
 @font-face {
@@ -692,4 +698,814 @@ figcaption {
     .about-us {
         width: 90vw;
     }
+}
+
+/*
+==========================================================
+===== HOME V2 (2026 dark-theme homepage, index-new.html) =====
+==========================================================
+New component styles for the redesigned homepage. Kept separate from the
+legacy rules above so it can be reviewed/promoted to other pages on its own.
+Reuses the site's existing fonts and "pressed paper" hover language
+(translate + growing/shrinking offset shadow, 250ms transition).
+*/
+
+.hv2-page {
+    background: linear-gradient(203deg, var(--AmoriemPlum) 14%, var(--AmoriemDeepPlum) 92%);
+    background-attachment: fixed;
+    color: white;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ornamental tiling texture layered over the gradient (Figma node 41:565) */
+.hv2-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url(../images/decor/texture.png) repeat;
+    background-size: 360px auto;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hv2-page > * {
+    position: relative;
+    z-index: 1;
+}
+
+.hv2-page * {
+    box-sizing: border-box;
+}
+
+/* Neutralize the legacy `div, p { font-size: 2vh; color: AmoriemBlack }` defaults for
+   unclassed text. Only `color` is reset here (so bare text inherits white); font-size is
+   left alone so single-class component rules win over the legacy element selector. */
+.hv2-page div,
+.hv2-page p {
+    color: inherit;
+}
+
+.hv2-page section {
+    text-align: left;
+    font-size: inherit;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3.4rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hv2-page * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* ----- Sticky nav ----- */
+
+.hv2-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    background: var(--AmoriemDeepPlum);
+    border-radius: 0 0 25px 25px;
+    padding: 0.75rem clamp(1rem, 3vw, 1.6rem);
+    transition: padding 250ms;
+}
+
+.hv2-nav__logo img {
+    display: block;
+    height: clamp(2.5rem, 5vw, 3.4rem);
+    width: auto;
+}
+
+.hv2-nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    transition: opacity 250ms, max-width 250ms;
+}
+
+.hv2-nav.is-expanded .hv2-nav__links {
+    opacity: 1;
+    max-width: 60vw;
+}
+
+
+.hv2-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: Exo, sans-serif;
+    font-weight: bold;
+    font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+    color: #c9c2c2;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.hv2-nav__link img {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex-shrink: 0;
+}
+
+.hv2-nav__link:hover {
+    color: var(--AmoriemPink);
+    transform: translate(-2px, -1px);
+    transition: 250ms;
+}
+
+.hv2-nav__socials {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: auto;
+}
+
+/* Square social "cards" with adequate padding + gap (Figma node 74:103) */
+.hv2-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(2.4rem, 4vw, 2.9rem);
+    height: clamp(2.4rem, 4vw, 2.9rem);
+    background: var(--AmoriemMauve);
+    border-radius: 4px;
+    padding: 0.55rem;
+}
+
+.hv2-icon-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.hv2-icon-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0px var(--AmoriemPink);
+    transition: 250ms;
+}
+
+@media (max-width: 800px) {
+    .hv2-nav__links {
+        gap: 1rem;
+    }
+
+    .hv2-nav__link span {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .hv2-nav__socials .hv2-icon-btn:nth-child(n+4) {
+        display: none;
+    }
+}
+
+/* ----- Hero ----- */
+
+.hv2-hero {
+    position: relative;
+    height: 100vh;
+    min-height: 34rem;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.hv2-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Dark band across the video holding the logo (left) + page links (right), Figma node 41:567 */
+.hv2-hero__band {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background: rgba(29, 12, 37, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem clamp(2rem, 6vw, 5rem);
+    flex-wrap: wrap;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.hv2-page .hv2-hero__logo {
+    font-family: Archive, sans-serif;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    color: var(--AmoriemPink);
+    text-shadow: 2px 2px 0px var(--AmoriemBlack);
+    margin: 0;
+    line-height: 1.05;
+}
+
+.hv2-hero__logo:hover {
+    transform: translate(-3px, -2px);
+    text-shadow: 5px 4px 0px var(--AmoriemBlack);
+    transition: 150ms;
+}
+
+.hv2-page .hv2-hero__tagline {
+    font-family: Exo, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--AmoriemPink);
+    margin: 0.4rem 0 0;
+}
+
+.hv2-hero__links {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.5vw, 1.1rem);
+    align-items: flex-end;
+}
+
+.hv2-hero__link {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    text-decoration: none;
+    color: #c9c2c2;
+    font-family: Exo, sans-serif;
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    white-space: nowrap;
+}
+
+.hv2-hero__link .hv2-hero__glyph {
+    width: 1.5em;
+    height: 1.5em;
+    flex-shrink: 0;
+}
+
+.hv2-hero__link .hv2-hero__arrow {
+    width: clamp(2rem, 3.5vw, 3rem);
+    aspect-ratio: 64 / 14.7;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.hv2-hero__link:hover {
+    color: var(--AmoriemPink);
+    transform: translate(-2px, -1px);
+    transition: 250ms;
+}
+
+@media (max-width: 700px) {
+    .hv2-hero__band {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hv2-hero__links {
+        align-items: center;
+    }
+}
+
+/* ----- Intro blurb ----- */
+
+.hv2-intro p {
+    font-family: Exo, sans-serif;
+    line-height: 1.6;
+}
+
+/* :first-of-type / :last-of-type (not :first-child) so the decorative <img>
+   sibling inside .hv2-intro doesn't disqualify the paragraphs. */
+.hv2-intro p:first-of-type {
+    font-weight: 600;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    max-width: 60rem;
+}
+
+.hv2-intro p:first-of-type span {
+    color: var(--AmoriemWhite);
+}
+
+.hv2-intro p:last-of-type {
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    max-width: 60rem;
+    opacity: 0.9;
+}
+
+.hv2-section-heading {
+    font-family: Exo, sans-serif;
+    font-weight: bold;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    margin: 0 0 1.25rem;
+}
+
+/* ----- Collaborations ----- */
+
+.hv2-collabs {
+    margin-top: clamp(2rem, 6vw, 5rem);
+}
+
+.hv2-collabs__grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+}
+
+/* Equal height for every tile; width follows each logo's own aspect ratio */
+.hv2-collabs__logo {
+    background: var(--AmoriemMauve);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: clamp(4.5rem, 8vw, 7rem);
+    width: auto;
+}
+
+.hv2-collabs__logo img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* ----- Email ----- */
+
+.hv2-email {
+    margin-top: clamp(3rem, 7vw, 7.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+}
+
+.hv2-email__text {
+    flex: 1 1 20rem;
+}
+
+.hv2-email__text p {
+    font-family: Exo, sans-serif;
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    opacity: 0.9;
+}
+
+.hv2-email__link {
+    flex: 1 1 20rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--AmoriemMauve);
+    padding: 1.5rem;
+    text-decoration: none;
+    color: white;
+}
+
+.hv2-email__link img {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+}
+
+.hv2-email__link span {
+    font-family: Exo, sans-serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+}
+
+.hv2-email__link:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemBlack);
+    transition: 250ms;
+}
+
+/* ----- Club Games gallery ----- */
+
+.hv2-games {
+    background: var(--AmoriemMauve);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hv2-games__intro {
+    flex: 1 1 18rem;
+    max-width: 30rem;
+}
+
+.hv2-games__intro h2 {
+    font-family: Archive, sans-serif;
+    font-weight: normal;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: white;
+    margin: 0 0 1rem;
+}
+
+.hv2-games__intro p {
+    font-family: Exo, sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+    margin: 0 0 0.75rem;
+}
+
+.hv2-games__gallery {
+    flex: 1 1 24rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.hv2-games__grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 0.6rem;
+}
+
+/* `display: grid` above would otherwise override the UA [hidden] rule,
+   so the pager's hidden pages must be re-hidden explicitly. */
+.hv2-games__page[hidden] {
+    display: none;
+}
+
+.hv2-game-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+}
+
+.hv2-game-card__cover {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    display: block;
+    background: var(--AmoriemBlush);
+}
+
+/* Placeholder covers (transparent logo) sit contained on the tile rather than cropped */
+.hv2-game-card__cover--placeholder {
+    object-fit: contain;
+    padding: 1.25rem;
+}
+
+.hv2-game-card__body {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    background: var(--AmoriemPlum);
+}
+
+.hv2-game-card__name {
+    font-family: Exo, sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    color: white;
+}
+
+.hv2-game-card__genre {
+    font-family: Exo, sans-serif;
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    color: white;
+    opacity: 0.85;
+}
+
+.hv2-game-card__year {
+    align-self: flex-start;
+    margin-top: 0.15rem;
+    background: var(--AmoriemDarkPink);
+    color: white;
+    font-family: Exo, sans-serif;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 25px;
+}
+
+.hv2-game-card:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemBlack);
+    transition: 250ms;
+}
+
+.hv2-games__pager {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: #dfe4f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hv2-games__pager img {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.hv2-games__pager:hover {
+    transform: translate(3px, 2px);
+    transition: 250ms;
+}
+
+.hv2-games__pager:focus-visible {
+    outline: 2px solid var(--AmoriemPink);
+    outline-offset: 2px;
+}
+
+@media (max-width: 800px) {
+    .hv2-games {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hv2-games__gallery {
+        flex-direction: column;
+    }
+
+    .hv2-games__pager {
+        align-self: center;
+        transform: rotate(90deg);
+    }
+
+    .hv2-games__pager:hover {
+        transform: rotate(90deg) translate(3px, 2px);
+    }
+}
+
+@media (max-width: 480px) {
+    .hv2-games__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ----- Event Highlights ----- */
+
+.hv2-events__strip {
+    display: flex;
+    gap: clamp(0.75rem, 2vw, 2rem);
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+}
+
+.hv2-event-photo {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(9rem, 16vw, 14.9rem);
+    aspect-ratio: 238 / 423;
+    overflow: hidden;
+}
+
+.hv2-event-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hv2-event-photo:hover img {
+    transform: scale(1.04);
+    transition: 250ms;
+}
+
+/* Caption + black overlay hidden by default, revealed on hover */
+.hv2-event-caption {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 250ms;
+}
+
+.hv2-event-photo:hover .hv2-event-caption {
+    opacity: 1;
+}
+
+.hv2-event-caption strong {
+    font-family: Exo, sans-serif;
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+}
+
+.hv2-event-caption p {
+    font-family: Exo, sans-serif;
+    font-size: clamp(0.75rem, 1vw, 0.85rem);
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* ----- Footer ----- */
+
+.hv2-footer {
+    background: var(--AmoriemPlum);
+    border-radius: 25px;
+    margin: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.hv2-footer__lists {
+    display: flex;
+    gap: clamp(2rem, 5vw, 4rem);
+    flex-wrap: wrap;
+}
+
+.hv2-footer__list h3 {
+    font-family: Exo, sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 0.75rem;
+}
+
+.hv2-footer__list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    /* pinned so the legacy `div { font-size: 2vh }` doesn't inflate the li line boxes */
+    font-size: 0.95rem;
+}
+
+.hv2-footer__list a {
+    font-family: Exo, sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: white;
+    text-decoration: none;
+}
+
+.hv2-footer__list a:hover {
+    color: var(--AmoriemPink);
+    transition: 250ms;
+}
+
+.hv2-footer__socials {
+    display: flex;
+    gap: 0.9rem;
+}
+
+/* ----- Decorative Y2K / sparkle / swirl motifs (Figma nodes 51:35, 51:43, 59:11-13, 35:406) ----- */
+
+.hv2-decor {
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    display: block;
+}
+
+/* host sections create their own stacking context so decor stays behind their content */
+.hv2-intro,
+.hv2-games,
+.hv2-events {
+    position: relative;
+    isolation: isolate;
+}
+
+.hv2-games,
+.hv2-events {
+    overflow: hidden;
+}
+
+/* Ornamental texture inside the Club Games panel (Figma node 41:685) */
+.hv2-games::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url(../images/decor/texture.png) repeat;
+    background-size: 300px auto;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* NB: these Figma SVGs declare width/height 100%, so an explicit aspect-ratio is
+   required — otherwise browsers fall back to a 150px intrinsic height. */
+
+/* Big treble-clef swirl, right of the intro */
+.hv2-decor--treble {
+    top: -3rem;
+    right: clamp(-4rem, -2vw, -1rem);
+    width: clamp(11rem, 20vw, 22rem);
+    aspect-ratio: 811 / 202;
+    opacity: 0.5;
+    animation: hv2-float 9s ease-in-out infinite;
+}
+
+/* Soft star glow behind the Club Games heading */
+.hv2-decor--star {
+    top: 0.5rem;
+    left: clamp(2rem, 12vw, 15rem);
+    width: clamp(9rem, 17vw, 19rem);
+    aspect-ratio: 344 / 503;
+    opacity: 0.7;
+    animation: hv2-pulse 6s ease-in-out infinite;
+}
+
+/* Four-point sparkles floating over the Event Highlights (in front of photos) */
+.hv2-decor--sparkle {
+    z-index: 2;
+    width: clamp(2.5rem, 5vw, 5.5rem);
+    animation: hv2-twinkle 4s ease-in-out infinite;
+}
+
+.hv2-decor--sparkle-1 {
+    top: 2.5rem;
+    left: 14%;
+    aspect-ratio: 95 / 95;
+    animation-delay: 0s;
+}
+
+.hv2-decor--sparkle-2 {
+    top: 0.5rem;
+    left: 57%;
+    aspect-ratio: 159 / 162;
+    animation-delay: 1.3s;
+}
+
+.hv2-decor--sparkle-3 {
+    bottom: 0.5rem;
+    left: 71%;
+    aspect-ratio: 87 / 131;
+    animation-delay: 2.1s;
+}
+
+/* Drifting swirl near the bottom of the Event Highlights */
+.hv2-decor--swirl {
+    bottom: 1rem;
+    right: -2rem;
+    width: clamp(9rem, 16vw, 18rem);
+    aspect-ratio: 299 / 501;
+    opacity: 0.3;
+    animation: hv2-drift 11s ease-in-out infinite;
+}
+
+@keyframes hv2-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+}
+
+@keyframes hv2-drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(10px, -12px) rotate(4deg); }
+}
+
+@keyframes hv2-twinkle {
+    0%, 100% { opacity: 0.35; transform: scale(0.9); }
+    50% { opacity: 0.95; transform: scale(1.1); }
+}
+
+@keyframes hv2-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.06); }
+}
+
+@media (max-width: 700px) {
+    .hv2-decor--treble,
+    .hv2-decor--swirl {
+        display: none;
+    }
+}
+
+/* ----- Scroll reveal ----- */
+
+.hv2-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.hv2-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
