@@ -11,6 +11,9 @@
 
 <body class="hv2-page">
 
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
     <nav class="hv2-nav">
         <a class="hv2-nav__logo" href="index-new.html" aria-label="Amoriem Labs home">
             <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
@@ -56,15 +59,17 @@
 
     <header class="hv2-hero">
         <!--
-            Hero video: currently plays the Encore clip on loop. HERO_TRAILERS in
-            static/scripts/home-v2.js already lists every clip in
-            static/images/games/trailers/ and ROTATE_TRAILERS is ready to flip on
-            once a multi-trailer rotation is wanted -- no markup changes needed then.
+            Two stacked video layers so clips can cross-fade into one another.
+            home-v2.js cycles the HERO_TRAILERS playlist (every clip in
+            static/images/games/trailers/), loading each one on demand and
+            releasing the previous clip so only one is ever buffered.
+            The first src is inline so the hero still plays without JS.
         -->
-        <video class="hv2-hero__video" autoplay muted loop playsinline
+        <video class="hv2-hero__video is-active" autoplay muted playsinline preload="auto"
             poster="static/images/games/encore-gameplay1.png"
             src="static/images/games/trailers/Encore_Demo_Clipped.mp4">
         </video>
+        <video class="hv2-hero__video" muted playsinline preload="none"></video>
         <div class="hv2-hero__band">
             <div class="hv2-hero__brand">
                 <p class="hv2-hero__logo">Amoriem Labs</p>
@@ -143,6 +148,9 @@
             <img class="hv2-decor hv2-decor--star" src="static/images/decor/star-glow.svg" alt="" aria-hidden="true">
 
             <div class="hv2-games__gallery">
+                <button class="hv2-games__pager hv2-games__pager--prev" type="button" aria-label="Show previous games"></button>
+
+                <div class="hv2-games__pages">
                 <div class="hv2-games__grid hv2-games__page" data-page="0">
                     <a class="hv2-game-card" href="games.html">
                         <img class="hv2-game-card__cover hv2-game-card__cover--placeholder" src="static/images/brand/amoriem_symbol_logo_pink.png" alt="27 Photos cover art">
@@ -239,10 +247,9 @@
                         </div>
                     </a>
                 </div>
+                </div>
 
-                <button class="hv2-games__pager" type="button" aria-label="Show next games">
-                    <img src="static/images/icons/gallery-arrow.svg" alt="">
-                </button>
+                <button class="hv2-games__pager hv2-games__pager--next" type="button" aria-label="Show next games"></button>
             </div>
         </section>
 

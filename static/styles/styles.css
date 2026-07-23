@@ -134,12 +134,12 @@ p {
     font-size: 15vh;
     text-shadow: 2px 2px 0px var(--AmoriemWhite);
     z-index: 1;
+    transition: transform 150ms, box-shadow 150ms, text-shadow 150ms, color 150ms;
 }
 
 .title:hover {
     transform: translate(-3px, -2px);
     text-shadow: 5px 4px 0px var(--AmoriemWhite);
-    transition: 150ms;
 }
 
 #subtitle {
@@ -205,12 +205,12 @@ p {
     margin-top: 10vh;
     padding-top: 3vh;
     text-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .page-title:hover {
     transform: translate(-3px, -2px);
     text-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .page-header
@@ -245,10 +245,13 @@ section {
     height: 100vh; 
 }
 
+.section-3 h1 {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
+}
+
 .section-3 h1:hover {
     transform: translate(-2px, -1px);
     text-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 /*
@@ -343,12 +346,12 @@ section {
     z-index: 1;
     color: var(--AmoriemPink);
     text-shadow: 2px 2px 0px var(--AmoriemDarkPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .text-column h2:hover {
     transform: translate(-2px, -1px);
     text-shadow: 5px 3px 0px var(--AmoriemDarkPink);
-    transition: 250ms;
 }
 
 .text-column p {
@@ -368,12 +371,12 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .image-column img:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemDarkPink);
-    transition: 250ms;
 }
 
 @media (max-width: 768px) {
@@ -390,8 +393,6 @@ section {
         margin-top: 20px;
     }
 }
-
-
 
 
 /*
@@ -414,13 +415,13 @@ section {
     border: 5px solid var(--AmoriemBlack);
     border-radius: 10px;
     box-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .game-card>img:hover,
 .game-card-rev>img:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .game-text {
@@ -474,13 +475,13 @@ section {
     padding: 2vh;
     border-radius: 10px;
     box-shadow: 5px 3px 0px var(--AmoriemBlack);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .game-link:hover,
 .contact-link:hover {
     transform: translate(3px, 2px);
     box-shadow: 2px 1px 0px var(--AmoriemBlack);
-    transition: 250ms;
 }
 
 @media (max-width: 800px) {
@@ -535,12 +536,12 @@ section {
     border: 5px solid var(--AmoriemBlack);
     border-radius: 10px;
     box-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .art-piece>img:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 /*
@@ -569,12 +570,12 @@ section {
     border: 5px solid var(--AmoriemDarkPink);
     border-radius: 10px;
     box-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .profile-card>img:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .profile-name {
@@ -602,12 +603,12 @@ section {
     border: 5px solid var(--AmoriemBlack);
     border-radius: 10px;
     box-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .news-card>img:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .news-info {
@@ -650,12 +651,12 @@ section {
     border: 5px solid var(--AmoriemBlack);
     border-radius: 10px;
     box-shadow: 2px 2px 0px var(--AmoriemPink);
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 #about-us-image:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .about-us {
@@ -733,6 +734,17 @@ Reuses the site's existing fonts and "pressed paper" hover language
 .hv2-page > * {
     position: relative;
     z-index: 1;
+}
+
+/* Starfield canvas sits in the background layer, above the gradient/texture
+   but behind all page content. Painted by home-v2.js. */
+.hv2-stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .hv2-page * {
@@ -817,10 +829,13 @@ Reuses the site's existing fonts and "pressed paper" hover language
     flex-shrink: 0;
 }
 
+.hv2-nav__link {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
+}
+
 .hv2-nav__link:hover {
     color: var(--AmoriemPink);
     transform: translate(-2px, -1px);
-    transition: 250ms;
 }
 
 .hv2-nav__socials {
@@ -848,10 +863,13 @@ Reuses the site's existing fonts and "pressed paper" hover language
     object-fit: contain;
 }
 
+.hv2-icon-btn {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
+}
+
 .hv2-icon-btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: 3px 3px 0px var(--AmoriemPink);
-    transition: 250ms;
 }
 
 @media (max-width: 800px) {
@@ -882,6 +900,7 @@ Reuses the site's existing fonts and "pressed paper" hover language
     align-items: center;
 }
 
+/* Two stacked layers; home-v2.js cross-fades between trailers by swapping .is-active */
 .hv2-hero__video {
     position: absolute;
     inset: 0;
@@ -889,6 +908,12 @@ Reuses the site's existing fonts and "pressed paper" hover language
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    opacity: 0;
+    transition: opacity 900ms ease;
+}
+
+.hv2-hero__video.is-active {
+    opacity: 1;
 }
 
 /* Dark band across the video holding the logo (left) + page links (right), Figma node 41:567 */
@@ -912,12 +937,12 @@ Reuses the site's existing fonts and "pressed paper" hover language
     text-shadow: 2px 2px 0px var(--AmoriemBlack);
     margin: 0;
     line-height: 1.05;
+    transition: transform 150ms, box-shadow 150ms, text-shadow 150ms, color 150ms;
 }
 
 .hv2-hero__logo:hover {
     transform: translate(-3px, -2px);
     text-shadow: 5px 4px 0px var(--AmoriemBlack);
-    transition: 150ms;
 }
 
 .hv2-page .hv2-hero__tagline {
@@ -960,10 +985,13 @@ Reuses the site's existing fonts and "pressed paper" hover language
     flex-shrink: 0;
 }
 
+.hv2-hero__link {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
+}
+
 .hv2-hero__link:hover {
     color: var(--AmoriemPink);
     transform: translate(-2px, -1px);
-    transition: 250ms;
 }
 
 @media (max-width: 700px) {
@@ -981,15 +1009,16 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 .hv2-intro p {
     font-family: Exo, sans-serif;
-    line-height: 1.6;
+    margin: 0;
 }
 
 /* :first-of-type / :last-of-type (not :first-child) so the decorative <img>
    sibling inside .hv2-intro doesn't disqualify the paragraphs. */
 .hv2-intro p:first-of-type {
     font-weight: 600;
-    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-    max-width: 60rem;
+    font-size: clamp(1.4rem, 2.6vw, 2.6rem);
+    line-height: 1.32;
+    max-width: none;
 }
 
 .hv2-intro p:first-of-type span {
@@ -997,9 +1026,17 @@ Reuses the site's existing fonts and "pressed paper" hover language
 }
 
 .hv2-intro p:last-of-type {
-    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
-    max-width: 60rem;
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+    line-height: 1.55;
+    max-width: none;
+    margin-top: clamp(1rem, 2vw, 1.75rem);
     opacity: 0.9;
+}
+
+/* Tighter vertical rhythm between the intro, collaborations and email blocks.
+   Scoped with .hv2-page so these beat `.hv2-page section`'s default padding. */
+.hv2-page .hv2-intro {
+    padding-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .hv2-section-heading {
@@ -1011,8 +1048,10 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 /* ----- Collaborations ----- */
 
-.hv2-collabs {
-    margin-top: clamp(2rem, 6vw, 5rem);
+.hv2-page .hv2-collabs {
+    margin-top: 0;
+    padding-top: clamp(0.75rem, 1.5vw, 1.25rem);
+    padding-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .hv2-collabs__grid {
@@ -1043,8 +1082,9 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 /* ----- Email ----- */
 
-.hv2-email {
-    margin-top: clamp(3rem, 7vw, 7.5rem);
+.hv2-page .hv2-email {
+    margin-top: 0;
+    padding-top: clamp(0.75rem, 1.5vw, 1.25rem);
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
@@ -1084,10 +1124,13 @@ Reuses the site's existing fonts and "pressed paper" hover language
     font-size: clamp(1rem, 1.6vw, 1.3rem);
 }
 
+.hv2-email__link {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
+}
+
 .hv2-email__link:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemBlack);
-    transition: 250ms;
 }
 
 /* ----- Club Games gallery ----- */
@@ -1127,12 +1170,24 @@ Reuses the site's existing fonts and "pressed paper" hover language
     gap: 1.25rem;
 }
 
-.hv2-games__grid {
+.hv2-games__pages {
     flex: 1;
+    min-width: 0;
+    max-width: 30rem;
+}
+
+.hv2-games__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 1fr;
     gap: 0.6rem;
+    opacity: 1;
+    transition: opacity 220ms ease;
+}
+
+/* fade-out state applied by the pager before swapping pages */
+.hv2-games__page.is-leaving {
+    opacity: 0;
 }
 
 /* `display: grid` above would otherwise override the UA [hidden] rule,
@@ -1166,71 +1221,94 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 .hv2-game-card__body {
     flex: 1;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 0.7rem 0.6rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.1rem;
     background: var(--AmoriemPlum);
 }
 
 .hv2-game-card__name {
     font-family: Exo, sans-serif;
     font-weight: 600;
-    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+    line-height: 1.25;
     color: white;
 }
 
 .hv2-game-card__genre {
     font-family: Exo, sans-serif;
-    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    font-size: clamp(0.68rem, 0.85vw, 0.8rem);
+    line-height: 1.3;
     color: white;
     opacity: 0.85;
 }
 
 .hv2-game-card__year {
     align-self: flex-start;
-    margin-top: 0.15rem;
+    margin-top: 0.3rem;
     background: var(--AmoriemDarkPink);
     color: white;
     font-family: Exo, sans-serif;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.7rem;
+    font-size: 0.7rem;
+    padding: 0.18rem 0.6rem;
     border-radius: 25px;
+}
+
+.hv2-game-card {
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .hv2-game-card:hover {
     transform: translate(-3px, -2px);
     box-shadow: 5px 3px 0px var(--AmoriemBlack);
-    transition: 250ms;
 }
 
+/* Gallery arrows, in the site's "pressed paper" button language */
 .hv2-games__pager {
     flex-shrink: 0;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background: #dfe4f5;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 10px;
+    background: var(--AmoriemPink);
+    border: 2px solid var(--AmoriemBlack);
+    box-shadow: 4px 3px 0px var(--AmoriemBlack);
+    color: var(--AmoriemBlack);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
     cursor: pointer;
     padding: 0;
+    transition: transform 250ms, box-shadow 250ms, background-color 250ms;
 }
 
-.hv2-games__pager img {
-    width: 1.4rem;
-    height: 1.4rem;
+/* chevron drawn in CSS so it always matches the button colour */
+.hv2-games__pager::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 3px solid currentColor;
+    border-bottom: 3px solid currentColor;
+}
+
+.hv2-games__pager--next::before {
+    transform: rotate(-45deg);
+    margin-left: -0.2rem;
+}
+
+.hv2-games__pager--prev::before {
+    transform: rotate(135deg);
+    margin-right: -0.2rem;
 }
 
 .hv2-games__pager:hover {
     transform: translate(3px, 2px);
-    transition: 250ms;
+    box-shadow: 1px 1px 0px var(--AmoriemBlack);
 }
 
 .hv2-games__pager:focus-visible {
-    outline: 2px solid var(--AmoriemPink);
-    outline-offset: 2px;
+    outline: 2px solid var(--AmoriemWhite);
+    outline-offset: 3px;
 }
 
 @media (max-width: 800px) {
@@ -1239,17 +1317,24 @@ Reuses the site's existing fonts and "pressed paper" hover language
         align-items: stretch;
     }
 
+    /* cards take their own full-width row; the two arrows sit centred beneath */
     .hv2-games__gallery {
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .hv2-games__pager {
-        align-self: center;
-        transform: rotate(90deg);
+    .hv2-games__pages {
+        order: 1;
+        flex: 1 1 100%;
+        max-width: none;
     }
 
-    .hv2-games__pager:hover {
-        transform: rotate(90deg) translate(3px, 2px);
+    .hv2-games__pager--prev {
+        order: 2;
+    }
+
+    .hv2-games__pager--next {
+        order: 3;
     }
 }
 
@@ -1282,11 +1367,11 @@ Reuses the site's existing fonts and "pressed paper" hover language
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .hv2-event-photo:hover img {
     transform: scale(1.04);
-    transition: 250ms;
 }
 
 /* Caption + black overlay hidden by default, revealed on hover */
@@ -1363,11 +1448,11 @@ Reuses the site's existing fonts and "pressed paper" hover language
     font-size: 0.95rem;
     color: white;
     text-decoration: none;
+    transition: transform 250ms, box-shadow 250ms, text-shadow 250ms, color 250ms;
 }
 
 .hv2-footer__list a:hover {
     color: var(--AmoriemPink);
-    transition: 250ms;
 }
 
 .hv2-footer__socials {
