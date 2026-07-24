@@ -38,14 +38,23 @@ document.addEventListener("DOMContentLoaded", function () {
     var pages = document.querySelectorAll(".hv2-games__page");
     var prevBtn = document.querySelector(".hv2-games__pager--prev");
     var nextBtn = document.querySelector(".hv2-games__pager--next");
+    var dots = document.querySelectorAll(".hv2-games__dot");
 
     if (pages.length) {
         var currentPage = 0;
         var swapping = false;
         var PAGE_FADE_MS = 220;
 
+        function updateDots() {
+            for (var i = 0; i < dots.length; i++) {
+                dots[i].classList.toggle("is-active", i === currentPage);
+                dots[i].setAttribute("aria-current", i === currentPage ? "true" : "false");
+            }
+        }
+
         function goToPage(target) {
-            if (swapping || pages.length < 2) return;
+            target = (target + pages.length) % pages.length;
+            if (swapping || pages.length < 2 || target === currentPage) return;
             swapping = true;
 
             var outgoing = pages[currentPage];
@@ -55,13 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 outgoing.hidden = true;
                 outgoing.classList.remove("is-leaving");
 
-                currentPage = (target + pages.length) % pages.length;
+                currentPage = target;
 
                 var incoming = pages[currentPage];
                 incoming.hidden = false;
                 incoming.classList.add("is-leaving"); // start transparent
                 void incoming.offsetWidth;            // force a reflow so the fade runs
                 incoming.classList.remove("is-leaving");
+
+                updateDots();
 
                 setTimeout(function () { swapping = false; }, PAGE_FADE_MS);
             }, PAGE_FADE_MS);
@@ -73,6 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (prevBtn) {
             prevBtn.addEventListener("click", function () { goToPage(currentPage - 1); });
         }
+        for (var d = 0; d < dots.length; d++) {
+            (function (index) {
+                dots[index].addEventListener("click", function () { goToPage(index); });
+            })(d);
+        }
+
+        updateDots();
     }
 
     /* ----- Hero trailer reel: cycles every clip in static/images/games/trailers/,
@@ -80,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
        at a time -- the outgoing layer's src is released after each fade. ----- */
     var HERO_TRAILERS = [
         "static/images/games/trailers/Encore_Demo_Clipped.mp4",
+        "static/images/games/trailers/Encore - FreePlayClip 9-2.mp4",
         "static/images/games/trailers/27_Trailer_Clipped.mp4",
         "static/images/games/trailers/Dungeon_Barista_2026.mp4",
         "static/images/games/trailers/Glyphbound_2026.mp4",
