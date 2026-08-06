@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* ----- Sticky nav: reveal Games/About/Events/Team once the hero scrolls out of view ----- */
     var nav = document.querySelector(".hv2-nav");
-    var hero = document.querySelector(".hv2-hero");
+    var hero = document.querySelector(".hv2-hero, .hv2-gp-hero");
 
     if (nav && hero) {
         var navObserver = new IntersectionObserver(function (entries) {
@@ -16,7 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
         navObserver.observe(hero);
     }
 
-    /* ----- Scroll reveal for content sections ----- */
+    /* ----- Scroll reveal for content sections -----
+       rootMargin shrinks the observer's effective viewport to a thin band
+       straddling the vertical center, so a section reveals as it crosses the
+       middle of the screen instead of the instant its top edge peeks in from
+       the bottom (the old `threshold: 0.15` fired far too early). */
     var revealTargets = document.querySelectorAll(".hv2-reveal");
 
     if (revealTargets.length) {
@@ -27,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { rootMargin: "-40% 0px -40% 0px", threshold: 0 });
 
         revealTargets.forEach(function (el) {
             revealObserver.observe(el);
@@ -204,16 +208,110 @@ document.addEventListener("DOMContentLoaded", function () {
         playSafely(heroLayers[0]);
     }
 
-    /* ----- Twinkling starfield (hand-rolled canvas, no dependency) ----- */
+    /* ----- Twinkling starfield + cursor sparkle trail (hand-rolled canvas,
+       no dependency -- both share the one rAF loop below). ----- */
     var starCanvas = document.querySelector(".hv2-stars");
+    /* Sparkle trail draws on its own top-most canvas (see .hv2-sparkle-layer)
+       so it renders over the hero video and every opaque section, not just
+       the background gradient behind the star canvas. */
+    var sparkleCanvas = document.querySelector(".hv2-sparkle-layer");
 
     if (starCanvas && starCanvas.getContext) {
         var ctx = starCanvas.getContext("2d");
+        var sparkleCtx = sparkleCanvas && sparkleCanvas.getContext ? sparkleCanvas.getContext("2d") : null;
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var stars = [];
         var viewW = 0;
         var viewH = 0;
         var rafId = null;
+
+        var canHover = window.matchMedia
+            && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+        /* Cursor sparkle trail: small 4-point sparkles spawn as the pointer
+           moves and fade/drift away, echoing the .hv2-decor sparkle motifs.
+           Mouse-only (gated like every other hover effect on this page) and
+           skipped entirely under reduced motion -- see the `else` branch
+           below where the listener is attached. */
+        var trail = [];
+        var TRAIL_MAX = 40;
+        var lastTrailX = null;
+        var lastTrailY = null;
+        var MIN_SPAWN_DIST = 14; // px moved before the next sparkle spawns
+
+        function spawnSparkle(x, y) {
+            if (trail.length >= TRAIL_MAX) trail.shift();
+            trail.push({
+                x: x,
+                y: y,
+                size: Math.random() * 3 + 2,
+                rot: Math.random() * Math.PI,
+                spin: (Math.random() - 0.5) * 0.05,
+                driftX: (Math.random() - 0.5) * 0.3,
+                driftY: -Math.random() * 0.4 - 0.1,
+                life: 1,
+                decay: Math.random() * 0.02 + 0.018,
+                warm: Math.random() < 0.6
+            });
+        }
+
+        function onPointerMove(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+
+            if (lastTrailX === null) {
+                lastTrailX = x;
+                lastTrailY = y;
+                return;
+            }
+
+            var dx = x - lastTrailX;
+            var dy = y - lastTrailY;
+            if ((dx * dx + dy * dy) < MIN_SPAWN_DIST * MIN_SPAWN_DIST) return;
+
+            lastTrailX = x;
+            lastTrailY = y;
+            spawnSparkle(x, y);
+        }
+
+        function updateTrail() {
+            for (var i = trail.length - 1; i >= 0; i--) {
+                var s = trail[i];
+                s.life -= s.decay;
+                if (s.life <= 0) {
+                    trail.splice(i, 1);
+                    continue;
+                }
+                s.x += s.driftX;
+                s.y += s.driftY;
+                s.rot += s.spin;
+            }
+        }
+
+        function drawSparkle(s) {
+            var r = s.size * s.life; // shrinks as it fades
+            if (r <= 0 || !sparkleCtx) return;
+
+            sparkleCtx.save();
+            sparkleCtx.globalAlpha = s.life;
+            sparkleCtx.translate(s.x, s.y);
+            sparkleCtx.rotate(s.rot);
+            sparkleCtx.fillStyle = s.warm ? "#f37f93" : "#fae5c8";
+
+            // simple 4-point sparkle (diamond cross), matching the decor SVGs
+            sparkleCtx.beginPath();
+            sparkleCtx.moveTo(0, -r * 2);
+            sparkleCtx.lineTo(r * 0.35, -r * 0.35);
+            sparkleCtx.lineTo(r * 2, 0);
+            sparkleCtx.lineTo(r * 0.35, r * 0.35);
+            sparkleCtx.lineTo(0, r * 2);
+            sparkleCtx.lineTo(-r * 0.35, r * 0.35);
+            sparkleCtx.lineTo(-r * 2, 0);
+            sparkleCtx.lineTo(-r * 0.35, -r * 0.35);
+            sparkleCtx.closePath();
+            sparkleCtx.fill();
+            sparkleCtx.restore();
+        }
 
         function seedStars() {
             viewW = window.innerWidth;
@@ -224,6 +322,14 @@ document.addEventListener("DOMContentLoaded", function () {
             starCanvas.style.width = viewW + "px";
             starCanvas.style.height = viewH + "px";
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            if (sparkleCtx) {
+                sparkleCanvas.width = viewW * dpr;
+                sparkleCanvas.height = viewH * dpr;
+                sparkleCanvas.style.width = viewW + "px";
+                sparkleCanvas.style.height = viewH + "px";
+                sparkleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
 
             // density follows viewport area, capped so large screens stay cheap
             var count = Math.min(170, Math.round((viewW * viewH) / 11000));
@@ -259,6 +365,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             ctx.globalAlpha = 1;
+
+            if (sparkleCtx) {
+                sparkleCtx.clearRect(0, 0, viewW, viewH);
+                if (trail.length) {
+                    updateTrail();
+                    for (var t = 0; t < trail.length; t++) drawSparkle(trail[t]);
+                    sparkleCtx.globalAlpha = 1;
+                }
+            }
         }
 
         function loop(time) {
@@ -280,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
         seedStars();
 
         if (reduceMotion) {
-            draw(0); // static field, no animation loop
+            draw(0); // static field, no animation loop, no cursor trail
         } else {
             startStars();
             // don't burn frames while the tab is in the background
@@ -288,6 +403,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (document.hidden) stopStars();
                 else startStars();
             });
+
+            if (canHover) {
+                window.addEventListener("pointermove", onPointerMove, { passive: true });
+            }
         }
 
         var resizeTimer = null;

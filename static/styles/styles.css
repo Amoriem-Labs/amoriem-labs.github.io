@@ -19,6 +19,11 @@
   --AmoriemMauve: #735d78;
   --AmoriemBlush: #ebd4da;
 
+  /* Chromatic accent range for the games page's constellation stars (2026 games-new.html) */
+  --hv2-gp-nearblack: #0d0611;
+  --hv2-gp-violet: #7c5cff;
+  --hv2-gp-amber: #ff9a56;
+
   /* Strong ease-out for entrances (Emil/animations.dev vocabulary) */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -796,6 +801,18 @@ Reuses the site's existing fonts and "pressed paper" hover language
   z-index: 0;
 }
 
+/* Cursor sparkle trail lives above every layer -- including the nav (z-index
+   10), the hero video, and the opaque Club Games panel -- so it reads over
+   the whole page instead of only the gaps where the background shows through. */
+.hv2-sparkle-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
 .hv2-page * {
   box-sizing: border-box;
 }
@@ -1122,8 +1139,8 @@ Reuses the site's existing fonts and "pressed paper" hover language
 .hv2-intro p:first-of-type {
   font-weight: 600;
   font-size: clamp(1.4rem, 2.6vw, 2.6rem);
-  line-height: 1.32;
-  max-width: none;
+  line-height: 1.5;
+  max-width: 80%;
 }
 
 .hv2-intro p:first-of-type span {
@@ -1133,9 +1150,18 @@ Reuses the site's existing fonts and "pressed paper" hover language
 .hv2-intro p:last-of-type {
   font-size: clamp(0.9rem, 1.2vw, 1.15rem);
   line-height: 1.6;
-  max-width: none;
+  max-width: 80%;
   margin-top: clamp(1rem, 2vw, 1.75rem);
   opacity: 0.85;
+}
+
+/* keep the full-width wrap on narrow screens — the right-hand gutter above
+   is a wide-viewport treatment, not enough room to spare on mobile */
+@media (max-width: 700px) {
+  .hv2-intro p:first-of-type,
+  .hv2-intro p:last-of-type {
+    max-width: none;
+  }
 }
 
 /* Vertical rhythm between the intro, collaborations and email blocks.
@@ -1336,8 +1362,18 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 @media (hover: hover) and (pointer: fine) {
   .hv2-game-card:hover {
-    transform: translate(-3px, -2px);
-    box-shadow: 5px 3px 0px var(--AmoriemBlack);
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0px var(--AmoriemPink);
+  }
+
+  /* the entrance-stagger rule's `.hv2-games.is-visible .hv2-game-card { transform:
+     none }` (3 classes) outranks the plain hover rule above (1 class + pseudo)
+     once a card has revealed, which is permanent -- so the raise silently lost
+     its translate and only the box-shadow ever showed. Re-declare at matching
+     specificity so hover wins after reveal too. */
+  .hv2-games.is-visible .hv2-game-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0px var(--AmoriemPink);
   }
 }
 
@@ -1913,4 +1949,738 @@ Reuses the site's existing fonts and "pressed paper" hover language
    so source order breaks the tie in this rule's favor. */
 .hv2-games.is-visible .hv2-game-card:hover {
   transition-delay: 0ms;
+}
+
+/*
+====================================================================
+===== GAMES PAGE (2026 dark-theme games-new.html, "hv2-gp-") =====
+====================================================================
+Page-specific rules for the constellation-style Games redesign. Namespaced
+"hv2-gp-" (Games Page) rather than reusing "hv2-games"/"hv2-game-card",
+which are already taken by the homepage's Club Games carousel above and
+would collide since both pages load this same stylesheet. Everything
+generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
+.hv2-decor keyframes) is reused as-is from the HOME V2 section.
+*/
+
+/* ----- Background: dedicated top-to-bottom cosmic gradient -----
+   Deliberately NOT the homepage's 203deg diagonal (line ~761) -- this page
+   reads top-to-bottom, so it gets its own vertical, multi-stop gradient
+   with two soft radial "blobs" layered on top for the sketch's rounded,
+   mesh-like cosmic look. .hv2-page.hv2-gp-page (2 classes) outranks the
+   base .hv2-page (1 class) regardless of source order. */
+.hv2-page.hv2-gp-page {
+  background:
+    radial-gradient(
+      ellipse 55% 38% at 12% 10%,
+      rgba(237, 19, 149, 0.28),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 88% 58%,
+      rgba(124, 92, 255, 0.2),
+      transparent 62%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--hv2-gp-nearblack) 0%,
+      var(--AmoriemDeepPlum) 20%,
+      var(--AmoriemPlum) 55%,
+      var(--AmoriemDarkPink) 100%
+    );
+  background-attachment: scroll;
+}
+
+/* ----- Hero / title ----- */
+
+.hv2-gp-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem clamp(2rem, 6vw, 5rem);
+  padding-top: clamp(7rem, 12vw, 9rem);
+}
+
+.hv2-gp-hero__heading {
+  flex: 1 1 22rem;
+  max-width: 40rem;
+}
+
+.hv2-gp-hero__title {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemWhite);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  margin: 0 0 1rem;
+  text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+}
+
+.hv2-gp-hero__intro {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 34rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Decorative, staggered year-jump list, top-right of the hero (Figma sketch).
+   The zig-zag margin-right stagger directly mirrors .hv2-hero__link:nth-child()
+   at lines ~1096-1107 -- the one place in this file nth-child positional
+   styling is correct, since these are 4 fixed cosmetic items, not
+   content-order-dependent (unlike .hv2-gp-entry's alternating side, which
+   uses an explicit modifier class instead -- see below). */
+.hv2-gp-yearjump {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
+  flex: 0 0 auto;
+  padding-top: 0.5rem;
+}
+
+.hv2-gp-yearjump__link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: Exo, sans-serif;
+  font-weight: bold;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: var(--AmoriemWhite);
+  text-decoration: none;
+  transition:
+    transform 250ms,
+    box-shadow 250ms,
+    text-shadow 250ms,
+    color 250ms;
+}
+
+.hv2-gp-yearjump__arrow {
+  width: clamp(1.75rem, 3vw, 2.5rem);
+  aspect-ratio: 64 / 14.7;
+  height: auto;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-gp-yearjump__link:hover {
+    color: var(--AmoriemPink);
+    transform: translate(-2px, -1px);
+  }
+}
+
+.hv2-gp-yearjump__link:nth-child(1) {
+  margin-right: 0;
+}
+.hv2-gp-yearjump__link:nth-child(2) {
+  margin-right: 2.5rem;
+}
+.hv2-gp-yearjump__link:nth-child(3) {
+  margin-right: 5.5rem;
+}
+.hv2-gp-yearjump__link:nth-child(4) {
+  margin-right: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .hv2-gp-yearjump {
+    align-items: flex-start;
+  }
+
+  .hv2-gp-yearjump__link:nth-child(1),
+  .hv2-gp-yearjump__link:nth-child(2),
+  .hv2-gp-yearjump__link:nth-child(3),
+  .hv2-gp-yearjump__link:nth-child(4) {
+    margin-right: 0;
+  }
+}
+
+/* ----- Left-edge side nav: small always-visible tab, expands on hover -----
+   Mirrors .hv2-nav's own expand-on-scroll mechanism (games-new.js toggles
+   .is-visible via the same IntersectionObserver pattern as home-v2.js
+   lines 5-17), but reveals on hover/focus rather than on scroll -- this is
+   a *second*, page-local nav for jumping between year sections, separate
+   from the site-wide .hv2-nav (Games/About/Events/Team) above it. */
+.hv2-gp-yearnav {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  transform: translate(-100%, -50%);
+  transition: transform 300ms var(--ease-out);
+  background: var(--AmoriemDeepPlum);
+  border-radius: 0 16px 16px 0;
+  padding: 1.1rem 0.6rem;
+}
+
+.hv2-gp-yearnav.is-visible {
+  transform: translate(0, -50%);
+}
+
+.hv2-gp-yearnav__tab {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: Exo, sans-serif;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--AmoriemPink);
+  white-space: nowrap;
+}
+
+/* Same GPU-only width/opacity reveal technique as .hv2-nav__links (lines ~865-877) */
+.hv2-gp-yearnav__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+  margin-left: 0;
+  transition:
+    opacity 250ms var(--ease-out),
+    transform 250ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-gp-yearnav:hover .hv2-gp-yearnav__links,
+  .hv2-gp-yearnav:focus-within .hv2-gp-yearnav__links {
+    width: auto;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    margin-left: 0.9rem;
+  }
+}
+
+/* Touch has no reliable hover -- always-expanded fallback, mirrors
+   .hv2-event-caption's @media (hover:none) rule at lines ~1622-1627 */
+@media (hover: none) {
+  .hv2-gp-yearnav__links {
+    width: auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    margin-left: 0.9rem;
+  }
+}
+
+.hv2-gp-yearnav__link {
+  font-family: Exo, sans-serif;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 250ms,
+    transform 250ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-gp-yearnav__link:hover {
+    color: var(--AmoriemPink);
+    transform: translate(-2px, 0);
+  }
+}
+
+/* Top .hv2-nav already covers wayfinding at phone widths */
+@media (max-width: 600px) {
+  .hv2-gp-yearnav {
+    display: none;
+  }
+}
+
+/* ----- Particles field: wraps all 4 year sections -----
+   position:absolute + inset:0 inside a position:relative wrapper whose only
+   other children are the normal-flow year sections -- the wrapper's height
+   is naturally the sum of its children, so the particle canvas spans the
+   full scrollable content automatically, no JS height math needed. Must
+   stay position:absolute (scrolls with the page), NOT position:fixed --
+   fixed would pin it to one viewport-height slice instead of threading
+   across all ~11 entries. */
+.hv2-gp-particles-field {
+  position: relative;
+  /* .hv2-page's own overflow-x:hidden (line ~767) turned out not to be
+     enough to stop the anchor stars' negative left/right offsets from
+     making the page horizontally scrollable on narrow viewports (verified:
+     body's overflow-x:hidden did not propagate to clip this in testing) --
+     clip locally instead. overflow-x only, so vertical bleed between
+     entries (the whole point of these anchors) stays free. */
+  overflow-x: hidden;
+}
+
+.hv2-gp-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* load-bearing, not optional: without this a full-height canvas over 11
+     entries would swallow clicks on every link/button beneath it */
+  pointer-events: none;
+}
+
+/* ----- Year sections ----- */
+
+/* .hv2-page section (line ~823) sets padding on all 4 sides via the shorthand,
+   which outranks a plain .hv2-gp-year rule (class+type vs. class alone) --
+   compound the selector with .hv2-page to win, same fix already used for
+   .hv2-intro/.hv2-collabs/.hv2-email (lines ~1164, ~1177, ~1211). Only
+   top/bottom are touched here so the shared horizontal page padding is left
+   alone. */
+.hv2-page .hv2-gp-year {
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.hv2-gp-year {
+  position: relative;
+  z-index: 1;
+  scroll-margin-top: clamp(5rem, 10vw, 7rem);
+}
+
+.hv2-gp-year__heading {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemWhite);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+  text-shadow: 2px 2px 0px var(--AmoriemDarkPink);
+}
+
+.hv2-gp-entries {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 8vw, 6rem);
+}
+
+/* ----- Alternating entry -----
+   Side is an explicit modifier class, not nth-child/nth-of-type: the 11
+   entries are grouped inside 4 separate per-year sections, so nth-of-type
+   would restart its count at 1 in each section and couldn't alternate
+   continuously down the page. grid-column (not the `order` property) swaps
+   which side text/media sit on, so DOM/reading/tab order stays
+   text-then-media regardless of visual side. */
+.hv2-gp-entry {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.hv2-gp-entry__text {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.hv2-gp-entry__media {
+  grid-column: 2;
+}
+
+.hv2-gp-entry--reverse .hv2-gp-entry__text {
+  grid-column: 2;
+}
+
+.hv2-gp-entry--reverse .hv2-gp-entry__media {
+  grid-column: 1;
+}
+
+@media (max-width: 800px) {
+  .hv2-gp-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .hv2-gp-entry__text,
+  .hv2-gp-entry__media {
+    grid-column: 1;
+  }
+}
+
+.hv2-gp-entry__title {
+  font-family: Exo, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: white;
+  -webkit-text-stroke: 0.6px currentColor;
+  margin: 0;
+}
+
+.hv2-gp-entry__desc {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.92;
+}
+
+.hv2-gp-entry__credit {
+  font-family: Exo, sans-serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.hv2-gp-entry__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* "Available to play soon!" -- reuses the .hv2-game-card__year pill recipe
+   (lines ~1431-1441) rather than a disabled-looking dead button */
+.hv2-gp-entry__status {
+  display: inline-block;
+  background: var(--AmoriemDarkPink);
+  color: white;
+  font-family: Exo, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0.65rem 1rem;
+  border-radius: 25px;
+}
+
+/* Labeled "Play Now" button for the 2 locally-hosted games (Planet 112,
+   Bulldog Bash) -- kept visually distinct from the itch.io/SoundCloud/Steam
+   .hv2-icon-btn row so it doesn't misrepresent where the link goes. Styled
+   like .hv2-email__link (lines ~1230-1266). */
+.hv2-gp-entry__play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--AmoriemMauve);
+  color: white;
+  text-decoration: none;
+  font-family: Exo, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.1rem;
+  transition:
+    transform 250ms,
+    box-shadow 250ms,
+    text-shadow 250ms,
+    color 250ms;
+}
+
+.hv2-gp-entry__play img {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-gp-entry__play:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 4px 3px 0px var(--AmoriemBlack);
+  }
+}
+
+/* ----- Media grid: 1 large + 2 small, per the sketch ----- */
+
+.hv2-gp-media {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.75rem;
+}
+
+.hv2-gp-media__primary {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hv2-gp-media__secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.hv2-gp-media__thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hv2-gp-media__thumb img,
+.hv2-gp-media__primary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Honest fallback for games without enough spare real assets */
+.hv2-gp-media__thumb--placeholder {
+  background: var(--AmoriemMauve);
+}
+
+/* ----- Hover/tap-to-play video (games-new.js governs src/playback) ----- */
+
+.hv2-gp-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.hv2-gp-video__poster,
+.hv2-gp-video__clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hv2-gp-video__poster {
+  transition: opacity 400ms ease;
+}
+
+.hv2-gp-video__clip {
+  opacity: 0;
+}
+
+.hv2-gp-video.is-playing .hv2-gp-video__clip {
+  opacity: 1;
+}
+
+.hv2-gp-video.is-playing .hv2-gp-video__poster {
+  opacity: 0;
+}
+
+/* Play-triangle badge drawn in CSS, same technique as .hv2-games__pager::before's
+   chevron (lines ~1464-1481) -- no new icon asset needed */
+.hv2-gp-video__badge {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(29, 12, 37, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 250ms;
+}
+
+.hv2-gp-video.is-playing .hv2-gp-video__badge {
+  opacity: 0;
+}
+
+.hv2-gp-video__badge::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 0 7px 11px;
+  border-color: transparent transparent transparent white;
+  margin-left: 3px;
+}
+
+/* ----- Chromatic anchor stars -----
+   Reuses .hv2-decor's base positioning approach + the existing hv2-float/
+   hv2-drift/hv2-twinkle/hv2-pulse keyframes (lines ~1801-1843) -- only the
+   source SVGs are new (gradient-filled instead of flat white). Lives as a
+   child of .hv2-gp-year (not nested inside individual .hv2-gp-entry cards)
+   so it can bleed across the gap into the next entry/section, matching the
+   sketch -- .hv2-page's own overflow-x:hidden (line ~767) already clips
+   any horizontal bleed page-wide, so only vertical bleed needs to stay
+   free, which it does here. */
+.hv2-gp-anchor {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+.hv2-gp-anchor--0 {
+  top: -6rem;
+  left: -3rem;
+  width: clamp(180px, 22vw, 320px);
+  aspect-ratio: 344 / 502.93;
+  opacity: 0.85;
+  animation: hv2-float 10s ease-in-out infinite;
+}
+.hv2-gp-anchor--1 {
+  bottom: -2.5rem;
+  right: 8%;
+  width: clamp(70px, 8vw, 120px);
+  aspect-ratio: 1 / 1;
+  opacity: 0.8;
+  animation: hv2-twinkle 5s ease-in-out infinite;
+}
+.hv2-gp-anchor--2 {
+  top: -2rem;
+  right: -2.5rem;
+  width: clamp(60px, 7vw, 110px);
+  aspect-ratio: 158.845 / 162.233;
+  opacity: 0.75;
+  animation: hv2-pulse 7s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+.hv2-gp-anchor--3 {
+  bottom: -3rem;
+  left: 4%;
+  width: clamp(150px, 18vw, 260px);
+  aspect-ratio: 344 / 502.93;
+  opacity: 0.8;
+  animation: hv2-drift 12s ease-in-out infinite;
+}
+.hv2-gp-anchor--4 {
+  top: 12%;
+  right: 6%;
+  width: clamp(70px, 8vw, 120px);
+  aspect-ratio: 1 / 1;
+  opacity: 0.75;
+  animation: hv2-twinkle 4.5s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+.hv2-gp-anchor--5 {
+  top: -2.5rem;
+  left: 10%;
+  width: clamp(90px, 10vw, 150px);
+  aspect-ratio: 158.845 / 162.233;
+  opacity: 0.8;
+  animation: hv2-pulse 6s ease-in-out infinite;
+}
+.hv2-gp-anchor--6 {
+  bottom: -3rem;
+  right: -3rem;
+  width: clamp(150px, 18vw, 260px);
+  aspect-ratio: 344 / 502.93;
+  opacity: 0.8;
+  animation: hv2-float 9s ease-in-out infinite;
+  animation-delay: 2s;
+}
+.hv2-gp-anchor--7 {
+  top: 8%;
+  left: -2.5rem;
+  width: clamp(60px, 7vw, 100px);
+  aspect-ratio: 1 / 1;
+  opacity: 0.7;
+  animation: hv2-twinkle 5.5s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+.hv2-gp-anchor--8 {
+  bottom: -2rem;
+  right: 10%;
+  width: clamp(100px, 12vw, 180px);
+  aspect-ratio: 158.845 / 162.233;
+  opacity: 0.75;
+  animation: hv2-drift 10s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
+/* mirrors the existing decor mobile-hide at lines ~1845-1850 */
+@media (max-width: 700px) {
+  .hv2-gp-anchor--0,
+  .hv2-gp-anchor--3,
+  .hv2-gp-anchor--6 {
+    display: none;
+  }
+}
+
+/* ----- Art Museum ----- */
+
+.hv2-page .hv2-gp-museum {
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.hv2-gp-museum__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.hv2-gp-museum__piece {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: clamp(120px, 14vw, 170px);
+  margin: 0;
+}
+
+.hv2-gp-museum__piece img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--AmoriemMauve);
+  border-radius: 4px;
+}
+
+.hv2-gp-museum__piece figcaption {
+  font-family: Exo, sans-serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/* Batch group entrance, same pattern as .hv2-collabs/.hv2-games/.hv2-events
+   (lines ~1867-1937): the section itself doesn't fade (that's handled by its
+   own .hv2-reveal in markup being immediately neutralized here), its 10
+   pieces stagger in one after another instead. Self-contained -- doesn't
+   touch the existing shared nth-child table above. */
+.hv2-gp-museum.hv2-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-gp-museum__grid > .hv2-gp-museum__piece {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 320ms var(--ease-out);
+}
+
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(1) {
+  transition-delay: 0ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(2) {
+  transition-delay: 50ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(3) {
+  transition-delay: 100ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(4) {
+  transition-delay: 150ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(5) {
+  transition-delay: 200ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(6) {
+  transition-delay: 250ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(7) {
+  transition-delay: 300ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(8) {
+  transition-delay: 350ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(9) {
+  transition-delay: 400ms;
+}
+.hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(10) {
+  transition-delay: 450ms;
 }

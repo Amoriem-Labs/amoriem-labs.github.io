@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 344.104 502.93" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Vector" filter="url(#filter0_f_gp_a)">
+<path d="M222.134 199.18C243.034 218.24 174.974 291.7 174.974 291.7C174.974 291.7 100.414 228.93 119.824 202.24C139.234 175.55 173.334 216.7 173.334 216.7C173.334 216.7 195.304 174.72 222.134 199.18ZM196.155 301.83C216.175 292.78 282.464 378.88 282.464 378.88C282.464 378.88 212.765 280.57 227.395 256.57C237.835 239.45 322.405 276.15 322.405 276.15C322.405 276.15 243.114 234.7 249.754 211.31C256.104 188.93 329.104 174.02 329.104 174.02C329.104 174.02 260.024 185.89 249.584 171.14C239.524 156.93 301.964 68.58 301.964 68.58C301.964 68.58 228.514 172.33 203.864 163.51C185.334 156.88 178.474 15 178.474 15C178.474 15 176.574 157.92 151.624 169.95C126.674 181.99 25.6445 77.73 25.6445 77.73C25.6445 77.73 107.234 165.03 94.5544 191.65C81.8744 218.26 18.6045 200.65 15.1045 200.07C11.6045 199.49 97.1645 219.45 104.994 244.54C112.824 269.63 27.5844 309.71 27.5844 309.71C27.5844 309.71 122.945 265.22 138.405 286.58C150.065 302.7 76.4544 395.07 76.4544 395.07C76.4544 395.07 147.564 312.03 161.634 316.84C176.514 321.93 177.514 487.93 177.514 487.93C177.514 487.93 180.424 308.96 196.174 301.84L196.155 301.83Z" fill="url(#hv2GpChromaA)"/>
+</g>
+<defs>
+<linearGradient id="hv2GpChromaA" x1="0" y1="0" x2="344.104" y2="502.93" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#ed1395"/>
+<stop offset="0.5" stop-color="#fae5c8"/>
+<stop offset="1" stop-color="#7c5cff"/>
+</linearGradient>
+<filter id="filter0_f_gp_a" x="6.87274e-10" y="0" width="344.104" height="502.93" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_gp_a"/>
+</filter>
+</defs>
+</svg>

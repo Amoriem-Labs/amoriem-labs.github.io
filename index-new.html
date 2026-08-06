@@ -14,6 +14,10 @@
     <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
     <canvas class="hv2-stars" aria-hidden="true"></canvas>
 
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over the hero
+         video and every section, not just the background gradient -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
     <nav class="hv2-nav">
         <a class="hv2-nav__logo" href="index-new.html" aria-label="Amoriem Labs home">
             <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
@@ -188,7 +192,7 @@
 
                 <div class="hv2-games__grid hv2-games__page" data-page="1" hidden>
                     <a class="hv2-game-card" href="https://amoriem-labs.itch.io/conquer-chiron" target="_blank" rel="noopener">
-                        <img class="hv2-game-card__cover" src="static/images/games/conquer_chiron.png" alt="Conquer Chiron cover art">
+                        <img class="hv2-game-card__cover" src="static/images/games/conquer-chiron.jpg" alt="Conquer Chiron cover art">
                         <div class="hv2-game-card__overlay">
                             <p class="hv2-game-card__name">Conquer Chiron</p>
                             <p class="hv2-game-card__genre">Psychological Horror</p>
@@ -212,7 +216,7 @@
                         </div>
                     </a>
                     <a class="hv2-game-card" href="https://amoriem-labs.itch.io/diploma-dash" target="_blank" rel="noopener">
-                        <img class="hv2-game-card__cover" src="static/images/games/diploma_dash.jpg" alt="Diploma Dash cover art">
+                        <img class="hv2-game-card__cover" src="static/images/games/diplomadash.png" alt="Diploma Dash cover art">
                         <div class="hv2-game-card__overlay">
                             <p class="hv2-game-card__name">Diploma Dash</p>
                             <p class="hv2-game-card__genre">Platformer</p>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Games | Amoriem Labs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
+</head>
+
+<body class="hv2-page hv2-gp-page">
+
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over every section -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <nav class="hv2-nav">
+        <a class="hv2-nav__logo" href="index-new.html" aria-label="Amoriem Labs home">
+            <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
+        </a>
+
+        <div class="hv2-nav__links">
+            <a class="hv2-nav__link" href="games-new.html">
+                <img src="static/images/icons/nav-games.svg" alt="">
+                <span>Games</span>
+            </a>
+            <a class="hv2-nav__link" href="about.html">
+                <img src="static/images/icons/nav-about.svg" alt="">
+                <span>About</span>
+            </a>
+            <a class="hv2-nav__link" href="events.html">
+                <img src="static/images/icons/nav-events.svg" alt="">
+                <span>Events</span>
+            </a>
+            <a class="hv2-nav__link" href="team.html">
+                <img src="static/images/icons/nav-team.svg" alt="">
+                <span>Team</span>
+            </a>
+        </div>
+
+        <div class="hv2-nav__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Left-edge year-jump rail: hidden until scrolled past the hero (games-new.js),
+         small always-visible tab expands to the full year list on hover/focus -->
+    <nav class="hv2-gp-yearnav" aria-label="Jump to year">
+        <span class="hv2-gp-yearnav__tab" aria-hidden="true">Years</span>
+        <div class="hv2-gp-yearnav__links">
+            <a class="hv2-gp-yearnav__link" href="#year-2025-2026">2025-2026</a>
+            <a class="hv2-gp-yearnav__link" href="#year-2024-2025">2024-2025</a>
+            <a class="hv2-gp-yearnav__link" href="#year-2023-2024">2023-2024</a>
+            <a class="hv2-gp-yearnav__link" href="#year-2022-2023">2022-2023</a>
+        </div>
+    </nav>
+
+    <main>
+        <header class="hv2-gp-hero hv2-reveal">
+            <div class="hv2-gp-hero__heading">
+                <h1 class="hv2-gp-hero__title">Games</h1>
+                <p class="hv2-gp-hero__intro">Amoriem Labs makes two games a year and aims to publish them on
+                    online platforms for free. We run a yearly pitch process, where anyone can pitch their ideas
+                    to be created by the club.</p>
+            </div>
+            <nav class="hv2-gp-yearjump" aria-label="Jump to year">
+                <a class="hv2-gp-yearjump__link" href="#year-2025-2026">
+                    <span>2025-2026</span>
+                    <img class="hv2-gp-yearjump__arrow" src="static/images/icons/nav-arrow.svg" alt="">
+                </a>
+                <a class="hv2-gp-yearjump__link" href="#year-2024-2025">
+                    <span>2024-2025</span>
+                    <img class="hv2-gp-yearjump__arrow" src="static/images/icons/nav-arrow.svg" alt="">
+                </a>
+                <a class="hv2-gp-yearjump__link" href="#year-2023-2024">
+                    <span>2023-2024</span>
+                    <img class="hv2-gp-yearjump__arrow" src="static/images/icons/nav-arrow.svg" alt="">
+                </a>
+                <a class="hv2-gp-yearjump__link" href="#year-2022-2023">
+                    <span>2022-2023</span>
+                    <img class="hv2-gp-yearjump__arrow" src="static/images/icons/nav-arrow.svg" alt="">
+                </a>
+            </nav>
+        </header>
+
+        <div class="hv2-gp-particles-field">
+            <div id="hv2-gp-particles" class="hv2-gp-particles" aria-hidden="true"></div>
+
+            <section class="hv2-gp-year" id="year-2025-2026">
+                <h2 class="hv2-gp-year__heading">2025-2026</h2>
+                <div class="hv2-gp-entries">
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-27-photos">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">27 Photos</h3>
+                            <p class="hv2-gp-entry__desc">27 Photos is a walking-simulator/puzzle game where you must
+                                uncover the story of the strange building you start in and the nameless character you
+                                play. Take pictures to reveal informations about your surroundings, but be sure to
+                                not use all 27 of them!</p>
+                            <p class="hv2-gp-entry__credit">Made by the Photos team, led by Chris Shia.</p>
+                            <div class="hv2-gp-entry__links">
+                                <span class="hv2-gp-entry__status">Available to play soon!</span>
+                                <!-- TODO: real SoundCloud URL for 27 Photos -->
+                                <a class="hv2-icon-btn" href="#" aria-label="SoundCloud">
+                                    <img src="static/images/icons/soundcloud.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/27_Trailer_Clipped.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/27_Photos_with%20art.png" alt="27 Photos cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/27%20Photos/27Photos.png" alt="27 Photos screenshot"></div>
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/27%20Photos/CqJ3Gy.png" alt="27 Photos screenshot"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-gp-entry--reverse hv2-reveal" id="game-cursed-grounds">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Cursed Grounds</h3>
+                            <p class="hv2-gp-entry__desc">Cursed Grounds is a dungeon-crawler/resturant simulator!
+                                Set in a fantasy world, you must traverse the dungeons to gather ingredients from
+                                strange creatures to create new items for your menu!</p>
+                            <p class="hv2-gp-entry__credit">Made by the Dungeon team, led by Maryeva Gonzales and Sam
+                                Johnson-Noya.</p>
+                            <div class="hv2-gp-entry__links">
+                                <span class="hv2-gp-entry__status">Available to play soon!</span>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Dungeon_Barista_2026.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/Dungeon_Barista_Square.png" alt="Cursed Grounds cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/Barista%20Logo.png" alt="Cursed Grounds logo"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <img class="hv2-gp-anchor hv2-gp-anchor--0" src="static/images/decor/star-glow-chroma-a.svg" alt="" aria-hidden="true">
+                <img class="hv2-gp-anchor hv2-gp-anchor--1" src="static/images/decor/sparkle-chroma-b.svg" alt="" aria-hidden="true">
+            </section>
+
+            <section class="hv2-gp-year" id="year-2024-2025">
+                <h2 class="hv2-gp-year__heading">2024-2025</h2>
+                <div class="hv2-gp-entries">
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-boola-dash">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Boola Dash</h3>
+                            <p class="hv2-gp-entry__desc">Boola Dash is a side-scrolling platformer where you play as
+                                Handsome Dan running across Yale trying to avoid obstacles like benches, cones, and
+                                students! Play to get on our leaderboard, where the best Resco will win! This game
+                                was made in collaboration with the Alumni Fund at Yale.</p>
+                            <p class="hv2-gp-entry__credit">Made by the Alumni Game team, led by Maryeva Gonzalez. See
+                                full credits on itch.io!</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/boola-dash" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Boola_Dash_2026.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/boola_dash.jpg" alt="Boola Dash cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/boola_dash.jpg" alt="Boola Dash screenshot" style="object-position: top;"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-gp-entry--reverse hv2-reveal" id="game-encore">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Encore!</h3>
+                            <p class="hv2-gp-entry__desc">Begin your career at the Multiversal Institute for the
+                                Rhythmic Arts (MIRA), an interdimensional school where music, magic, and friendship
+                                collide. Recruit new friends from across realities and times to form a band that will
+                                rival the ages and unlock the power of rhythm with your bonds. Can your band make the
+                                audience scream Encore!?</p>
+                            <p class="hv2-gp-entry__credit">Made by the Rhythm/Visual Novel Game team, led by Chris
+                                Shia. See full credits on itch.io!</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/encore" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                                <!-- TODO: real SoundCloud URL for Encore! -->
+                                <a class="hv2-icon-btn" href="#" aria-label="SoundCloud">
+                                    <img src="static/images/icons/soundcloud.svg" alt="">
+                                </a>
+                                <!-- TODO: real Steam URL for Encore! -->
+                                <a class="hv2-icon-btn" href="#" aria-label="Steam">
+                                    <img src="static/images/icons/steam.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Encore_Demo_Clipped.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/Encore_Square.png" alt="Encore! cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/ENCORE/Encore1.jpg" alt="Encore! screenshot"></div>
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/ENCORE/Encore2.jpg" alt="Encore! screenshot"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-glyphbound">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Glyphbound</h3>
+                            <p class="hv2-gp-entry__desc">Glyphbound is a roguelite deckbuilder that centers around
+                                scribing spells to craft crazy combos! Play as a time-travelling wizard tasked with
+                                saving the world from a growing corruption.</p>
+                            <p class="hv2-gp-entry__credit">Made by the Magic team, led by Jeffrey Tan. See full
+                                credits on itch.io!</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/glyphbound" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Glyphbound_2026.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/Glyphbound.png" alt="Glyphbound cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/Glyphbound.png" alt="Glyphbound artwork" style="object-fit: contain; background: var(--AmoriemMauve);"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-gp-entry--reverse hv2-reveal" id="game-conquer-chiron">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Conquer Chiron</h3>
+                            <p class="hv2-gp-entry__desc">Conquer Chiron is a psychological horror game that plays on
+                                the fear of AI in the post-modern world. Play as a pilot who is trapped with the
+                                deviant AI assistant Chiron. Can you survive the onslaught of Chiron&rsquo;s
+                                assassination attempts?</p>
+                            <p class="hv2-gp-entry__credit">Made by Victor Liu, Will Liu, Grace Halak, and Jacob
+                                Leshnower.</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/conquer-chiron" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary"><img src="static/images/games/conquer_chiron.png" alt="Conquer Chiron cover art"></div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/conquer-chiron.jpg" alt="Conquer Chiron screenshot"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <img class="hv2-gp-anchor hv2-gp-anchor--2" src="static/images/decor/sparkle-chroma-c.svg" alt="" aria-hidden="true">
+                <img class="hv2-gp-anchor hv2-gp-anchor--3" src="static/images/decor/star-glow-chroma-a.svg" alt="" aria-hidden="true">
+                <img class="hv2-gp-anchor hv2-gp-anchor--4" src="static/images/decor/sparkle-chroma-b.svg" alt="" aria-hidden="true">
+            </section>
+
+            <section class="hv2-gp-year" id="year-2023-2024">
+                <h2 class="hv2-gp-year__heading">2023-2024</h2>
+                <div class="hv2-gp-entries">
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-echoes-of-eternity">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Echoes of Eternity</h3>
+                            <p class="hv2-gp-entry__desc">A minute can last seconds here&hellip; or an eternity. It
+                                all depends on how well you can traverse time. Some friends will keep you occupied
+                                for a while. Careful: You might start seeing ghosts. Stuck in an unstable realm,
+                                players must battle ever-growing hordes of enemies with weapons found across the map
+                                to survive. They can also travel through time. This strategy game allows players to
+                                aid their future self and subsequently receive aid from their past self. Survival
+                                hinges on their ability to traverse through the fourth dimension. Echoes of Eternity
+                                is an endless mode arcade-style game.</p>
+                            <p class="hv2-gp-entry__credit">Made by Victor Liu, Jeffrey Tan, Will Liu, Grace Halak,
+                                and Jacob Leshnower.</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/echoes-of-eternity" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Echoes%20of%20Eternity%20Promotional%20Trailer%20-%20Amoriem%20Labs%20-%20Victor%20Liu%20%281080p%29.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/echoes_of_eternity.png" alt="Echoes of Eternity cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/eternity/BHu5q9.jpg" alt="Echoes of Eternity screenshot"></div>
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/eternity/NDsoZJ.jpg" alt="Echoes of Eternity screenshot"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-gp-entry--reverse hv2-reveal" id="game-rosefield-requiem">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Rosefield Requiem</h3>
+                            <p class="hv2-gp-entry__desc">Six months ago, a pop star from the small, quaint town of
+                                Rosefield died from apparent suicide. However, the clues don&rsquo;t seem to add up,
+                                indicating that a murderer is hiding among the townsfolks. Every choice matters in
+                                this murder mystery and dating sim visual novel!</p>
+                            <p class="hv2-gp-entry__credit">Made by the Visual Novel team, led by Chris Shia. See full
+                                credits on itch.io!</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/rosefield-requiem" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                                <!-- TODO: real SoundCloud URL for Rosefield Requiem -->
+                                <a class="hv2-icon-btn" href="#" aria-label="SoundCloud">
+                                    <img src="static/images/icons/soundcloud.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary"><img src="static/images/games/rosefield-requiem-new.png" alt="Rosefield Requiem cover art"></div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/rosefield-gameplay.png" alt="Rosefield Requiem screenshot"></div>
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/rosefield_requiem.png" alt="Rosefield Requiem screenshot"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-diploma-dash">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Diploma Dash</h3>
+                            <p class="hv2-gp-entry__desc">Diploma Dash is a fast-paced platformer game made by
+                                Amoriem Labs in the school year 2023-2024. You are a Yale college senior who has
+                                unwisely decided to major in every discipline and needs to rush his last week of
+                                classes to finish all his course requirements. Collect all your assignments and make
+                                it to the end in order to graduate on time!</p>
+                            <p class="hv2-gp-entry__credit">Made by the Platformer team. Led by Victor Liu, with full
+                                credits on itch.io!</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io/diploma-dash" target="_blank" rel="noopener" aria-label="itch.io">
+                                    <img src="static/images/icons/itchio.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary"><img src="static/images/games/diploma_dash.jpg" alt="Diploma Dash cover art"></div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/diplomadash.png" alt="Diploma Dash screenshot"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <img class="hv2-gp-anchor hv2-gp-anchor--5" src="static/images/decor/sparkle-chroma-c.svg" alt="" aria-hidden="true">
+                <img class="hv2-gp-anchor hv2-gp-anchor--6" src="static/images/decor/star-glow-chroma-a.svg" alt="" aria-hidden="true">
+            </section>
+
+            <section class="hv2-gp-year" id="year-2022-2023">
+                <h2 class="hv2-gp-year__heading">2022-2023</h2>
+                <div class="hv2-gp-entries">
+
+                    <article class="hv2-gp-entry hv2-gp-entry--reverse hv2-reveal" id="game-planet-112">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Planet 112</h3>
+                            <p class="hv2-gp-entry__desc">After crash landing on an unknown planet, you find yourself
+                                in a mysterious alien ecosystem. Unravel the secrets of this planet and plant your
+                                way through the lands to go back home!</p>
+                            <p class="hv2-gp-entry__credit">Made by Victor Liu, Xien Chen, Jesse Chen, Will Liu, Jacob
+                                Feit Mann, Jessie Hwang, Adrian Hall, Nick He, Win Hlaing, Harry Hwang, Lucas Huang,
+                                and other collaborators.</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-gp-entry__play" href="games/planet_112/planet_112.html">
+                                    <img src="static/images/icons/nav-games.svg" alt="">
+                                    <span>Play Now</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Planet_112_2026.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/planet_112.jpg" alt="Planet 112 cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/112/112-1.png" alt="Planet 112 screenshot"></div>
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/planet_112.png" alt="Planet 112 artwork"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="hv2-gp-entry hv2-reveal" id="game-bulldog-bash">
+                        <div class="hv2-gp-entry__text">
+                            <h3 class="hv2-gp-entry__title">Bulldog Bash</h3>
+                            <p class="hv2-gp-entry__desc">Choose your favorite between former dean Marvin Chun and
+                                current Yale president Peter Salovey in this arcade-style 1v1 fighting game!</p>
+                            <p class="hv2-gp-entry__credit">Made by Christie Yu, Eric Xue, Eric Doddy, Jack Li, Adrian
+                                Hall, Nick He, Ethan Pesikoff, Murtaza Javaid, Luc Ta, and other collaborators.</p>
+                            <div class="hv2-gp-entry__links">
+                                <a class="hv2-gp-entry__play" href="games/bulldog_bash/bulldog_bash.html">
+                                    <img src="static/images/icons/nav-games.svg" alt="">
+                                    <span>Play Now</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hv2-gp-entry__media hv2-gp-media">
+                            <div class="hv2-gp-media__primary">
+                                <div class="hv2-gp-video" data-video-src="static/images/games/trailers/Bulldog_Bash_2026.mp4">
+                                    <img class="hv2-gp-video__poster" src="static/images/games/bulldog_bash.PNG" alt="Bulldog Bash cover art">
+                                    <video class="hv2-gp-video__clip" muted loop playsinline preload="none"></video>
+                                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="hv2-gp-media__secondary">
+                                <div class="hv2-gp-media__thumb"><img src="static/images/games/bulldog_bash.PNG" alt="Bulldog Bash screenshot" style="object-position: top;"></div>
+                                <div class="hv2-gp-media__thumb hv2-gp-media__thumb--placeholder"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <img class="hv2-gp-anchor hv2-gp-anchor--7" src="static/images/decor/sparkle-chroma-b.svg" alt="" aria-hidden="true">
+                <img class="hv2-gp-anchor hv2-gp-anchor--8" src="static/images/decor/sparkle-chroma-c.svg" alt="" aria-hidden="true">
+            </section>
+
+        </div>
+
+        <section class="hv2-gp-museum hv2-reveal">
+            <h2 class="hv2-section-heading">Art Museum</h2>
+            <div class="hv2-gp-museum__grid">
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/bb_chun_kick.gif" alt="Marvin Chun's Kick">
+                    <figcaption>Marvin Chun's Kick</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/bb_salovey_kick.gif" alt="Peter Salovey's Punch">
+                    <figcaption>Peter Salovey's Punch</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_dirt_roach.gif" alt="Dirt Roach">
+                    <figcaption>Dirt Roach</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_fireball_bee.gif" alt="Fireball Bee">
+                    <figcaption>Fireball Bee</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_guardian_tree.gif" alt="Guardian Tree">
+                    <figcaption>Guardian Tree</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_jupiter_trap.gif" alt="Jupiter Trap">
+                    <figcaption>Jupiter Trap</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_locust.gif" alt="Locust">
+                    <figcaption>Locust</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_pitcher_plant.gif" alt="Pitcher Plant">
+                    <figcaption>Pitcher Plant</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_tartarus's_eye.gif" alt="Tartarus's Eye">
+                    <figcaption>Tartarus's Eye</figcaption>
+                </figure>
+                <figure class="hv2-gp-museum__piece">
+                    <img src="static/images/museum/p112_titan_beetle.gif" alt="Titan Beetle">
+                    <figcaption>Titan Beetle</figcaption>
+                </figure>
+            </div>
+        </section>
+    </main>
+
+    <footer class="hv2-footer hv2-reveal">
+        <div class="hv2-footer__lists">
+            <div class="hv2-footer__list">
+                <h3>Recent Games</h3>
+                <ul>
+                    <li><a href="games-new.html#game-27-photos">27 Photos</a></li>
+                    <li><a href="games-new.html#game-cursed-grounds">Cursed Grounds</a></li>
+                    <li><a href="games-new.html#game-boola-dash">Boola Dash</a></li>
+                    <li><a href="games-new.html#game-encore">Encore!</a></li>
+                    <li><a href="games-new.html#game-glyphbound">Glyphbound</a></li>
+                </ul>
+            </div>
+            <div class="hv2-footer__list">
+                <h3>Club</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="events.html">Events</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hv2-footer__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
+    </footer>
+
+    <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/tsparticles.engine.min.js"></script>
+    <script src="static/scripts/vendor/tsparticles.all.bundle.min.js"></script>
+    <script src="static/scripts/games-new.js"></script>
+</body>
+
+</html>
