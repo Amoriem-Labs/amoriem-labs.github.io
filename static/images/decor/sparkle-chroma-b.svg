@@ -1,4 +1,4 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 95.14 95.15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="-15 -15 125.14 125.15" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Vector" filter="url(#filter0_f_gp_b)">
 <path d="M57.29 46.23C55.84 46.1 55.09 44.44 55.96 43.27C64.41 31.99 91.14 4 91.14 4C91.14 4 63.14 30.99 51.86 39.3C50.69 40.16 49.04 39.41 48.91 37.97C47.98 27.57 47.57 9.41998 47.57 9.41998C47.57 9.41998 47.24 27.38 46.31 37.8C46.18 39.25 44.5 40 43.34 39.12C32.1 30.59 4 4 4 4C4 4 30.82 31.83 39.22 43.21C40.08 44.38 39.33 46.03 37.88 46.16C27.46 47.07 9.41998 47.57 9.41998 47.57C9.41998 47.57 27.58 47.91 37.99 48.86C39.43 48.99 40.18 50.64 39.32 51.81C31.03 63.11 4 91.15 4 91.15C4 91.15 31.86 63.29 43.35 55.47C44.52 54.67 46.11 55.42 46.25 56.83C47.22 67.17 47.57 85.73 47.57 85.73C47.57 85.73 47.57 67.22 48.63 56.86C48.77 55.45 50.38 54.71 51.54 55.52C62.88 63.42 91.13 91.15 91.13 91.15C91.13 91.15 64.14 62.89 55.83 51.71C54.97 50.55 55.71 48.9 57.15 48.76C67.58 47.75 85.72 47.58 85.72 47.58C85.72 47.58 67.7 47.17 57.28 46.25L57.29 46.23Z" fill="url(#hv2GpChromaB)"/>
 </g>
@@ -8,7 +8,7 @@
 <stop offset="0.5" stop-color="#f37f93"/>
 <stop offset="1" stop-color="#7c5cff"/>
 </linearGradient>
-<filter id="filter0_f_gp_b" x="0" y="0" width="95.14" height="95.15" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_f_gp_b" x="-100%" y="-100%" width="300%" height="300%" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_gp_b"/>

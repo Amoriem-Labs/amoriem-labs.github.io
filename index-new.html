@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
 </head>
 
-<body class="hv2-page">
+<body class="hv2-page hv2-page-entering">
 
     <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
     <canvas class="hv2-stars" aria-hidden="true"></canvas>
@@ -17,6 +17,10 @@
     <!-- Cursor sparkle trail: separate top-most layer so it reads over the hero
          video and every section, not just the background gradient -->
     <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <!-- Page-transition veil: starfield-blur curtain driven by home-v2.js on
+         internal link clicks; the entrance reveal here on load is plain CSS -->
+    <div class="hv2-transition-veil" aria-hidden="true"></div>
 
     <nav class="hv2-nav">
         <a class="hv2-nav__logo" href="index-new.html" aria-label="Amoriem Labs home">
@@ -28,15 +32,15 @@
                 <img src="static/images/icons/nav-games.svg" alt="">
                 <span>Games</span>
             </a>
-            <a class="hv2-nav__link" href="about.html">
+            <a class="hv2-nav__link" href="about-new.html">
                 <img src="static/images/icons/nav-about.svg" alt="">
                 <span>About</span>
             </a>
-            <a class="hv2-nav__link" href="events.html">
+            <a class="hv2-nav__link" href="events-new.html">
                 <img src="static/images/icons/nav-events.svg" alt="">
                 <span>Events</span>
             </a>
-            <a class="hv2-nav__link" href="team.html">
+            <a class="hv2-nav__link" href="team-new.html">
                 <img src="static/images/icons/nav-team.svg" alt="">
                 <span>Team</span>
             </a>
@@ -85,17 +89,17 @@
                     <span>Games</span>
                     <img class="hv2-hero__arrow" src="static/images/icons/nav-arrow.svg" alt="">
                 </a>
-                <a class="hv2-hero__link" href="about.html">
+                <a class="hv2-hero__link" href="about-new.html">
                     <img class="hv2-hero__glyph" src="static/images/icons/nav-about.svg" alt="">
                     <span>About</span>
                     <img class="hv2-hero__arrow" src="static/images/icons/nav-arrow.svg" alt="">
                 </a>
-                <a class="hv2-hero__link" href="events.html">
+                <a class="hv2-hero__link" href="events-new.html">
                     <img class="hv2-hero__glyph" src="static/images/icons/nav-events.svg" alt="">
                     <span>Events</span>
                     <img class="hv2-hero__arrow" src="static/images/icons/nav-arrow.svg" alt="">
                 </a>
-                <a class="hv2-hero__link" href="team.html">
+                <a class="hv2-hero__link" href="team-new.html">
                     <img class="hv2-hero__glyph" src="static/images/icons/nav-team.svg" alt="">
                     <span>Team</span>
                     <img class="hv2-hero__arrow" src="static/images/icons/nav-arrow.svg" alt="">
@@ -282,8 +286,8 @@
                     <img src="static/images/Socials/Mental_Health_In_Gaming.png" alt="Mental Health and Gaming Night">
                     <div class="hv2-event-caption">
                         <strong>Mental Health and Gaming Night!</strong>
-                        <p>We played games and discussed online spaces and best methods to navigate with the SHARE
-                            center.</p>
+                        <p>A roundtable with the SHARE Center on online gaming spaces and bystander
+                            intervention, capped off with Panera and a round of Overcooked.</p>
                     </div>
                 </div>
                 <div class="hv2-event-photo">
@@ -298,8 +302,8 @@
                     <img src="static/images/Socials/Milk_And_Cookies.png" alt="Milk and Cookies Night">
                     <div class="hv2-event-caption">
                         <strong>Milk &amp; Cookies!</strong>
-                        <p>A cozy study-break social with treats, casual gaming, and a chance to meet new members
-                            of the club.</p>
+                        <p>A midterms study break with milk, cookies, and good vibes &mdash; the reset
+                            everyone needed before finals.</p>
                     </div>
                 </div>
                 <div class="hv2-event-photo">
@@ -329,9 +333,9 @@
             <div class="hv2-footer__list">
                 <h3>Club</h3>
                 <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="team.html">Team</a></li>
-                    <li><a href="events.html">Events</a></li>
+                    <li><a href="about-new.html">About Us</a></li>
+                    <li><a href="team-new.html">Team</a></li>
+                    <li><a href="events-new.html">Events</a></li>
                 </ul>
             </div>
         </div>
@@ -353,9 +357,12 @@
                 <img src="static/images/icons/soundcloud.svg" alt="">
             </a>
         </div>
+
+        <p class="hv2-footer__disclaimer">This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
     </footer>
 
     <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/gsap.min.js"></script>
 </body>
 
 </html>

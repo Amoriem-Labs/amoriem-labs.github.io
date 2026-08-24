@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Events | Amoriem Labs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
+</head>
+
+<body class="hv2-page hv2-events-page hv2-page-entering">
+
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over
+         every section, not just the background gradient -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <!-- Page-transition veil: starfield-blur curtain driven by home-v2.js on
+         internal link clicks; the entrance reveal here on load is plain CSS -->
+    <div class="hv2-transition-veil" aria-hidden="true"></div>
+
+    <nav class="hv2-nav">
+        <a class="hv2-nav__logo" href="index-new.html" aria-label="Amoriem Labs home">
+            <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
+        </a>
+
+        <div class="hv2-nav__links">
+            <a class="hv2-nav__link" href="games-new.html">
+                <img src="static/images/icons/nav-games.svg" alt="">
+                <span>Games</span>
+            </a>
+            <a class="hv2-nav__link" href="about-new.html">
+                <img src="static/images/icons/nav-about.svg" alt="">
+                <span>About</span>
+            </a>
+            <a class="hv2-nav__link" href="events-new.html">
+                <img src="static/images/icons/nav-events.svg" alt="">
+                <span>Events</span>
+            </a>
+            <a class="hv2-nav__link" href="team-new.html">
+                <img src="static/images/icons/nav-team.svg" alt="">
+                <span>Team</span>
+            </a>
+        </div>
+
+        <div class="hv2-nav__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <header class="hv2-events-hero">
+            <h1 class="hv2-events-hero__title">Events</h1>
+            <p class="hv2-events-hero__intro">From game jams to speaker panels to just hanging out, here's a look
+                back at what Amoriem Labs has been up to.</p>
+        </header>
+
+        <div class="hv2-events-tabs" role="tablist">
+            <button class="hv2-events-tab is-active" data-filter="hackathons" role="tab" aria-selected="true">Hackathons</button>
+            <button class="hv2-events-tab" data-filter="social" role="tab" aria-selected="false">Social Events</button>
+            <button class="hv2-events-tab" data-filter="speaker" role="tab" aria-selected="false">Speaker Events</button>
+        </div>
+
+        <div class="hv2-events-grid" data-category="hackathons">
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/hackathons/Girl_Pop.png" alt="Girly-Pop Game Jam">
+                <div class="hv2-events-card__caption">
+                    <strong>Girly-Pop Game Jam</strong>
+                    <p>
+                        Winner: Flower Mama &mdash; Chris Shia, Jennifer Chen &amp; Morgan Go<br>
+                        Asset Bubble will GirlyPop &mdash; Sonam &amp; Chi<br>
+                        Pop-Off! &mdash; Silas<br>
+                        The Girlypop Show &mdash; Sebastian<br>
+                        Diva's Inferno &mdash; Byron, Angela, Sebastian &amp; Kayle
+                    </p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/hackathons/Beginner_Game_Jam.png" alt="Beginner Game Jam (Classical Elements)">
+                <div class="hv2-events-card__caption">
+                    <strong>Beginner Game Jam (Classical Elements)</strong>
+                    <p>
+                        Dice Magic &mdash; Alvin Shi &amp; Alexa Jeong<br>
+                        In My Element &mdash; Sonam Wangchuck<br>
+                        Element Joyride &mdash; Chloe Parke, David Liu &amp; Callum Legendre
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hv2-events-grid" data-category="social" hidden>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Mental_Health_In_Gaming.png" alt="Mental Health in Gaming">
+                <div class="hv2-events-card__caption">
+                    <strong>Mental Health in Gaming</strong>
+                    <p>A roundtable and game night with the SHARE Center on online gaming spaces, bystander
+                        intervention, and mental health &mdash; with Panera catering and a round of Overcooked
+                        to close things out.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Indigenous_Voices.png" alt="Indigenous Voices">
+                <div class="hv2-events-card__caption">
+                    <strong>Indigenous Voices</strong>
+                    <p>A collaboration with Professor Tarren Andrews&rsquo; class: gameplay demos of Skabma
+                        and Never Alone, followed by a discussion on Indigenous storytelling in games.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/XR Pediatrics.png" alt="XR Pediatrics">
+                <div class="hv2-events-card__caption">
+                    <strong>XR Pediatrics</strong>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Milk_And_Cookies.png" alt="Milk &amp; Cookies">
+                <div class="hv2-events-card__caption">
+                    <strong>Milk &amp; Cookies</strong>
+                    <p>A midterms study break with milk, cookies, and good vibes &mdash; a low-key reset
+                        before finals season.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Valentines_Game_Night.png" alt="Valentine's Game Night">
+                <div class="hv2-events-card__caption">
+                    <strong>Valentine's Game Night</strong>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Halloween Game Night.png" alt="Halloween Game Night">
+                <div class="hv2-events-card__caption">
+                    <strong>Halloween Game Night</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="hv2-events-grid" data-category="speaker" hidden>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Alumni in Games Panel (1).png" alt="Alumni in Games Panel">
+                <div class="hv2-events-card__caption">
+                    <strong>Alumni in Games Panel</strong>
+                    <p>A virtual Q&amp;A with Amoriem alumni now working in the games industry &mdash; how
+                        they broke in, and what the day-to-day is really like.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Mike_Shah.png" alt="Mike Shah">
+                <div class="hv2-events-card__caption">
+                    <strong>Mike Shah</strong>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/ZhenZhai.png" alt="Zhen Zhai">
+                <div class="hv2-events-card__caption">
+                    <strong>Zhen Zhai</strong>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Elena_Bertozzi.png" alt="Elena Bertozzi">
+                <div class="hv2-events-card__caption">
+                    <strong>Elena Bertozzi</strong>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="hv2-footer">
+        <div class="hv2-footer__lists">
+            <div class="hv2-footer__list">
+                <h3>Recent Games</h3>
+                <ul>
+                    <li><a href="games-new.html#game-27-photos">27 Photos</a></li>
+                    <li><a href="games-new.html#game-cursed-grounds">Cursed Grounds</a></li>
+                    <li><a href="games-new.html#game-boola-dash">Boola Dash</a></li>
+                    <li><a href="games-new.html#game-encore">Encore!</a></li>
+                    <li><a href="games-new.html#game-glyphbound">Glyphbound</a></li>
+                </ul>
+            </div>
+            <div class="hv2-footer__list">
+                <h3>Club</h3>
+                <ul>
+                    <li><a href="about-new.html">About Us</a></li>
+                    <li><a href="team-new.html">Team</a></li>
+                    <li><a href="events-new.html">Events</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hv2-footer__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
+
+        <p class="hv2-footer__disclaimer">This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
+    </footer>
+
+    <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/gsap.min.js"></script>
+    <script src="static/scripts/events.js"></script>
+</body>
+
+</html>

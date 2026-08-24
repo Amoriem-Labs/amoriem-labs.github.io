@@ -209,6 +209,22 @@ p {
   padding-bottom: 10vh;
 }
 
+.site-footer {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 4vh;
+  padding: 2.5vh 5vw;
+  background-color: var(--AmoriemLightPink);
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 1.6vh;
+  color: var(--AmoriemBlack);
+  opacity: 0.75;
+}
+
 .page-title {
   font-family: Archive, sans-serif;
   color: var(--AmoriemBlack);
@@ -811,6 +827,49 @@ Reuses the site's existing fonts and "pressed paper" hover language
   height: 100%;
   pointer-events: none;
   z-index: 20;
+}
+
+/* Page-transition veil: a starfield-blur curtain between internal page
+   navigations. Reuses the games page's chromatic constellation palette
+   (--hv2-gp-violet/--hv2-gp-amber/--hv2-gp-nearblack) so the transition reads
+   as the same "stars" language everywhere, not a one-off effect. Rests at
+   opacity 0 -- see home-v2.js for the GSAP tween that raises it on an
+   internal link click, right before navigating away. */
+.hv2-transition-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1.6px 1.6px at 8% 22%, var(--AmoriemWhite) 60%, transparent 61%),
+    radial-gradient(1.2px 1.2px at 19% 64%, var(--hv2-gp-violet) 60%, transparent 61%),
+    radial-gradient(1.8px 1.8px at 31% 12%, var(--AmoriemPink) 60%, transparent 61%),
+    radial-gradient(1.2px 1.2px at 44% 78%, var(--AmoriemWhite) 60%, transparent 61%),
+    radial-gradient(1.4px 1.4px at 57% 34%, var(--hv2-gp-amber) 60%, transparent 61%),
+    radial-gradient(1.6px 1.6px at 68% 88%, var(--AmoriemPink) 60%, transparent 61%),
+    radial-gradient(1.2px 1.2px at 79% 46%, var(--hv2-gp-violet) 60%, transparent 61%),
+    radial-gradient(1.8px 1.8px at 88% 18%, var(--AmoriemWhite) 60%, transparent 61%),
+    radial-gradient(1.2px 1.2px at 93% 70%, var(--AmoriemPink) 60%, transparent 61%),
+    radial-gradient(1.4px 1.4px at 12% 92%, var(--hv2-gp-amber) 60%, transparent 61%),
+    var(--hv2-gp-nearblack);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Entrance half is deliberately plain CSS, not GSAP -- it has to run even if
+   the vendor script fails to load, or the veil would stay stuck covering the
+   page. `both` holds the opacity:1 start state at first paint (no flash of
+   the raw page) then commits to 0 once the reveal finishes. Already inherits
+   the sitewide prefers-reduced-motion override above, which zeroes every
+   .hv2-page animation duration -- no extra guard needed here. */
+.hv2-page-entering .hv2-transition-veil {
+  opacity: 1;
+  animation: hv2-veil-reveal 620ms var(--ease-out) 80ms both;
+}
+
+@keyframes hv2-veil-reveal {
+  to { opacity: 0; }
 }
 
 .hv2-page * {
@@ -1705,6 +1764,18 @@ Reuses the site's existing fonts and "pressed paper" hover language
   gap: 0.9rem;
 }
 
+.hv2-footer__disclaimer {
+  flex-basis: 100%;
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: Exo, sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* ----- Decorative Y2K / sparkle / swirl motifs (Figma nodes 51:35, 51:43, 59:11-13, 35:406) ----- */
 
 .hv2-decor {
@@ -1991,6 +2062,31 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   background-attachment: scroll;
 }
 
+/* ----- Header: normal in-flow scroll, not fixed -----
+   .hv2-nav is shared with index-new.html (whose full-height .hv2-hero the
+   fixed-nav + expand-on-scroll reveal is tuned for). games-new.html's own
+   .hv2-gp-hero is short, so that reveal misfired near-immediately here --
+   and a fixed header sitting over independently-scrolling content read as
+   "two different scroll containers." Scoped through .hv2-gp-page so
+   index-new.html's nav is completely untouched. position:relative (not
+   static) keeps .hv2-nav's z-index:10 meaningful, which is what keeps it
+   painting above the fixed, viewport-spanning starfield/texture layers
+   (.hv2-stars, .hv2-page::before) -- z-index is a no-op on static
+   elements. Links no longer have a scroll trigger to wait for, so they're
+   just always shown; home-v2.js's navObserver keeps running harmlessly
+   (higher-specificity .is-expanded rule sets the same end state, so there
+   is never a visible conflict). */
+.hv2-gp-page .hv2-nav {
+  position: relative;
+}
+
+.hv2-gp-page .hv2-nav__links {
+  width: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
 /* ----- Hero / title ----- */
 
 .hv2-gp-hero {
@@ -1999,7 +2095,10 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   align-items: flex-start;
   justify-content: space-between;
   gap: 2rem clamp(2rem, 6vw, 5rem);
-  padding-top: clamp(7rem, 12vw, 9rem);
+  /* Top padding used to exist solely to clear the fixed nav bar overlaid
+     on top of this hero; nav is now in-flow above it (see the header
+     override rule above), so this just needs normal section spacing. */
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.4rem) 0;
 }
 
 .hv2-gp-hero__heading {
@@ -2211,8 +2310,19 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
      making the page horizontally scrollable on narrow viewports (verified:
      body's overflow-x:hidden did not propagate to clip this in testing) --
      clip locally instead. overflow-x only, so vertical bleed between
-     entries (the whole point of these anchors) stays free. */
-  overflow-x: hidden;
+     entries (the whole point of these anchors) stays free.
+     Use overflow-x: clip, NOT hidden -- the CSS overflow spec forces a
+     non-visible axis's *sibling* axis from visible to auto when paired,
+     so overflow-x:hidden alone silently turned this into a real (if
+     sliver-thin) independent vertical scrollbox, since the anchor stars'
+     deliberate vertical bleed gave it genuine scrollable overflow. That
+     stole scroll input from the page (had to be "unstuck" with extra
+     momentum) right at this div's edges. `clip` doesn't participate in
+     that forcing rule, so it clips X without touching Y at all. Don't
+     reintroduce a bare overflow-x/-y here -- this is the second time this
+     codebase has hit this exact footgun (see .hv2-page's own comment). */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .hv2-gp-particles {
@@ -2240,7 +2350,10 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 .hv2-gp-year {
   position: relative;
   z-index: 1;
-  scroll-margin-top: clamp(5rem, 10vw, 7rem);
+  /* Used to clear the fixed nav bar for year-jump-link targets; nav is now
+     in-flow (see the header override rule near .hv2-gp-hero), so this is
+     just a small breathing-room gap, not a nav-height offset anymore. */
+  scroll-margin-top: 1.5rem;
 }
 
 .hv2-gp-year__heading {
@@ -2268,13 +2381,31 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: start;
   gap: clamp(1.5rem, 4vw, 3rem);
 }
 
+/* Media column is 40% of the row (3fr : 2fr) so screenshots read larger
+   without overwhelming the text. --reverse entries put media in column 1,
+   so the ratio is mirrored here to keep text the wider column regardless
+   of side. */
+.hv2-gp-entry--reverse {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+/* grid-row is pinned explicitly on both children, not left to auto-placement:
+   for --reverse entries the DOM-first child (text) lands in column 2 while
+   the DOM-second child (media) lands in column 1 -- sparse auto-placement's
+   cursor only moves forward, so by the time it places media (column 1) it
+   has already advanced past column 1 while placing text, and wraps media
+   into a *second* implicit row instead of sharing row 1. That silently
+   stacked text above media instead of laying them out side by side for
+   every --reverse entry. Pinning row 1 on both sidesteps the cursor
+   entirely, regardless of column/DOM-order mismatch. */
 .hv2-gp-entry__text {
   grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -2283,6 +2414,7 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 
 .hv2-gp-entry__media {
   grid-column: 2;
+  grid-row: 1;
 }
 
 .hv2-gp-entry--reverse .hv2-gp-entry__text {
@@ -2293,14 +2425,38 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   grid-column: 1;
 }
 
+/* Non-reverse entries: media sits to the right, so right-align the text
+   block to hug the shared gap (mirrors --reverse, which is already
+   left-aligned and already hugs the gap on its side). */
+.hv2-gp-entry:not(.hv2-gp-entry--reverse) .hv2-gp-entry__text {
+  align-items: flex-end;
+  text-align: right;
+}
+
 @media (max-width: 800px) {
   .hv2-gp-entry {
     grid-template-columns: 1fr;
   }
 
-  .hv2-gp-entry__text,
-  .hv2-gp-entry__media {
+  /* .hv2-page-prefixed to match .hv2-gp-entry--reverse .hv2-gp-entry__text's
+     own specificity (2 classes) -- a plain .hv2-gp-entry__text here would
+     lose that fight regardless of source order, leaving reverse entries'
+     text stuck at grid-column: 2 on mobile and forcing the grid to spawn a
+     sliver-width implicit column instead of collapsing to one. grid-row is
+     reset to auto (not left at the desktop-only pin of 1) so text and media
+     fall into two separate implicit rows and stack top-to-bottom, instead
+     of both landing in row 1 and overlapping. */
+  .hv2-page .hv2-gp-entry__text,
+  .hv2-page .hv2-gp-entry__media {
     grid-column: 1;
+    grid-row: auto;
+  }
+
+  /* No gap to face once text/media stack vertically -- back to left-aligned
+     for readability. */
+  .hv2-gp-entry:not(.hv2-gp-entry--reverse) .hv2-gp-entry__text {
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -2395,9 +2551,10 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 
 .hv2-gp-media__primary {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--media-ratio, 16 / 9);
   overflow: hidden;
   border-radius: 4px;
+  background: var(--AmoriemMauve);
 }
 
 .hv2-gp-media__secondary {
@@ -2406,18 +2563,38 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   gap: 0.75rem;
 }
 
-.hv2-gp-media__thumb {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 4px;
+/* Entries with only 1 real secondary asset -- avoids stretching a lone thumb
+   full-row-width or leaving a placeholder box for the empty second slot */
+.hv2-gp-media__secondary--single {
+  grid-template-columns: 1fr;
 }
 
+.hv2-gp-media__secondary--single .hv2-gp-media__thumb {
+  max-width: calc(50% - 0.375rem);
+}
+
+/* Rosefield Requiem has 3 real secondary screenshots */
+.hv2-gp-media__secondary--triple {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.hv2-gp-media__thumb {
+  position: relative;
+  aspect-ratio: var(--media-ratio, 16 / 9);
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--AmoriemMauve);
+}
+
+/* object-fit: contain (not cover) so every game's cover art/screenshots
+   show at their original proportions instead of being cropped to fill a
+   box whose aspect ratio rarely matches the source image -- the mauve
+   background above fills whatever letterbox/pillarbox gap that leaves. */
 .hv2-gp-media__thumb img,
 .hv2-gp-media__primary img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -2441,7 +2618,7 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -2479,6 +2656,21 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 
 .hv2-gp-video.is-playing .hv2-gp-video__badge {
   opacity: 0;
+  /* once playing, this sits atop a real interactive surface (YouTube's
+     iframe controls) rather than an inert <video> -- pointer-events:none
+     keeps it from swallowing clicks meant for the player underneath */
+  pointer-events: none;
+}
+
+/* YouTube trailer iframe, swapped in for the poster on click (see
+   games-new.js's click-to-play YouTube block) */
+.hv2-gp-video__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .hv2-gp-video__badge::before {
@@ -2492,14 +2684,17 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 }
 
 /* ----- Chromatic anchor stars -----
-   Reuses .hv2-decor's base positioning approach + the existing hv2-float/
-   hv2-drift/hv2-twinkle/hv2-pulse keyframes (lines ~1801-1843) -- only the
-   source SVGs are new (gradient-filled instead of flat white). Lives as a
-   child of .hv2-gp-year (not nested inside individual .hv2-gp-entry cards)
-   so it can bleed across the gap into the next entry/section, matching the
-   sketch -- .hv2-page's own overflow-x:hidden (line ~767) already clips
-   any horizontal bleed page-wide, so only vertical bleed needs to stay
-   free, which it does here. */
+   Shapes and positions are chosen and placed at runtime by placeStars()
+   in games-new.js -- one small star in the gap between each pair of
+   .hv2-gp-entry cards, plus a large star bookending the top/bottom of
+   each .hv2-gp-year section -- rather than hand-authored per instance,
+   so this only needs to supply shared positioning + a size class; GSAP
+   sets opacity/scale/rotate directly as inline styles for the pop-in and
+   ambient spin. Lives as a child of .hv2-gp-year (not nested inside
+   individual .hv2-gp-entry cards) so it can bleed across the gap into the
+   next entry/section -- .hv2-page's own overflow-x:hidden (line ~767)
+   already clips any horizontal bleed page-wide, so only vertical bleed
+   needs to stay free, which it does here. */
 .hv2-gp-anchor {
   position: absolute;
   z-index: 0;
@@ -2507,89 +2702,21 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
   display: block;
 }
 
-.hv2-gp-anchor--0 {
-  top: -6rem;
-  left: -3rem;
-  width: clamp(180px, 22vw, 320px);
-  aspect-ratio: 344 / 502.93;
-  opacity: 0.85;
-  animation: hv2-float 10s ease-in-out infinite;
+/* Sized up from the artwork's own on-canvas footprint (~70-75% of the padded
+   SVG's width -- see the STAR_ASPECT comment in games-new.js) so the visible
+   star reads at roughly its original size despite the extra transparent
+   margin now baked into each file's viewBox. */
+.hv2-gp-anchor--small {
+  width: clamp(85px, 10.5vw, 173px);
 }
-.hv2-gp-anchor--1 {
-  bottom: -2.5rem;
-  right: 8%;
-  width: clamp(70px, 8vw, 120px);
-  aspect-ratio: 1 / 1;
-  opacity: 0.8;
-  animation: hv2-twinkle 5s ease-in-out infinite;
-}
-.hv2-gp-anchor--2 {
-  top: -2rem;
-  right: -2.5rem;
-  width: clamp(60px, 7vw, 110px);
-  aspect-ratio: 158.845 / 162.233;
-  opacity: 0.75;
-  animation: hv2-pulse 7s ease-in-out infinite;
-  animation-delay: 1.2s;
-}
-.hv2-gp-anchor--3 {
-  bottom: -3rem;
-  left: 4%;
-  width: clamp(150px, 18vw, 260px);
-  aspect-ratio: 344 / 502.93;
-  opacity: 0.8;
-  animation: hv2-drift 12s ease-in-out infinite;
-}
-.hv2-gp-anchor--4 {
-  top: 12%;
-  right: 6%;
-  width: clamp(70px, 8vw, 120px);
-  aspect-ratio: 1 / 1;
-  opacity: 0.75;
-  animation: hv2-twinkle 4.5s ease-in-out infinite;
-  animation-delay: 0.6s;
-}
-.hv2-gp-anchor--5 {
-  top: -2.5rem;
-  left: 10%;
-  width: clamp(90px, 10vw, 150px);
-  aspect-ratio: 158.845 / 162.233;
-  opacity: 0.8;
-  animation: hv2-pulse 6s ease-in-out infinite;
-}
-.hv2-gp-anchor--6 {
-  bottom: -3rem;
-  right: -3rem;
-  width: clamp(150px, 18vw, 260px);
-  aspect-ratio: 344 / 502.93;
-  opacity: 0.8;
-  animation: hv2-float 9s ease-in-out infinite;
-  animation-delay: 2s;
-}
-.hv2-gp-anchor--7 {
-  top: 8%;
-  left: -2.5rem;
-  width: clamp(60px, 7vw, 100px);
-  aspect-ratio: 1 / 1;
-  opacity: 0.7;
-  animation: hv2-twinkle 5.5s ease-in-out infinite;
-  animation-delay: 1.8s;
-}
-.hv2-gp-anchor--8 {
-  bottom: -2rem;
-  right: 10%;
-  width: clamp(100px, 12vw, 180px);
-  aspect-ratio: 158.845 / 162.233;
-  opacity: 0.75;
-  animation: hv2-drift 10s ease-in-out infinite;
-  animation-delay: 0.9s;
+
+.hv2-gp-anchor--large {
+  width: clamp(215px, 28vw, 430px);
 }
 
 /* mirrors the existing decor mobile-hide at lines ~1845-1850 */
 @media (max-width: 700px) {
-  .hv2-gp-anchor--0,
-  .hv2-gp-anchor--3,
-  .hv2-gp-anchor--6 {
+  .hv2-gp-anchor--large {
     display: none;
   }
 }
@@ -2683,4 +2810,1052 @@ generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn, .hv2-reveal,
 }
 .hv2-gp-museum.is-visible .hv2-gp-museum__piece:nth-child(10) {
   transition-delay: 450ms;
+}
+
+/*
+====================================================================
+===== EVENTS PAGE (2026 dark-theme events.html, "hv2-events-page-") =====
+====================================================================
+Page-specific rules for the Events redesign. Namespaced "hv2-events-page-"
+(distinct from the homepage's "hv2-events" Event Highlights strip, which
+this page does not use). Everything generic (.hv2-page, .hv2-nav,
+.hv2-footer, .hv2-icon-btn, .hv2-reveal, .hv2-decor keyframes) is reused
+as-is from the HOME V2 section, including the starfield/sparkle canvases
+(markup added in events-new.html) -- only the background gradient below
+is page-specific.
+*/
+
+/* ----- Background: diagonal gradient matched to Figma node 67:49 -----
+   Sampled straight from the Figma frame's rendered screenshot rather than
+   its exported fill CSS -- the export came back as an olive-to-purple
+   linear-gradient that doesn't match what actually renders (likely a
+   blend mode the codegen didn't carry over), so the stops here are the
+   real on-canvas pixel colors: a warm dusty mauve near the nav, deepening
+   to plum-purple toward the footer, with a magenta pull in the lower-left
+   corner. Follows the same "linear base + soft radial accent blob"
+   pattern as .hv2-gp-page above. */
+.hv2-page.hv2-events-page {
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 18% 88%,
+      rgba(175, 68, 116, 0.35),
+      transparent 65%
+    ),
+    linear-gradient(180deg, #977780 0%, #7a5482 45%, #68427f 100%);
+  background-attachment: scroll;
+}
+
+/* ----- Header: same short-hero override as games-new.html -----
+   This page's hero is short like .hv2-gp-hero, so the fixed-nav +
+   expand-on-scroll reveal tuned for index-new.html's full-height hero
+   would misfire near-immediately here. Scoped through .hv2-events-page so
+   index-new.html/games-new.html's nav behavior is untouched. */
+.hv2-events-page .hv2-nav {
+  position: relative;
+}
+
+.hv2-events-page .hv2-nav__links {
+  width: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ----- Hero / title ----- */
+
+.hv2-events-hero {
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.4rem) 0;
+  max-width: 42rem;
+}
+
+.hv2-events-hero__title {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemWhite);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  margin: 0 0 1rem;
+  text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+}
+
+.hv2-events-hero__intro {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 34rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* ----- Filter tabs -----
+   "Pressed paper" pill buttons, same language as .hv2-games__pager
+   (styles.css ~1449-1493) but labeled and laid out in a row. */
+
+.hv2-events-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 3.4rem) 0;
+}
+
+.hv2-events-tab {
+  background: var(--AmoriemMauve);
+  color: white;
+  border: 2px solid var(--AmoriemBlack);
+  border-radius: 25px;
+  font-family: Exo, sans-serif;
+  font-weight: bold;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  padding: 0.65rem 1.5rem;
+  box-shadow: 4px 3px 0px var(--AmoriemBlack);
+  cursor: pointer;
+  transition:
+    transform 250ms,
+    box-shadow 250ms,
+    background-color 250ms,
+    color 250ms;
+}
+
+.hv2-events-tab.is-active {
+  background: var(--AmoriemPink);
+  color: var(--AmoriemBlack);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-events-tab:hover {
+    transform: translate(3px, 2px);
+    box-shadow: 1px 1px 0px var(--AmoriemBlack);
+  }
+}
+
+.hv2-events-tab:focus-visible {
+  outline: 2px solid var(--AmoriemWhite);
+  outline-offset: 3px;
+}
+
+/* ----- Masonry gallery -----
+   CSS multi-column (not CSS Grid) is what actually produces the
+   Pinterest-style variable-tile-height look from the Figma wireframe --
+   grid-template-rows: masonry isn't broadly supported. Each card's height
+   is driven by its image's natural aspect ratio (no fixed aspect-ratio,
+   unlike .hv2-game-card/.hv2-event-photo). */
+
+.hv2-events-grid {
+  column-count: 3;
+  column-gap: clamp(0.85rem, 2vw, 1.5rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 3.4rem) clamp(2rem, 5vw, 4rem);
+}
+
+.hv2-events-grid[hidden] {
+  display: none;
+}
+
+/* Hover/caption treatment copied from .hv2-event-photo (styles.css
+   ~1587-1632): scale the image, fade in a bottom-anchored dark scrim
+   holding the title/credit text. No border-radius -- matches the sharp
+   corners of .hv2-game-card/.hv2-event-photo rather than the old
+   site's rounded .image-column img. */
+.hv2-events-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  break-inside: avoid;
+  overflow: hidden;
+  margin-bottom: clamp(0.85rem, 2vw, 1.5rem);
+  background: var(--AmoriemMauve);
+}
+
+.hv2-events-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 250ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-events-card:hover .hv2-events-card__img {
+    transform: scale(1.04);
+  }
+}
+
+.hv2-events-card__caption {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 250ms;
+}
+
+.hv2-events-card:hover .hv2-events-card__caption {
+  opacity: 1;
+}
+
+/* Touch devices have no reliable hover: show captions so the info isn't lost */
+@media (hover: none) {
+  .hv2-events-card__caption {
+    opacity: 1;
+  }
+}
+
+.hv2-events-card__caption strong {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+}
+
+.hv2-events-card__caption p {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.78rem, 1vw, 0.88rem);
+  line-height: 1.4;
+  margin: 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 800px) {
+  .hv2-events-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .hv2-events-grid {
+    column-count: 1;
+  }
+}
+
+/*
+====================================================================
+===== ABOUT PAGE (2026 dark-theme about-new.html, "hv2-about-") =====
+====================================================================
+Page-specific rules for the About redesign. Namespaced "hv2-about-"
+(distinct from the legacy About page's own "===== ABOUT PAGE =====" block
+near the top of this file, which backs the old about.html and is left
+untouched). Everything generic (.hv2-page, .hv2-nav, .hv2-footer,
+.hv2-icon-btn, .hv2-reveal) is reused as-is from the HOME V2 section.
+*/
+
+/* ----- Background: warm "sunrise" gradient -----
+   Sampled from Figma node 67:119's radial gradient, which reads as
+   vertical across the tall frame. Built mostly from existing tokens --
+   --AmoriemBlush/--AmoriemWhite match the Figma's top two stops almost
+   exactly, and --AmoriemMauve (rgb 115,93,120) is an exact match for the
+   Figma's bottom-most stop -- only the three tan/dusty-rose stops in
+   between have no existing token and are hardcoded. Same "linear base +
+   soft radial accent" technique as .hv2-gp-page/.hv2-events-page above.
+   Dark stops are front-loaded (solid --AmoriemDeepPlum by 88% rather than
+   at the very end) so the History section -- the last thing on the page --
+   always sits on a fully dark background, keeping its white text/pink
+   highlights legible instead of straddling the lighter mid-gradient. */
+.hv2-page.hv2-about-page {
+  background:
+    radial-gradient(
+      ellipse 60% 32% at 20% 6%,
+      rgba(250, 229, 200, 0.45),
+      transparent 65%
+    ),
+    linear-gradient(180deg,
+      var(--AmoriemBlush) 0%,
+      var(--AmoriemWhite) 14%,
+      #d8c3b4 30%,
+      #b7a1a0 46%,
+      #957f8c 60%,
+      var(--AmoriemMauve) 72%,
+      var(--AmoriemDeepPlum) 88%,
+      var(--AmoriemDeepPlum) 100%);
+  background-attachment: scroll;
+  color: var(--AmoriemBlack);
+}
+
+/* ----- Header: same short-hero override as games-new.html/events-new.html -----
+   This page's hero is a plain title (no video), so the fixed-nav +
+   expand-on-scroll reveal tuned for index-new.html's full-height hero
+   would misfire near-immediately here. */
+.hv2-about-page .hv2-nav {
+  position: relative;
+}
+
+.hv2-about-page .hv2-nav__links {
+  width: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ----- Hero / title -----
+   Dark fill, unlike events/games' white hero titles -- this page's
+   gradient starts light, so white text would wash out at the top. */
+.hv2-about-hero {
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.4rem) 0;
+}
+
+.hv2-about-hero__title {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemBlack);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  margin: 0;
+  text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+}
+
+/* ----- Vertical timeline: connector rail + star markers -----
+   One continuous rail spans the whole timeline rather than a separate
+   segment per gap (as in the Figma) -- avoids JS height measurement for
+   an equivalent visual read. Stars are placed/animated by about-new.js
+   (IntersectionObserver + GSAP pop-in, same non-ScrollTrigger approach
+   as the games page's chromatic anchor stars -- see games-new.js for the
+   rationale). Each section needs position: relative so its star can be
+   absolutely positioned against it. */
+.hv2-about-timeline {
+  position: relative;
+  /* single source of truth for the left gutter reserved for the rail/star
+     column -- .hv2-about-row's padding-left stays in sync with this.
+     --hv2-about-star-cx is the shared horizontal center: the rail and
+     every star derive their position from it (rather than each carrying
+     its own independent `left`) so the rail always runs exactly through
+     each star's midpoint, regardless of viewport width. --hv2-about-progress
+     (0-1) is written by about-new.js on scroll and read by
+     .hv2-about-timeline__rail-fill below. */
+  --hv2-about-gutter: clamp(6.5rem, 12vw, 10.5rem);
+  --hv2-about-star-cx: clamp(3rem, 6vw, 6.25rem);
+  --hv2-about-star-w: clamp(5rem, 9vw, 8.5rem);
+  --hv2-about-progress: 0;
+}
+
+.hv2-about-description,
+.hv2-about-mascot,
+.hv2-about-history {
+  position: relative;
+}
+
+/* Track: thicker and set apart from the page bg at low opacity, so the
+   bright fill below reads as a distinct "scrubbing" progress indicator
+   riding on top of it, not just one flat line. Centered on the shared
+   --hv2-about-star-cx axis so it passes straight through each star's
+   midpoint (rail is 5px wide, hence the -2.5px). */
+.hv2-about-timeline__rail {
+  position: absolute;
+  top: clamp(3rem, 5vw, 4rem);
+  bottom: clamp(3rem, 5vw, 4rem);
+  left: calc(var(--hv2-about-star-cx) - 2.5px);
+  width: 5px;
+  border-radius: 2.5px;
+  background: var(--AmoriemMauve);
+  opacity: 0.22;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Fill height is driven straight off scroll position (see about-new.js) --
+   not the site's usual IntersectionObserver reveal pattern, since a
+   scrubbing progress bar needs a continuous 0-1 value tied to the live
+   scroll offset, not a one-time "has this entered the viewport" trigger.
+   This sidesteps the stale-pixel-offset problem that ruled out
+   ScrollTrigger elsewhere on the site (see games-new.js): the fraction is
+   recomputed from getBoundingClientRect() on every scroll frame, so there
+   is no cached trigger position that can go stale as content loads in.
+   Two saturated stops (no duller warm middle tone) plus a layered glow so
+   it reads unmistakably as "the bright part" against the muted gradient. */
+.hv2-about-timeline__rail-fill {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--hv2-about-progress) * 100%);
+  background: linear-gradient(to bottom, #ff2fc4, var(--hv2-gp-violet));
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.7),
+    0 0 16px rgba(255, 47, 196, 0.85),
+    0 0 30px rgba(124, 92, 255, 0.55);
+  filter: saturate(1.2);
+  transition: height 120ms linear;
+}
+
+.hv2-about-timeline__star {
+  position: absolute;
+  top: clamp(1rem, 2.6vw, 2rem);
+  left: calc(var(--hv2-about-star-cx) - var(--hv2-about-star-w) / 2);
+  width: var(--hv2-about-star-w);
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  /* these are solid-fill exports straight from Figma (not the blurred
+     chroma decor assets), but their fill colors still sit close in
+     lightness to the top of the sunrise gradient without this */
+  filter: drop-shadow(0 1px 5px rgba(59, 18, 61, 0.45));
+}
+
+@media (max-width: 480px) {
+  .hv2-about-timeline {
+    --hv2-about-gutter: 4rem;
+    --hv2-about-star-cx: 2rem;
+    --hv2-about-star-w: 3.5rem;
+  }
+
+  .hv2-about-timeline__rail {
+    display: none;
+  }
+}
+
+/* ----- Section typography -----
+   Dark by default (Description/Mascot sit on the light/mid gradient);
+   History flips back to white since it sits on the dark bottom band. */
+.hv2-about-heading {
+  font-family: Archive, sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.625rem);
+  margin: 0 0 0.25rem;
+}
+
+.hv2-about-row__text p {
+  font-family: Exo, sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* --AmoriemBrightPink reads weak here -- its luminance sits too close to
+   this page's own mid-gradient tones (WCAG contrast dips well under 3:1
+   against both the light top and the mauve middle), unlike the site's
+   other pages where it only ever sits on solid near-black. Darker pink
+   for the light/mid sections; History's own dark backdrop gets a pale
+   pink instead so it stays legible as the gradient nears full plum. */
+.hv2-about-highlight {
+  color: var(--AmoriemDarkPink);
+  font-weight: 700;
+}
+
+.hv2-about-history {
+  color: var(--AmoriemWhite);
+}
+
+.hv2-about-history .hv2-about-highlight {
+  color: var(--AmoriemLightPink);
+}
+
+/* ----- Two-column layout: text + photo grid, alternating never needed here -----
+   Same grid technique as .hv2-gp-entry (games page), namespaced fresh
+   since that component's title/credit/status/play-button styling doesn't
+   apply here. Same 800px stack breakpoint convention. padding-left keys
+   off the timeline's shared --hv2-about-gutter custom property so the
+   row's inset always matches the rail/star column's actual width. */
+.hv2-about-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: start;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  padding-left: var(--hv2-about-gutter);
+}
+
+.hv2-about-row__text {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hv2-about-row__media {
+  grid-column: 2;
+}
+
+@media (max-width: 800px) {
+  .hv2-about-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hv2-page .hv2-about-row__text,
+  .hv2-page .hv2-about-row__media {
+    grid-column: 1;
+  }
+}
+
+/* ----- Timeline-style staggered reveal -----
+   Same convention as .hv2-collabs/.hv2-games/.hv2-events/.hv2-gp-museum
+   above: the row itself (which carries .hv2-reveal in markup, purely so
+   home-v2.js's generic IntersectionObserver picks it up and toggles
+   .is-visible) is neutralized to opacity:1/transform:none, and every
+   piece of real content inside -- heading, each paragraph, each photo
+   tile, the closing figure -- gets its own hidden state + staggered
+   transition-delay keyed off the row's .is-visible class. That cascade,
+   one element after another, is what reads as a "timeline" reveal rather
+   than the whole block moving as one. */
+.hv2-about-row.hv2-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-about-row__text > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.hv2-about-row.is-visible .hv2-about-row__text > * {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-about-row.is-visible .hv2-about-row__text > *:nth-child(1) { transition-delay: 0ms; }
+.hv2-about-row.is-visible .hv2-about-row__text > *:nth-child(2) { transition-delay: 90ms; }
+.hv2-about-row.is-visible .hv2-about-row__text > *:nth-child(3) { transition-delay: 180ms; }
+.hv2-about-row.is-visible .hv2-about-row__text > *:nth-child(4) { transition-delay: 270ms; }
+.hv2-about-row.is-visible .hv2-about-row__text > *:nth-child(5) { transition-delay: 360ms; }
+
+/* ----- Photo treatment: matches .hv2-gp-media/.hv2-gp-museum's
+   object-fit:contain-on-a-mauve-backing (styles.css ~2546-2599, ~2745-2751)
+   -- nothing is ever cropped, whatever letterbox/pillarbox gap a mismatched
+   aspect ratio leaves just shows the mauve. Sharp corners and no shadow
+   throughout, matching .hv2-events-card's "no border-radius" treatment
+   (styles.css ~2952-2972) rather than inventing a bordered "photo card"
+   look unique to this page. Every photo/art container below repeats this
+   same background/object-fit pair with its own aspect-ratio. */
+
+/* ----- Description: stack of three -----
+   Three photos stacked full-width rather than cropped into a hero+row
+   grid, so nothing is cut off; each keeps the club photos' native ~3:2
+   shape. Reveal rides the same .hv2-about-row.is-visible toggle as the
+   text, staggered slightly behind it. */
+.hv2-about-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hv2-about-stack__item {
+  aspect-ratio: 3 / 2;
+  background: var(--AmoriemMauve);
+  overflow: hidden;
+}
+
+.hv2-about-stack__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.hv2-about-row.is-visible .hv2-about-stack__item img {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-about-row.is-visible .hv2-about-stack__item:nth-child(2) img { transition-delay: 90ms; }
+.hv2-about-row.is-visible .hv2-about-stack__item:nth-child(3) img { transition-delay: 180ms; }
+
+/* ----- Mascot: hero portrait -----
+   mascot.png is transparent, so contain-on-mauve is what actually shows
+   the whole character instead of cropping it. */
+.hv2-about-row__media--mascot {
+  aspect-ratio: 1 / 1;
+  background: var(--AmoriemMauve);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+
+.hv2-about-row__media--mascot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.hv2-about-row.is-visible .hv2-about-row__media--mascot img {
+  opacity: 1;
+  transform: none;
+}
+
+/* ----- "Below" sections: fun photos (Description) / Mori gallery (Mascot) -----
+   A second .hv2-reveal target, separate from .hv2-about-row, so this
+   supplementary content fades in a beat after the text+hero above it
+   rather than all at once. Same neutralize-the-parent, stagger-the-
+   children convention as everywhere else on this page. */
+.hv2-about-below {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-left: var(--hv2-about-gutter);
+  padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-top: 1px dashed rgba(59, 18, 61, 0.18);
+  max-width: 56rem;
+}
+
+.hv2-about-below.hv2-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Plain bold Exo, same face/weight as running body copy -- not a small-caps
+   eyebrow tag in a different register from the rest of the page. */
+.hv2-about-below__label {
+  display: block;
+  font-family: Exo, sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.hv2-about-funstrip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+}
+
+.hv2-about-funstrip img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: var(--AmoriemMauve);
+  display: block;
+  opacity: 0;
+  transform: translateY(14px) rotate(0deg);
+  transition:
+    opacity 380ms var(--ease-out),
+    transform 380ms var(--ease-out);
+}
+
+.hv2-about-below.is-visible .hv2-about-funstrip img {
+  opacity: 1;
+}
+
+.hv2-about-below.is-visible .hv2-about-funstrip img:nth-child(1) { transform: rotate(-3deg); }
+.hv2-about-below.is-visible .hv2-about-funstrip img:nth-child(2) { transform: rotate(2deg); transition-delay: 70ms; }
+.hv2-about-below.is-visible .hv2-about-funstrip img:nth-child(3) { transform: rotate(-2deg); transition-delay: 140ms; }
+
+/* ----- Mori gallery -----
+   Same square-tile-plus-italic-caption language as the games page's
+   .hv2-gp-museum grid (styles.css ~2724-2813), reused rather than
+   invented fresh. Bento sizing: the 5 mascot expressions + 2 fan-art
+   illustrations are the actual content people came to see, so they get
+   the large tile size; the animated gif and t-shirt photo are secondary
+   and stay small; the multi-pose sticker sheet gets its own tall shape.
+   Every frame's aspect-ratio approximates its image's real proportions
+   (rather than forcing a uniform square) so contain never has to
+   letterbox much -- "more accurate sizing" per the source art. */
+.hv2-about-museum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem;
+}
+
+.hv2-about-museum figure {
+  margin: 0;
+  width: clamp(78px, 11%, 104px);
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 380ms var(--ease-out),
+    transform 380ms var(--ease-out);
+}
+
+.hv2-about-below.is-visible .hv2-about-museum figure {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-about-museum__frame {
+  aspect-ratio: 1 / 1;
+  background: var(--AmoriemMauve);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hv2-about-museum__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.3rem;
+}
+
+.hv2-about-museum figcaption {
+  font-family: Exo, sans-serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  text-align: center;
+  opacity: 0.75;
+  margin-top: 0.5rem;
+}
+
+/* size tiers -- selectors repeat the .hv2-about-museum ancestor (rather
+   than just the bare modifier class) so they outrank the base "figure"
+   rule above: that rule's extra type selector otherwise wins the
+   specificity fight over a single-class modifier and silently keeps
+   every tile at the default size regardless of which tier class is set. */
+.hv2-about-museum .hv2-about-museum__item--lg { width: clamp(150px, 20%, 205px); }
+.hv2-about-museum .hv2-about-museum__item--wide { width: clamp(170px, 24%, 220px); }
+.hv2-about-museum .hv2-about-museum__item--shirt { width: clamp(95px, 13%, 125px); }
+
+/* aspect-ratio tiers, layered onto whichever size tier above */
+.hv2-about-museum__item--portrait .hv2-about-museum__frame { aspect-ratio: 4 / 5; }
+.hv2-about-museum__item--landscape .hv2-about-museum__frame { aspect-ratio: 5 / 4; }
+.hv2-about-museum__item--wide-landscape .hv2-about-museum__frame { aspect-ratio: 3 / 2; }
+.hv2-about-museum__item--shirt .hv2-about-museum__frame { aspect-ratio: 3 / 4; }
+.hv2-about-museum__item--wide .hv2-about-museum__frame { aspect-ratio: 0.7 / 1; }
+
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(2) { transition-delay: 50ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(3) { transition-delay: 100ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(4) { transition-delay: 150ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(5) { transition-delay: 200ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(6) { transition-delay: 250ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(7) { transition-delay: 300ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(8) { transition-delay: 350ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(9) { transition-delay: 400ms; }
+.hv2-about-below.is-visible .hv2-about-museum figure:nth-child(10) { transition-delay: 450ms; }
+
+/* ----- Closing image -----
+   Natural width/auto height, no crop -- same treatment as
+   .hv2-events-card__img (styles.css ~2967-2972) rather than the legacy
+   #about-us-image "pressed paper" border+shadow card. Still lives in
+   History's own __media column (same left/right orientation as
+   Description/Mascot). */
+.hv2-about-final-image {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.hv2-about-row.is-visible .hv2-about-final-image {
+  opacity: 1;
+  transform: none;
+  transition-delay: 90ms;
+}
+
+.hv2-about-final-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hv2-about-final-image figcaption {
+  font-family: Exo, sans-serif;
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/*
+====================================================================
+===== TEAM PAGE (2026 dark-theme team-new.html, "hv2-team-") =====
+====================================================================
+Replaces the legacy team.html gallery (.profile-container/.profile-card,
+~line 610 above, left untouched) with an hv2-namespaced equivalent.
+Everything generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn,
+.hv2-reveal, --ease-out) is reused as-is from the HOME V2 section.
+*/
+
+.hv2-page.hv2-team-page {
+  background:
+    radial-gradient(ellipse 50% 38% at 88% 6%, rgba(243, 127, 147, 0.25), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 8% 92%, rgba(175, 68, 116, 0.3), transparent 65%),
+    linear-gradient(203deg, var(--AmoriemPlum) 14%, var(--AmoriemDeepPlum) 92%);
+  background-attachment: scroll;
+}
+
+.hv2-team-page .hv2-nav {
+  position: relative;
+}
+
+.hv2-team-page .hv2-nav__links {
+  width: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.hv2-team-hero {
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.4rem) 0;
+  max-width: 42rem;
+}
+
+.hv2-team-hero__title {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemWhite);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  margin: 0 0 1rem;
+  text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+}
+
+.hv2-team-hero__intro {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 34rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.hv2-team-section__heading {
+  font-family: Archive, sans-serif;
+  color: var(--AmoriemWhite);
+  font-size: clamp(1.8rem, 3.2vw, 2.625rem);
+  text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+  margin: 0 0 1.5rem;
+  padding: 0 clamp(1.25rem, 4vw, 3.4rem);
+}
+
+.hv2-team-projects {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.4rem);
+}
+
+.hv2-team-projects__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.hv2-team-projects__item {
+  margin: 0;
+}
+
+.hv2-team-projects__photo {
+  aspect-ratio: 3 / 2;
+  background: var(--AmoriemMauve);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hv2-team-projects__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.hv2-team-projects__label {
+  font-family: Exo, sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 700px) {
+  .hv2-team-projects__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hv2-team-board {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hv2-team-board__group-heading {
+  font-family: Exo, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hv2-team-board__emoji {
+  font-size: 1.2em;
+}
+
+.hv2-team-board__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.hv2-team-members {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.4rem) clamp(3rem, 6vw, 4.5rem);
+}
+
+.hv2-team-members__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.hv2-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: clamp(120px, 13vw, 165px);
+  margin: 0;
+  text-align: center;
+}
+
+.hv2-team-card__photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--AmoriemMauve);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hv2-team-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.hv2-team-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hv2-team-card__name {
+  font-family: Exo, sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.hv2-team-card__role {
+  font-family: Exo, sans-serif;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.hv2-team-card__email {
+  font-family: Exo, sans-serif;
+  font-size: 0.78rem;
+  color: var(--AmoriemBrightPink);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.hv2-team-card__email:hover {
+  text-decoration: underline;
+}
+
+/* Staggered-children reveal, same neutralize-parent/reveal-children
+   convention as .hv2-collabs/.hv2-games/.hv2-events (~line 1943). Each
+   board group is its own trigger so groups animate independently as
+   they're scrolled to, instead of one trigger for the whole tall
+   section firing everything at once near the top. */
+.hv2-team-projects.hv2-reveal,
+.hv2-team-board__group.hv2-reveal,
+.hv2-team-members.hv2-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-team-projects__grid > .hv2-team-projects__item,
+.hv2-team-board__grid > .hv2-team-card,
+.hv2-team-members__grid > .hv2-team-card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 320ms var(--ease-out);
+}
+
+.hv2-team-projects.is-visible .hv2-team-projects__item,
+.hv2-team-board__group.is-visible .hv2-team-card,
+.hv2-team-members.is-visible .hv2-team-card {
+  opacity: 1;
+  transform: none;
+}
+
+.hv2-team-projects.is-visible .hv2-team-projects__item:nth-child(1),
+.hv2-team-board__group.is-visible .hv2-team-card:nth-child(1),
+.hv2-team-members.is-visible .hv2-team-card:nth-child(1) { transition-delay: 0ms; }
+
+.hv2-team-projects.is-visible .hv2-team-projects__item:nth-child(2),
+.hv2-team-board__group.is-visible .hv2-team-card:nth-child(2),
+.hv2-team-members.is-visible .hv2-team-card:nth-child(2) { transition-delay: 50ms; }
+
+.hv2-team-board__group.is-visible .hv2-team-card:nth-child(3),
+.hv2-team-members.is-visible .hv2-team-card:nth-child(3) { transition-delay: 100ms; }
+
+.hv2-team-members.is-visible .hv2-team-card:nth-child(4) { transition-delay: 150ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(5) { transition-delay: 200ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(6) { transition-delay: 250ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(7) { transition-delay: 300ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(8) { transition-delay: 350ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(9) { transition-delay: 400ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(10) { transition-delay: 450ms; }
+.hv2-team-members.is-visible .hv2-team-card:nth-child(n+11) { transition-delay: 500ms; }
+
+/*
+====================================================================
+===== PAGE TRANSITIONS (2026 site-wide, cross-document) =====
+====================================================================
+Native cross-document View Transitions (Chromium 126+; every other
+browser just ignores the @view-transition rule and navigates normally,
+so this is a pure progressive enhancement -- no JS/polyfill needed).
+Applies to every page sharing this stylesheet since the at-rule isn't
+selector-scopable. Reads as "warping" between pages: the outgoing page
+blurs/brightens/scales up and out while the incoming page resolves in
+from the same blur, with a starfield backdrop briefly showing through
+the cross-fade gap (::view-transition-group(root) paints behind both
+snapshots) -- a page-level echo of the .hv2-stars canvas used within
+the dark-theme pages themselves. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  background:
+    radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent 100%),
+    radial-gradient(1px 1px at 25% 65%, #fff, transparent 100%),
+    radial-gradient(1px 1px at 40% 15%, #fff, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 82%, #fff, transparent 100%),
+    radial-gradient(1px 1px at 70% 35%, #fff, transparent 100%),
+    radial-gradient(2px 2px at 85% 55%, #fff, transparent 100%),
+    radial-gradient(1px 1px at 92% 12%, #fff, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 90%, #fff, transparent 100%),
+    radial-gradient(1px 1px at 60% 5%, #fff, transparent 100%),
+    radial-gradient(1.5px 1.5px at 78% 88%, #fff, transparent 100%),
+    var(--AmoriemDeepPlum);
+  background-size: cover;
+}
+
+::view-transition-old(root) {
+  animation: hv2-vt-out 420ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: hv2-vt-in 480ms var(--ease-out) both;
+  animation-delay: 110ms;
+}
+
+@keyframes hv2-vt-out {
+  to {
+    opacity: 0;
+    filter: blur(22px) brightness(1.25);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes hv2-vt-in {
+  from {
+    opacity: 0;
+    filter: blur(22px) brightness(1.25);
+    transform: scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

@@ -418,4 +418,44 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 150);
         });
     }
+
+    /* ----- Page-transition veil: intercepts internal link clicks and raises
+       the starfield-blur curtain (.hv2-transition-veil, styles.css) before
+       navigating, so leaving a page dissolves through the same stars instead
+       of a hard cut. The arriving page's reveal is separate, plain CSS (see
+       styles.css) -- this half only ever drives the exit, and only when GSAP
+       actually loaded, same guarded posture as the constellation layer in
+       games-new.js. Skipped entirely under reduced motion: links just
+       navigate normally. ----- */
+    var transitionVeil = document.querySelector(".hv2-transition-veil");
+
+    if (transitionVeil && window.gsap && !reduceMotion) {
+        var navigating = false;
+
+        document.addEventListener("click", function (e) {
+            if (navigating || e.defaultPrevented) return;
+            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+            var link = e.target.closest("a[href]");
+            if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+            if (link.origin !== window.location.origin) return;
+
+            // in-page anchor jump (e.g. "#section") -- let the browser scroll normally
+            if (link.pathname === window.location.pathname && link.hash) return;
+            // link back to the exact page already showing
+            if (link.href === window.location.href) return;
+
+            navigating = true;
+            e.preventDefault();
+
+            gsap.to(transitionVeil, {
+                opacity: 1,
+                duration: 0.46,
+                ease: "power2.in",
+                onComplete: function () {
+                    window.location.href = link.href;
+                }
+            });
+        });
+    }
 });
