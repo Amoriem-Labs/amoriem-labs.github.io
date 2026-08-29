@@ -6,156 +6,238 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="static/styles/styles.css">
-    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png" />
+    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
 </head>
 
-<body>
-    <div class="nav-bar">
-        <a class="nav-item" href="index.html">
-            <img src="static\images\brand\logo-darkpink.png">
+<body class="hv2-page hv2-events-page hv2-page-entering">
+
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over
+         every section, not just the background gradient -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <!-- Page-transition veil: starfield-blur curtain driven by home-v2.js on
+         internal link clicks; the entrance reveal here on load is plain CSS -->
+    <div class="hv2-transition-veil" aria-hidden="true"></div>
+
+    <nav class="hv2-nav">
+        <a class="hv2-nav__logo" href="index.html" aria-label="Amoriem Labs home">
+            <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
         </a>
-        <a class="nav-item" href="index.html">Home</a>
-        <a class="nav-item" href="games.html">Games</a>
-        <a class="nav-item" href="team.html">Team</a>
-        <a class="nav-item this-page" href="events.html">Events</a>
-        <a class="nav-item" href="about.html">About</a>
-    </div>
 
-<div class="page">
-
-    <div class="page-title unselectable">Events</div>
-
-    <!-- Filter Buttons -->
-    <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="hackathons">Hackathons</button>
-        <button class="filter-btn" data-filter="social">Social Events</button>
-        <button class="filter-btn" data-filter="speaker">Speaker Events</button>
-    </div>
-
-    <!-- HACKATHONS 2 -->
-    <div class="text-and-image-container" data-category="hackathons">
-        <div class="text-column">
-            <h2>Girly-Pop Game Jam</h2>
-            <strong>Winner: Flower Mama: Chris Shia, Jennifer Chen, & Morgan Go</strong>
-            <b>Asset Bubble will GirlyPop: Sonam and Chi</b>
-            <b>Pop-Off!: Silas</b>
-            <b>The Girlypop Show; Sebastian</b>
-            <b>Diva’s Inferno; Byron, Angela, Sebastian, and Kayle</b>
+        <div class="hv2-nav__links">
+            <a class="hv2-nav__link" href="games.html">
+                <img src="static/images/icons/nav-games.svg" alt="">
+                <span>Games</span>
+            </a>
+            <a class="hv2-nav__link" href="about.html">
+                <img src="static/images/icons/nav-about.svg" alt="">
+                <span>About</span>
+            </a>
+            <a class="hv2-nav__link" href="events.html">
+                <img src="static/images/icons/nav-events.svg" alt="">
+                <span>Events</span>
+            </a>
+            <a class="hv2-nav__link" href="team.html">
+                <img src="static/images/icons/nav-team.svg" alt="">
+                <span>Team</span>
+            </a>
         </div>
-        <div class="image-column">
-            <img src="static/images/hackathons/Girl_Pop.png" width="300" alt="Instagram promotion">
+
+        <div class="hv2-nav__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
         </div>
-                <div class="text-column">
-            <h2>Beginner Game Jam (Classical Elements)</h2>
-            <b>Dice Magic: Alvin Shi and Alexa Jeong</b>
-            <b>In My Element: Sonam Wangchuck</b>
-            <b>Element Joyride: Chloe Parke, David Liu, and Callum Legendre</b>
+    </nav>
+
+    <main>
+        <header class="hv2-events-hero">
+            <h1 class="hv2-events-hero__title">Events</h1>
+            <p class="hv2-events-hero__intro">From game jams to speaker panels to just hanging out, here's a look
+                back at what Amoriem Labs has been up to.</p>
+        </header>
+
+        <div class="hv2-events-tabs" role="tablist">
+            <button class="hv2-events-tab is-active" data-filter="hackathons" role="tab" aria-selected="true">Hackathons</button>
+            <button class="hv2-events-tab" data-filter="social" role="tab" aria-selected="false">Social Events</button>
+            <button class="hv2-events-tab" data-filter="speaker" role="tab" aria-selected="false">Speaker Events</button>
         </div>
-        <div class="image-column">
-            <img src="static/images/hackathons/Beginner_Game_Jam.png" width="300" alt="Instagram promotion">
+
+        <div class="hv2-events-grid" data-category="hackathons">
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/hackathons/Girl_Pop.png" alt="Girly-Pop Game Jam" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Girly-Pop Game Jam</strong>
+                    <p>
+                        <strong>Winner:</strong> Flower Mama &mdash; Chris Shia, Jennifer Chen &amp; Morgan Go
+                    </p>
+                    <p>
+                        <strong>Other entries:</strong><br>
+                        Asset Bubble will GirlyPop &mdash; Sonam &amp; Chi<br>
+                        Pop-Off! &mdash; Silas<br>
+                        The Girlypop Show &mdash; Sebastian<br>
+                        Diva's Inferno &mdash; Byron, Angela, Sebastian &amp; Kayle
+                    </p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/hackathons/Beginner_Game_Jam.png" alt="Beginner Game Jam (Classical Elements)" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Beginner Game Jam (Classical Elements)</strong>
+                    <p>
+                        Dice Magic &mdash; Alvin Shi &amp; Alexa Jeong<br>
+                        In My Element &mdash; Sonam Wangchuck<br>
+                        Element Joyride &mdash; Chloe Parke, David Liu &amp; Callum Legendre
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
 
-  <div class="text-and-image-container" data-category="social" style="display:none">
-    <div class="image-column">
-        <img src="static/images/Socials/Mental_Health_In_Gaming.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Socials/Indigenous_Voices.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Socials/XR Pediatrics.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Socials/Milk_And_Cookies.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Socials/Valentines_Game_Night.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Socials/Halloween Game Night.png" width="300" alt="Instagram promotion">
-    </div>
-</div>
+        <div class="hv2-events-grid" data-category="social" hidden>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Mental_Health_In_Gaming.png" alt="Mental Health in Gaming" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Mental Health in Gaming</strong>
+                    <p>A roundtable and game night with the SHARE Center on online gaming spaces, bystander
+                        intervention, and mental health &mdash; with Panera catering and a round of Overcooked
+                        to close things out.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Indigenous_Voices.webp" alt="Indigenous Voices" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Indigenous Voices</strong>
+                    <p>A collaboration with Professor Tarren Andrews&rsquo; class: gameplay demos of Skabma
+                        and Never Alone, followed by a discussion on Indigenous storytelling in games.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/XR Pediatrics.webp" alt="XR Pediatrics" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>XR Pediatrics</strong>
+                    <!-- TODO: add a one-sentence description of this event -->
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Milk_And_Cookies.png" alt="Milk &amp; Cookies" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Milk &amp; Cookies</strong>
+                    <p>A midterms study break with milk, cookies, and good vibes &mdash; a low-key reset
+                        before finals season.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Valentines_Game_Night.png" alt="Valentine's Game Night" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Valentine's Game Night</strong>
+                    <p>Members shared their favorite romance and co-op games over a night of
+                        themed treats and friendly competition.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Socials/Halloween Game Night.png" alt="Halloween Game Night" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Halloween Game Night</strong>
+                    <p>A spooky evening of costumes, horror games, and community as members
+                        celebrated the season together.</p>
+                </div>
+            </div>
+        </div>
 
-<div class="text-and-image-container" data-category="speaker" style="display:none">
-    <div class="image-column">
-        <img src="static/images/Speakers/Alumni in Games Panel (1).png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Speakers/Mike_Shah.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Speakers/ZhenZhai.png" width="300" alt="Instagram promotion">
-    </div>
-    <div class="image-column">
-        <img src="static/images/Speakers/Elena_Bertozzi.png" width="300" alt="Instagram promotion">
-    </div>
-</div>
+        <div class="hv2-events-grid" data-category="speaker" hidden>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Alumni in Games Panel (1).webp" alt="Alumni in Games Panel" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Alumni in Games Panel</strong>
+                    <p>A virtual Q&amp;A with Amoriem alumni now working in the games industry &mdash; how
+                        they broke in, and what the day-to-day is really like.</p>
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Mike_Shah.webp" alt="Mike Shah" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Mike Shah</strong>
+                    <!-- TODO: add a one-sentence description of this talk -->
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/ZhenZhai.webp" alt="Zhen Zhai" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Zhen Zhai</strong>
+                    <!-- TODO: add a one-sentence description of this talk -->
+                </div>
+            </div>
+            <div class="hv2-events-card">
+                <img class="hv2-events-card__img" src="static/images/Speakers/Elena_Bertozzi.webp" alt="Elena Bertozzi" loading="lazy" decoding="async">
+                <div class="hv2-events-card__caption">
+                    <strong>Elena Bertozzi</strong>
+                    <!-- TODO: add a one-sentence description of this talk -->
+                </div>
+            </div>
+        </div>
+    </main>
 
-<!-- Scoped styles just for this page -->
-<style>
-    .filter-buttons {
-        display: flex;
-        gap: 1.5vw;
-        justify-content: center;
-        margin-bottom: 1vh;
-    }
+    <footer class="hv2-footer">
+        <div class="hv2-footer__lists">
+            <div class="hv2-footer__list">
+                <h3>Recent Games</h3>
+                <ul>
+                    <li><a href="games.html#game-27-photos">27 Photos</a></li>
+                    <li><a href="games.html#game-cursed-grounds">Cursed Grounds</a></li>
+                    <li><a href="games.html#game-boola-dash">Boola Dash</a></li>
+                    <li><a href="games.html#game-encore">Encore!</a></li>
+                    <li><a href="games.html#game-glyphbound">Glyphbound</a></li>
+                </ul>
+            </div>
+            <div class="hv2-footer__list">
+                <h3>Club</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="events.html">Events</a></li>
+                </ul>
+            </div>
+        </div>
 
-    .filter-btn {
-        background-color: var(--AmoriemLightPink);
-        color: var(--AmoriemBlack);
-        border: 2px solid var(--AmoriemBlack);
-        font-family: Exo, sans-serif;
-        font-size: 2.5vh;
-        padding: 1vh 2vw;
-        border-radius: 8px;
-        cursor: pointer;
-        box-shadow: 3px 2px 0px var(--AmoriemBlack);
-        transition: 250ms;
-    }
+        <div class="hv2-footer__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
 
-    .filter-btn:hover {
-        transform: translate(2px, 1px);
-        box-shadow: 1px 1px 0px var(--AmoriemBlack);
-    }
-
-    .filter-btn.active {
-        background-color: var(--AmoriemPink);
-        font-weight: bold;
-    }
-</style>
-
-<!-- Script just for this page -->
-<script>
-    const buttons = document.querySelectorAll('.filter-btn');
-    const containers = document.querySelectorAll('.text-and-image-container');
-
-    // Set initial state explicitly on load
-    containers.forEach(container => {
-        container.style.display =
-            container.dataset.category === 'hackathons' ? 'flex' : 'none';
-    });
-
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.dataset.filter;
-
-            containers.forEach(container => {
-                container.style.display =
-                    container.dataset.category === filter ? 'flex' : 'none';
-            });
-        });
-    });
-</script>
-
-</div>
-
-    <footer class="site-footer">
-        <p>This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
+        <p class="hv2-footer__disclaimer">This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
     </footer>
+
+    <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/gsap.min.js"></script>
+    <script src="static/scripts/events.js"></script>
 </body>
 
 </html>

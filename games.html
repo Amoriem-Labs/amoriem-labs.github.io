@@ -1,288 +1,972 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Games | Amoriem Labs</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="static/styles/styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="static/styles/styles.css" />
     <link rel="shortcut icon" href="static/images/brand/amorien_icon.png" />
-</head>
+  </head>
 
-<body>
-    <div class="nav-bar">
-        <a class="nav-item" href="index.html">
-            <img src="static\images\brand\logo-darkpink.png">
+  <body class="hv2-page hv2-gp-page hv2-page-entering">
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over every section -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <!-- Page-transition veil: starfield-blur curtain driven by home-v2.js on
+         internal link clicks; the entrance reveal here on load is plain CSS -->
+    <div class="hv2-transition-veil" aria-hidden="true"></div>
+
+    <nav class="hv2-nav">
+      <a
+        class="hv2-nav__logo"
+        href="index.html"
+        aria-label="Amoriem Labs home"
+      >
+        <img
+          src="static/images/brand/logo-pink-stacked.png"
+          alt="Amoriem Labs"
+        />
+      </a>
+
+      <div class="hv2-nav__links">
+        <a class="hv2-nav__link" href="games.html">
+          <img src="static/images/icons/nav-games.svg" alt="" />
+          <span>Games</span>
         </a>
-        <a class="nav-item" href="index.html">Home</a>
-        <a class="nav-item this-page" href="games.html">Games</a>
-        <a class="nav-item" href="team.html">Team</a>
+        <a class="hv2-nav__link" href="about.html">
+          <img src="static/images/icons/nav-about.svg" alt="" />
+          <span>About</span>
+        </a>
+        <a class="hv2-nav__link" href="events.html">
+          <img src="static/images/icons/nav-events.svg" alt="" />
+          <span>Events</span>
+        </a>
+        <a class="hv2-nav__link" href="team.html">
+          <img src="static/images/icons/nav-team.svg" alt="" />
+          <span>Team</span>
+        </a>
+      </div>
 
-        <a class="nav-item" href="events.html">Events</a>
-        <a class="nav-item" href="about.html">About</a>
-    </div>
+      <div class="hv2-nav__socials">
+        <a
+          class="hv2-icon-btn"
+          href="https://instagram.com/amoriemlabs"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img src="static/images/icons/instagram.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://amoriem-labs.itch.io"
+          target="_blank"
+          rel="noopener"
+          aria-label="itch.io"
+        >
+          <img src="static/images/icons/itchio.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="mailto:amoriemlabs@gmail.com"
+          aria-label="Email"
+        >
+          <img src="static/images/icons/mail.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="static/images/icons/linkedin.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://soundcloud.com/amoriem-labs"
+          target="_blank"
+          rel="noopener"
+          aria-label="SoundCloud"
+        >
+          <img src="static/images/icons/soundcloud.svg" alt="" />
+        </a>
+      </div>
+    </nav>
 
-    <div class="page">
-        <div class="page-title-games" class="unselectable">Games</div>
+    <!-- Left-edge year-jump rail: hidden until scrolled past the hero (games-new.js),
+         small always-visible tab expands to the full year list on hover/focus -->
+    <nav class="hv2-gp-yearnav" aria-label="Jump to year">
+      <span class="hv2-gp-yearnav__tab" aria-hidden="true">Years</span>
+      <div class="hv2-gp-yearnav__links">
+        <a class="hv2-gp-yearnav__link" href="#year-2025-2026">2025-2026</a>
+        <a class="hv2-gp-yearnav__link" href="#year-2024-2025">2024-2025</a>
+        <a class="hv2-gp-yearnav__link" href="#year-2023-2024">2023-2024</a>
+        <a class="hv2-gp-yearnav__link" href="#year-pre-2023">Pre-2023</a>
+      </div>
+    </nav>
 
-        <div class="center-text">
-                    <b>Below is the list of games developed by Amoriem Labs! Each game is pitched by students at the beginning of the year, which is then developed throughout the school year.</b>
+    <main>
+      <header class="hv2-gp-hero">
+        <div class="hv2-gp-hero__heading">
+          <h1 class="hv2-gp-hero__title">Games</h1>
+          <p class="hv2-gp-hero__intro">
+            Amoriem Labs makes two games a year and aims to publish them on
+            online platforms for free. We run a yearly pitch process, where
+            anyone can pitch their ideas to be created by the club.
+          </p>
         </div>
- 
-        
-        <div class="page-title" class="unselectable">2025-2026</div>
+        <nav class="hv2-gp-yearjump" aria-label="Jump to year">
+          <a class="hv2-gp-yearjump__link" href="#year-2025-2026">
+            <span>2025-2026</span>
+            <img
+              class="hv2-gp-yearjump__arrow"
+              src="static/images/icons/nav-arrow.svg"
+              alt=""
+            />
+          </a>
+          <a class="hv2-gp-yearjump__link" href="#year-2024-2025">
+            <span>2024-2025</span>
+            <img
+              class="hv2-gp-yearjump__arrow"
+              src="static/images/icons/nav-arrow.svg"
+              alt=""
+            />
+          </a>
+          <a class="hv2-gp-yearjump__link" href="#year-2023-2024">
+            <span>2023-2024</span>
+            <img
+              class="hv2-gp-yearjump__arrow"
+              src="static/images/icons/nav-arrow.svg"
+              alt=""
+            />
+          </a>
+          <a class="hv2-gp-yearjump__link" href="#year-pre-2023">
+            <span>Pre-2023</span>
+            <img
+              class="hv2-gp-yearjump__arrow"
+              src="static/images/icons/nav-arrow.svg"
+              alt=""
+            />
+          </a>
+        </nav>
+      </header>
 
-        <div class="game-card">
-            <img src="static\images\brand\amoriem_symbol_logo_pink.png">            
-            <div class="game-text">
-                <div class="game-title">27 Photos</div>
-                <div class="game-desc">
-                    27 Photos is a walking-simulator/puzzle game where you must uncover the story of the strange building you start in and the nameless character you play. Take pictures to reveal informations about your surroundings, but be sure to not use all 27 of them! 
-                </div>
-                    <div class="game-desc">
-                    <em>Made by the Photos team, led by Chris Shia. Available to play soon!<br></em>
-                    
-                </div>
-                </div>
-                </div>
+      <div class="hv2-gp-particles-field">
+        <div
+          id="hv2-gp-particles"
+          class="hv2-gp-particles"
+          aria-hidden="true"
+        ></div>
 
-        <div class="game-card">
-            <img src="static\images\brand\amoriem_symbol_logo_pink.png">            
-            <div class="game-text">
-                <div class="game-title">Cursed Grounds</div>
-                <div class="game-desc">
-                    Cursed Grounds is a dungeon-crawler/resturant simulator! Set in a fantasy world, you must traverse the dungeons to gather ingredients from strange creatures to create new items for your menu!
+        <section class="hv2-gp-year" id="year-2025-2026">
+          <h2 class="hv2-gp-year__heading">2025-2026</h2>
+          <div class="hv2-gp-entries">
+            <article class="hv2-gp-entry" id="game-27-photos">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">27 Photos</h3>
+                <p class="hv2-gp-entry__desc">
+                  27 Photos is a walking-simulator/puzzle game where you must
+                  uncover the story of the strange building you start in and the
+                  nameless character you play. Take pictures to reveal
+                  information about your surroundings, but be sure not to use
+                  all 27 of them!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Photos team, led by Chris Shia.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <span class="hv2-gp-entry__status">Demo is out now!</span>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/27-photos"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://soundcloud.com/amoriem-labs/sets/27_photos_demo"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="SoundCloud"
+                  >
+                    <img src="static/images/icons/soundcloud.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://www.youtube.com/watch?v=qhvA_-ZyO70"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="YouTube trailer"
+                  >
+                    <img src="static/images/icons/youtube.svg" alt="" />
+                  </a>
                 </div>
-                    <div class="game-desc">
-                    <em>Made by the Dungeon team, led by Maryeva Gonzales and Sam Johnson-Noya. Available to play soon!<br></em>
-                    
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1279 / 1004;">
+                  <div
+                    class="hv2-gp-video hv2-gp-video--youtube"
+                    data-youtube-id="qhvA_-ZyO70"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/27_Photos_with%20art.webp"
+                      alt="27 Photos cover art" loading="lazy" decoding="async" />
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
                 </div>
+                <div class="hv2-gp-media__secondary">
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/27%20Photos/27Photos.png"
+                      alt="27 Photos screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/27%20Photos/CqJ3Gy.png"
+                      alt="27 Photos screenshot" loading="lazy" decoding="async" />
+                  </div>
                 </div>
-                </div>
+              </div>
+            </article>
 
-
-        <div class="page-title" class="unselectable">2024-2025</div>
-
-        <div class="game-card">
-            <img src="static\images\games\boola_dash.jpg">
-            <div class="game-text">
-                <div class="game-title">Boola Dash</div>
-                <div class="game-desc">
-                    Boola Dash is a side-scrolling platformer where you play as Handsome Dan running across Yale 
-                    trying to avoid obstacles like benches, cones, and students! Play to get on our leaderboard, 
-                    where the best Resco will win! This game was made in collaboration with the Alumni Fund at Yale.
+            <article
+              class="hv2-gp-entry hv2-gp-entry--reverse"
+              id="game-cursed-grounds"
+            >
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Cursed Grounds</h3>
+                <p class="hv2-gp-entry__desc">
+                  Cursed Grounds is a dungeon-crawler/restaurant simulator! Set
+                  in a fantasy world, you must traverse the dungeons to gather
+                  ingredients from strange creatures to create new items for
+                  your menu!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Dungeon team, led by Maryeva Gonzalez and Sam
+                  Johnson-Noya.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <span class="hv2-gp-entry__status">Demo is out now!</span>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/the-dungeon-barista-cursed-grounds"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
                 </div>
-                <div class="game-desc">
-                    <em>Made by the Alumni Game team, led by Maryeva Gonzalez. See full credits in the link below!</em>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1 / 1;">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Dungeon_Barista_2026.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/Dungeon_Barista_Square.png"
+                      alt="Cursed Grounds cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
                 </div>
-                <a href="https://amoriem-labs.itch.io/boola-dash" class="game-link">Play Now</a>
-            </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="hv2-gp-year" id="year-2024-2025">
+          <h2 class="hv2-gp-year__heading">2024-2025</h2>
+          <div class="hv2-gp-entries">
+            <article class="hv2-gp-entry" id="game-boola-dash">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Boola Dash</h3>
+                <p class="hv2-gp-entry__desc">
+                  Boola Dash is a side-scrolling platformer where you play as
+                  Handsome Dan running across Yale trying to avoid obstacles
+                  like benches, cones, and students! Play to get on our
+                  leaderboard, where the best Resco will win! This game was made
+                  in collaboration with the Alumni Fund at Yale.
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Alumni Game team, led by Maryeva Gonzalez. See
+                  full credits on itch.io!
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/boola-dash"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1638 / 1401;">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Boola_Dash_2026.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/boola_dash.jpg"
+                      alt="Boola Dash cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="hv2-gp-entry hv2-gp-entry--reverse"
+              id="game-encore"
+            >
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Encore!</h3>
+                <p class="hv2-gp-entry__desc">
+                  Begin your career at the Multiversal Institute for the
+                  Rhythmic Arts (MIRA), an interdimensional school where music,
+                  magic, and friendship collide. Recruit new friends from across
+                  realities and times to form a band that will rival the ages
+                  and unlock the power of rhythm with your bonds. Can your band
+                  make the audience scream Encore!?
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Rhythm/Visual Novel Game team, led by Chris Shia.
+                  See full credits on itch.io!
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/encore"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://soundcloud.com/amoriem-labs/sets/encore"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="SoundCloud"
+                  >
+                    <img src="static/images/icons/soundcloud.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://store.steampowered.com/app/4219930/Encore/?beta=0"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Steam"
+                  >
+                    <img src="static/images/icons/steam.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://www.youtube.com/watch?v=dmy8LS0qBBA"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="YouTube trailer"
+                  >
+                    <img src="static/images/icons/youtube.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1 / 1;">
+                  <div
+                    class="hv2-gp-video hv2-gp-video--youtube"
+                    data-youtube-id="dmy8LS0qBBA"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/Encore_Square.webp"
+                      alt="Encore! cover art" loading="lazy" decoding="async" />
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+                <div class="hv2-gp-media__secondary">
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/ENCORE/Encore1.jpg"
+                      alt="Encore! screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/ENCORE/Encore2.jpg"
+                      alt="Encore! screenshot" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="hv2-gp-entry" id="game-glyphbound">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Glyphbound</h3>
+                <p class="hv2-gp-entry__desc">
+                  Glyphbound is a roguelite deckbuilder that centers around
+                  scribing spells to craft crazy combos! Play as a
+                  time-travelling wizard tasked with saving the world from a
+                  growing corruption.
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Magic team, led by Jeffrey Tan. See full credits
+                  on itch.io!
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/glyphbound"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1735 / 576;">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Glyphbound_2026.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/Glyphbound.png"
+                      alt="Glyphbound cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="hv2-gp-entry hv2-gp-entry--reverse"
+              id="game-conquer-chiron"
+            >
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Conquer Chiron</h3>
+                <p class="hv2-gp-entry__desc">
+                  Conquer Chiron is a psychological horror game that plays on
+                  the fear of AI in the post-modern world. Play as a pilot who
+                  is trapped with the deviant AI assistant Chiron. Can you
+                  survive the onslaught of Chiron&rsquo;s assassination
+                  attempts?
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by Victor Liu, Will Liu, Grace Halak, and Jacob
+                  Leshnower.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/conquer-chiron"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary">
+                  <img
+                    src="static/images/games/conquer-chiron.jpg"
+                    alt="Conquer Chiron screenshot" loading="lazy" decoding="async" />
+                </div>
+                <div
+                  class="hv2-gp-media__secondary hv2-gp-media__secondary--single"
+                ></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="hv2-gp-year" id="year-2023-2024">
+          <h2 class="hv2-gp-year__heading">2023-2024</h2>
+          <div class="hv2-gp-entries">
+            <article class="hv2-gp-entry" id="game-echoes-of-eternity">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Echoes of Eternity</h3>
+                <p class="hv2-gp-entry__desc">
+                  A minute can last seconds here&hellip; or an eternity. Stuck
+                  in an unstable realm, you battle ever-growing hordes of enemies
+                  to survive &mdash; and you can travel through time to aid your
+                  future self and receive help from your past self. An endless,
+                  arcade-style test of how well you traverse the fourth
+                  dimension.
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by Victor Liu, Jeffrey Tan, Will Liu, Grace Halak, and
+                  Jacob Leshnower.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/echoes-of-eternity"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Echoes%20of%20Eternity%20Promotional%20Trailer%20-%20Amoriem%20Labs%20-%20Victor%20Liu%20%281080p%29.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/echoes_of_eternity.png"
+                      alt="Echoes of Eternity cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+                <div class="hv2-gp-media__secondary">
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/eternity/BHu5q9.jpg"
+                      alt="Echoes of Eternity screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/eternity/NDsoZJ.jpg"
+                      alt="Echoes of Eternity screenshot" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="hv2-gp-entry hv2-gp-entry--reverse"
+              id="game-rosefield-requiem"
+            >
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Rosefield Requiem</h3>
+                <p class="hv2-gp-entry__desc">
+                  Six months ago, a pop star from the small, quaint town of
+                  Rosefield died from apparent suicide. However, the clues
+                  don&rsquo;t seem to add up, indicating that a murderer is
+                  hiding among the townsfolks. Every choice matters in this
+                  murder mystery and dating sim visual novel!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Visual Novel team, led by Chris Shia. See full
+                  credits on itch.io!
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/rosefield-requiem"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://soundcloud.com/amoriem-labs/sets/rosefield-requiem"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="SoundCloud"
+                  >
+                    <img src="static/images/icons/soundcloud.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 1 / 1;">
+                  <img
+                    src="static/images/games/rosefield-requiem-new.png"
+                    alt="Rosefield Requiem cover art" loading="lazy" decoding="async" />
+                </div>
+                <div
+                  class="hv2-gp-media__secondary hv2-gp-media__secondary--triple"
+                >
+                  <div class="hv2-gp-media__thumb" style="--media-ratio: 2560 / 1311;">
+                    <img
+                      src="static/images/games/rosefield-gameplay.webp"
+                      alt="Rosefield Requiem screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/rosefield_requiem.png"
+                      alt="Rosefield Requiem screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/pgSB1u.png"
+                      alt="Rosefield Requiem screenshot" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="hv2-gp-entry" id="game-diploma-dash">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Diploma Dash</h3>
+                <p class="hv2-gp-entry__desc">
+                  Diploma Dash is a fast-paced platformer game made by Amoriem
+                  Labs in the school year 2023-2024. You are a Yale college
+                  senior who has unwisely decided to major in every discipline
+                  and needs to rush his last week of classes to finish all his
+                  course requirements. Collect all your assignments and make it
+                  to the end in order to graduate on time!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by the Platformer team. Led by Victor Liu, with full
+                  credits on itch.io!
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://amoriem-labs.itch.io/diploma-dash"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="itch.io"
+                  >
+                    <img src="static/images/icons/itchio.svg" alt="" />
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://soundcloud.com/amoriem-labs/sets/diploma-dash-original"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="SoundCloud"
+                  >
+                    <img src="static/images/icons/soundcloud.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary" style="--media-ratio: 604 / 486;">
+                  <img
+                    src="static/images/games/diplomadash.png"
+                    alt="Diploma Dash screenshot" loading="lazy" decoding="async" />
+                </div>
+                <div
+                  class="hv2-gp-media__secondary hv2-gp-media__secondary--single"
+                ></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="hv2-gp-year" id="year-pre-2023">
+          <h2 class="hv2-gp-year__heading">Pre-2023</h2>
+          <div class="hv2-gp-entries">
+            <article
+              class="hv2-gp-entry hv2-gp-entry--reverse"
+              id="game-planet-112"
+            >
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Planet 112</h3>
+                <p class="hv2-gp-entry__desc">
+                  After crash landing on an unknown planet, you find yourself in
+                  a mysterious alien ecosystem. Unravel the secrets of this
+                  planet and plant your way through the lands to go back home!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by Victor Liu, Xien Chen, Jesse Chen, Will Liu, Jacob
+                  Feit Mann, Jessie Hwang, Adrian Hall, Nick He, Win Hlaing,
+                  Harry Hwang, Lucas Huang, and other collaborators.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-gp-entry__play"
+                    href="games/planet_112/planet_112.html"
+                  >
+                    <img src="static/images/icons/nav-games.svg" alt="" />
+                    <span>Play Now</span>
+                  </a>
+                  <a
+                    class="hv2-icon-btn"
+                    href="https://soundcloud.com/amoriem-labs/sets/planet-112-original-soundtrack"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="SoundCloud"
+                  >
+                    <img src="static/images/icons/soundcloud.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Planet_112_2026.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/planet_112.jpg"
+                      alt="Planet 112 cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+                <div class="hv2-gp-media__secondary">
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/112/112-1.png"
+                      alt="Planet 112 screenshot" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="hv2-gp-media__thumb">
+                    <img
+                      src="static/images/games/planet_112.png"
+                      alt="Planet 112 artwork" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="hv2-gp-entry" id="game-bulldog-bash">
+              <div class="hv2-gp-entry__text">
+                <h3 class="hv2-gp-entry__title">Bulldog Bash</h3>
+                <p class="hv2-gp-entry__desc">
+                  Choose your favorite between former dean Marvin Chun and
+                  current Yale president Peter Salovey in this arcade-style 1v1
+                  fighting game!
+                </p>
+                <p class="hv2-gp-entry__credit">
+                  Made by Christie Yu, Eric Xue, Eric Doddy, Jack Li, Adrian
+                  Hall, Nick He, Ethan Pesikoff, Murtaza Javaid, Luc Ta, and
+                  other collaborators.
+                </p>
+                <div class="hv2-gp-entry__links">
+                  <a
+                    class="hv2-gp-entry__play"
+                    href="games/bulldog_bash/bulldog_bash.html"
+                  >
+                    <img src="static/images/icons/nav-games.svg" alt="" />
+                    <span>Play Now</span>
+                  </a>
+                </div>
+              </div>
+              <div class="hv2-gp-entry__media hv2-gp-media">
+                <div class="hv2-gp-media__primary">
+                  <div
+                    class="hv2-gp-video"
+                    data-video-src="static/images/games/trailers/Bulldog_Bash_2026.mp4"
+                  >
+                    <img
+                      class="hv2-gp-video__poster"
+                      src="static/images/games/bulldog_bash.PNG"
+                      alt="Bulldog Bash cover art" loading="lazy" decoding="async" />
+                    <video
+                      class="hv2-gp-video__clip"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                    <span class="hv2-gp-video__badge" aria-hidden="true"></span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <section class="hv2-gp-museum">
+        <h2 class="hv2-section-heading">Art Museum</h2>
+        <div class="hv2-gp-museum__grid">
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/bb_chun_kick.gif"
+              alt="Marvin Chun's Kick" loading="lazy" decoding="async" />
+            <figcaption>Marvin Chun's Kick</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/bb_salovey_kick.gif"
+              alt="Peter Salovey's Punch" loading="lazy" decoding="async" />
+            <figcaption>Peter Salovey's Punch</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_dirt_roach.gif"
+              alt="Dirt Roach" loading="lazy" decoding="async" />
+            <figcaption>Dirt Roach</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_fireball_bee.gif"
+              alt="Fireball Bee" loading="lazy" decoding="async" />
+            <figcaption>Fireball Bee</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_guardian_tree.gif"
+              alt="Guardian Tree" loading="lazy" decoding="async" />
+            <figcaption>Guardian Tree</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_jupiter_trap.gif"
+              alt="Jupiter Trap" loading="lazy" decoding="async" />
+            <figcaption>Jupiter Trap</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img src="static/images/museum/p112_locust.gif" alt="Locust" loading="lazy" decoding="async" />
+            <figcaption>Locust</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_pitcher_plant.gif"
+              alt="Pitcher Plant" loading="lazy" decoding="async" />
+            <figcaption>Pitcher Plant</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_tartarus's_eye.gif"
+              alt="Tartarus's Eye" loading="lazy" decoding="async" />
+            <figcaption>Tartarus's Eye</figcaption>
+          </figure>
+          <figure class="hv2-gp-museum__piece">
+            <img
+              src="static/images/museum/p112_titan_beetle.gif"
+              alt="Titan Beetle" loading="lazy" decoding="async" />
+            <figcaption>Titan Beetle</figcaption>
+          </figure>
         </div>
+      </section>
+    </main>
 
-        <div class="game-card">
-            <img src="static\images\games\encore.png">
-            <div class="game-text">
-                <div class="game-title">Encore!</div>
-                <div class="game-desc">
-                    Begin your career at the Multiversal Institute for the Rhythmic Arts (MIRA), an interdimensional school where music, magic, and friendship collide. 
-
-                    Recruit new friends from across realities and times to form a band that will rival the ages and unlock the power of rhythm with your bonds. Can your band make the audience scream Encore!?
-                </div>
-                <div class="game-desc">
-                    <em>Made by the Rhythm/Visual Novel Game team, led by Chris Shia. See full credits in the link below!</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/encore" class="game-link">Play Now</a>
-            </div>
+    <footer class="hv2-footer">
+      <div class="hv2-footer__lists">
+        <div class="hv2-footer__list">
+          <h3>Recent Games</h3>
+          <ul>
+            <li><a href="games.html#game-27-photos">27 Photos</a></li>
+            <li>
+              <a href="games.html#game-cursed-grounds">Cursed Grounds</a>
+            </li>
+            <li><a href="games.html#game-boola-dash">Boola Dash</a></li>
+            <li><a href="games.html#game-encore">Encore!</a></li>
+            <li><a href="games.html#game-glyphbound">Glyphbound</a></li>
+          </ul>
         </div>
-
-        <div class="game-card">
-            <img src="static\images\games\Glyphbound.png">
-            <div class="game-text">
-                <div class="game-title">Glyphbound</div>
-                <div class="game-desc">
-                    Glyphbound is a roguelite deckbuilder that centers around scribing spells to craft crazy combos! Play as a time-travelling wizard tasked with saving the world from a growing corruption.                </div>
-                <div class="game-desc">
-                    <em>Made by the Magic team, led by Jeffrey Tan. See full credits in the link below!</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/glyphbound" class="game-link">Play Now</a>
-            </div>
+        <div class="hv2-footer__list">
+          <h3>Club</h3>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="events.html">Events</a></li>
+          </ul>
         </div>
+      </div>
 
-        <div class="game-card">
-            <img src="static\images\games\conquer_chiron.png">
-            <div class="game-text">
-                <div class="game-title">Conquer Chiron</div>
-                <div class="game-desc">
-                    Conquer Chiron is a psychological horror game that plays on the fear of AI in the post-modern world. Play as a pilot who is trapped with the deviant AI assistant Chiron. Can you survive the onslaught of Chiron’s assassination attempts?
-                </div>
-                <div class="game-desc">
-                    <em>Made by Victor Liu, Will Liu, Grace Halak, and Jacob Leshnower.</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/conquer-chiron" class="game-link">Play Now</a>
-            </div>
-        </div>
+      <div class="hv2-footer__socials">
+        <a
+          class="hv2-icon-btn"
+          href="https://instagram.com/amoriemlabs"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img src="static/images/icons/instagram.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://amoriem-labs.itch.io"
+          target="_blank"
+          rel="noopener"
+          aria-label="itch.io"
+        >
+          <img src="static/images/icons/itchio.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="mailto:amoriemlabs@gmail.com"
+          aria-label="Email"
+        >
+          <img src="static/images/icons/mail.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="static/images/icons/linkedin.svg" alt="" />
+        </a>
+        <a
+          class="hv2-icon-btn"
+          href="https://soundcloud.com/amoriem-labs"
+          target="_blank"
+          rel="noopener"
+          aria-label="SoundCloud"
+        >
+          <img src="static/images/icons/soundcloud.svg" alt="" />
+        </a>
+      </div>
 
-        
-
-
-        
-        <div class="page-title" class="unselectable">2023-2024</div>
-
-        <div class="game-card">
-            <img src="static\images\games\echoes_of_eternity.png">
-            <div class="game-text">
-                <div class="game-title">Echoes of Eternity</div>
-                <div class="game-desc">
-                    A minute can last seconds here… or an eternity. It all depends on how well you can traverse time.
-                    Some friends will keep you occupied for a while. Careful: You might start seeing ghosts.
-                    Stuck in an unstable realm, players must battle ever-growing hordes of enemies with weapons found across the map to survive.
-                    They can also travel through time. This strategy game allows players to aid their future self and subsequently receive aid from their past self.
-                    Survival hinges on their ability to traverse through the fourth dimension. Echoes of Eternity is an endless mode arcade-style game.
-
-                </div>
-                <div class="game-desc">
-                    <em>Made by Victor Liu, Jeffrey Tan, Will Liu, Grace Halak, and Jacob Leshnower.</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/echoes-of-eternity" class="game-link">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="static/images/games/rosefield_requiem.png">
-            <div class="game-text">
-                <div class="game-title">Rosefield Requiem</div>
-                <div class="game-desc">
-                    Six months ago, a pop star from the small, quaint town
-                    of Rosefield died from apparent suicide. However, the
-                    clues don't seem to add up, indicating that a murderer
-                    is hiding among the townsfolks. Every choice matters in
-                    this murder mystery and dating sim visual novel!
-
-                </div>
-                <div class="game-desc">
-                    <em>Made by the Visual Novel team, led by Chris Shia. See full credits in the link below!</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/rosefield-requiem" class="game-link">Play Now</a>
-            </div>
-        </div>
-                <div class="game-card">
-
-             <img src="static/images/games/diploma_dash.jpg">
-            <div class="game-text">
-                <div class="game-title">Diploma Dash</div>
-                <div class="game-desc">
-                    Diploma Dash is a fast-paced platformer game made by Amoriem Labs in the school year 2023-2024. 
-                    You are a Yale college senior who has unwisely decided to major in every discipline and needs to rush 
-                    his last week of classes to finish all his course requirements. Collect all your assignments and make 
-                    it to the end in order to graduate on time!
-
-                </div>
-                <div class="game-desc">
-                    <em>Made by the Platformer team. Led by Victor Liu, with full credits in the link below!</em>
-                </div>
-                <a href="https://amoriem-labs.itch.io/diploma-dash" class="game-link">Play Now</a>
-            </div>
-        </div>
-
-        <div class="page-title" class="unselectable">2022-2023</div>
-
-
-
-        <div class="game-card">
-            <img src="static/images/games/planet_112.jpg">
-            <div class="game-text">
-                <div class="game-title">Planet 112</div>
-                <div class="game-desc">
-                    After crash landing on an unknown planet, you find
-                    yourself in a mysterious alien ecosystem.
-                    Unravel the secrets of this planet and plant your way
-                    through the lands to go back home!
-                </div>
-                <div class="game-desc">
-                    <em>Made by Victor Liu, Xien Chen, Jesse Chen, Will Liu, Jacob Feit Mann, Jessie Hwang, Adrian Hall,
-                        Nick He, Win Hlaing, Harry Hwang, Lucas Huang, and other
-                        collaborators.</em>
-                </div>
-                <a href="games/bulldog_bash/planet_112.html" class="game-link">Play Now</a>
-            </div>
-        </div>
-        <div class="game-card">
-            <img src="static/images/games/bulldog_bash.PNG">
-            <div class="game-text">
-                <div class="game-title">Bulldog Bash</div>
-                <div class="game-desc">
-                    Choose your favorite between former dean Marvin Chun and
-                    current Yale president Peter Salovey in this arcade-style
-                    1v1 fighting game!
-                </div>
-                <div class="game-desc">
-                    <em>Made by Christie Yu, Eric Xue, Eric Doddy, Jack Li, Adrian Hall, Nick He, Ethan Pesikoff,
-                        Murtaza Javaid, Luc Ta, and other collaborators.</em>
-                </div>
-                <a href="games/bulldog_bash/bulldog_bash.html" class="game-link">Play Now</a>
-            </div>
-        </div>
-
-
-        <div class="page-title" class="unselectable">Art Museum</div>
-        <div class="art-museum">
-
-            <div class="art-piece">
-                <img src="static/images/museum/bb_chun_kick.gif">
-                <em>Marvin Chun's Kick</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/bb_salovey_kick.gif">
-                <em>Peter Salovey's Punch</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_dirt_roach.gif">
-                <em>Dirt Roach</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_fireball_bee.gif">
-                <em>Fireball Bee</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_guardian_tree.gif">
-                <em>Guardian Tree</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_jupiter_trap.gif">
-                <em>Jupiter Trap</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_locust.gif">
-                <em>Locust</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_pitcher_plant.gif">
-                <em>Pitcher Plant</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_tartarus's_eye.gif">
-                <em>Tartarus's Eye</em>
-            </div>
-
-            <div class="art-piece">
-                <img src="static/images/museum/p112_titan_beetle.gif">
-                <em>Titan Beetle</em>
-            </div>
-
-        </div>
-    </div>
-
-    <footer class="site-footer">
-        <p>This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
+      <p class="hv2-footer__disclaimer">
+        This website is a student-run site, maintained, hosted, and operated
+        independently of Yale University.
+      </p>
     </footer>
-</body>
 
+    <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/tsparticles.engine.min.js"></script>
+    <script src="static/scripts/vendor/tsparticles.all.bundle.min.js"></script>
+    <script src="static/scripts/vendor/gsap.min.js"></script>
+    <script src="static/scripts/games-new.js"></script>
+  </body>
 </html>

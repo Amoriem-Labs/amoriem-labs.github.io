@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta name="robots" content="noindex">
+    <title>Amoriem Labs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles/styles.css">
+    <link rel="shortcut icon" href="/static/images/brand/amorien_icon.png">
+    <script src="scripts/slideshow.js"></script>
+</head>
+
+<body class="home-body">
+    <div class="nav-bar" style="background-color: var(--AmoriemPink)">
+        <a class="nav-item" href="archive/index.html">
+            <img src="/static/images/brand/logo-darkpink.png">
+        </a>
+        <a class="nav-item" href="archive/index.html">Home</a>
+        <a class="nav-item" href="archive/games.html">Games</a>
+        <a class="nav-item" href="archive/team.html">Team</a>
+        <a class="nav-item" href="archive/events.html">Events</a>
+        <a class="nav-item" href="archive/about.html">About</a>
+    </div>
+
+    <div class="page">
+        <section class="section-1">
+            <div id="title-subtitle-text">
+                <div class="page-title" class="unselectable" style="text-align: center;">Amoriem Labs</div>
+                <div id="subtitle" class="unselectable" style="text-align: center;">Undergraduate game development studio at Yale University.</div>  
+            </div>
+        
+<!-- Slideshow -->
+<div class="slideshow-container">
+
+    <div class="mySlides fade">
+        <div class="numbertext">1 / 5</div>
+        <img src="/static/images/games/encore-gameplay1.webp" style="width:100%">
+        <div class="text">Encore!</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">2 / 5</div>
+        <img src="/static/images/games/encore-gameplay2.png" style="width:100%">
+        <div class="text">Encore!</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">3 / 5</div>
+        <img src="/static/images/games/rosefield-gameplay.webp" style="width:100%">
+        <div class="text">Rosefield Requiem</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">4 / 5</div>
+        <img src="/static/images/games/echoes-of-eternity.jpg" style="width:100%">
+        <div class="text">Echoes of Eternity</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">5 / 5</div>
+        <img src="/static/images/games/bulldog_bash.PNG" style="width:100%">
+        <div class="text">Bulldog Bash</div>
+    </div>
+</div>
+
+<br>
+
+<div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+    <span class="dot" onclick="currentSlide(5)"></span>
+</div>
+
+            <script>
+                let slideIndex = 0;
+                showSlides();
+                
+                function showSlides() {
+                  let i;
+                  let slides = document.getElementsByClassName("mySlides");
+                  let dots = document.getElementsByClassName("dot");
+                  for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                  }
+                  slideIndex++;
+                  if (slideIndex > slides.length) {slideIndex = 1}    
+                  for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";  
+                  dots[slideIndex-1].className += " active";
+                  setTimeout(showSlides, 5000); // Change image every 5 seconds
+                }
+            </script>
+        </section>
+
+        <section class="section-2">
+            <div class="text-and-image-container">
+                <div class="text-column">
+                    <h2>Who We Are</h2>
+                    <p>
+                        We are <span class="highlight">Amoriem Labs</span>, Yale's first and only video game development club. Led entirely by students, we unite passionate gamers, programmers, artists, musicians, storytellers, and designers to bring digital worlds to life.
+                    </p>
+                    <p>
+                        Amoriem was founded in 2019 and has been making video games ever since. 
+                        We are the place for your game design ideas and visions.
+                    </p>
+                </div>
+        
+                <div class="image-column">
+                    <img src="/static/images/about/team_24-25.jpg">
+                </div>
+            </div>
+        </section>
+
+        <section class="section-3">
+            <h1>Current Projects</h1>
+            <h2>The Cursed Grounds</h2>
+                <h3> Led by Maryeva Gonzalez<br> A hybrid of a dungeon crawler and a cozy cafe simulator!</h3>
+                         
+            <h2>27 Photos</h2>
+                <h3> Led by Chris Shia <br> A walking simulator with the premise: If you only had 27 photos, which ones would you keep?</h3>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <p>This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
+    </footer>
+</body>
+
+</html>

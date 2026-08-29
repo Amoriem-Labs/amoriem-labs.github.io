@@ -1,118 +1,293 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
     <title>About | Amoriem Labs</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="static/styles/styles.css">
-    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png" />
+    <link rel="shortcut icon" href="static/images/brand/amorien_icon.png">
 </head>
 
-<body>
-    <div class="nav-bar">
-        <a class="nav-item" href="index.html">
-            <img src="static\images\brand\logo-darkpink.png">
+<body class="hv2-page hv2-about-page hv2-page-entering">
+
+    <!-- Twinkling starfield, drawn by home-v2.js (no external library) -->
+    <canvas class="hv2-stars" aria-hidden="true"></canvas>
+
+    <!-- Cursor sparkle trail: separate top-most layer so it reads over
+         every section, not just the background gradient -->
+    <canvas class="hv2-sparkle-layer" aria-hidden="true"></canvas>
+
+    <!-- Page-transition veil: starfield-blur curtain driven by home-v2.js on
+         internal link clicks; the entrance reveal here on load is plain CSS -->
+    <div class="hv2-transition-veil" aria-hidden="true"></div>
+
+    <nav class="hv2-nav">
+        <a class="hv2-nav__logo" href="index.html" aria-label="Amoriem Labs home">
+            <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
         </a>
-        <a class="nav-item" href="index.html">Home</a>
-        <a class="nav-item" href="games.html">Games</a>
-        <a class="nav-item" href="team.html">Team</a>
 
-        <a class="nav-item" href="events.html">Events</a>
-        <a class="nav-item this-page" href="about.html">About</a>
-    </div>
-
-    <div class="page">
-        <div class="page-title" class="unselectable">About</div>
-
-        <img id="about-us-image" src="static/images/about/Amoriem_Team_Pic2425 (1).jpg">
-
-        <div class="about-us">
-            <p>
-                We are <span class="highlight">Amoriem Labs</span> (or simply, <span class="highlight">Amoriem</span>):
-                Yale's first and
-                only video game development club! Led entirely by students,
-                we unite passionate gamers, programers, artists, musicians,
-                storytellers, and designers to bring digital worlds to life.
-                Amoriem was founded in 2019 and has been making video games
-                ever since. We are the place for your game design ideas
-                and visions.
-            </p>
-            <p>
-                We meet <span class="highlight">every week in-person</span> and <span class="highlight">provide
-                    food</span> to fuel up
-                members for a long and productive game-making session! In
-                these meetings, project leaders will go over the previous
-                week's accomplishments and work with members to set goals for
-                the next week. The expectation is that members will be working
-                at the weekly meetings and then throughout the week to
-                meet their goals by the next meeting. A typical goal may be "design
-                these two character animations by next week".
-            </p>
-            <p>
-                <span class="highlight">No experience is required!</span> Our current members have experience in
-                a wide variety of software (i.e. Unity) and will host robust training
-                programs and tutorials so that you can get started quickly. This is
-                the perfect chance to <span class="highlight">pick up new skills</span> and put them into practice to
-                create real tangible games.
-            </p>
-            <p>
-                In addition to making games, we also host <span class="highlight">game nights</span> and participate
-                in <span class="highlight">game jams</span> throughout the year. If you are interested in any of
-                the stuff mentioned so far, please join our <a
-                    href="mailto:yalegamedevs+subscribe@elilists.yale.edu">mailing list</a>. If you have
-                questions or inquiries, please email us:
-            </p>
+        <div class="hv2-nav__links">
+            <a class="hv2-nav__link" href="games.html">
+                <img src="static/images/icons/nav-games.svg" alt="">
+                <span>Games</span>
+            </a>
+            <a class="hv2-nav__link" href="about.html">
+                <img src="static/images/icons/nav-about.svg" alt="">
+                <span>About</span>
+            </a>
+            <a class="hv2-nav__link" href="events.html">
+                <img src="static/images/icons/nav-events.svg" alt="">
+                <span>Events</span>
+            </a>
+            <a class="hv2-nav__link" href="team.html">
+                <img src="static/images/icons/nav-team.svg" alt="">
+                <span>Team</span>
+            </a>
         </div>
 
-        <a href="mailto:amoriemlabs@gmail.com" class="contact-link">Email us!</a>
+        <div class="hv2-nav__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
+    </nav>
 
-        <div class="page-title" class="unselectable">History</div>
+    <main>
+        <header class="hv2-about-hero">
+            <h1 class="hv2-about-hero__title">About</h1>
+        </header>
 
-        <div class="about-us">
-            <p>
-                Once upon a time, in an ordinary evening during the winter break of 2019,
-                <span class="highlight">Christie Yu</span> ('22) was watching a playthrough
-                of Toby Fox's <em>Deltarune</em>, the sequel to his megahit indie game <em>Undertale</em>.
-                With just a few collaborators and a lot of hours during his college years, Toby Fox
-                created one of the most influential indie games of all time. Christie, inspired by
-                the video, sent out an email to the CS majors mailing list in order to scout for interest
-                in a video game development club<span>&#8212;</span>the first and only on Yale's campus.
-            </p>
-            <p>
-                After receiving over twenty responses, <span class="highlight">YGames</span> was born.
-                The club was informal, but nonetheless met for the first time in the spring of 2019.
-                These pioneer members worked on <span class="highlight"><em>Amoriem</em></span> the game,
-                a dungeon-based local multiplayer game where two characters worked together to escape a
-                complex labyrinth. The goal was to create a demo for <span class="highlight">Bulldog Days</span>
-                in April, where Yale's admitted students come to campus and see what the university has to
-                offer. With a time crunch of a few months, the initial take-off for <em>Amoriem</em> was challenging.
-                However, after much hard work and tireless dedication, the game was successfully exhibited to
-                eager pre-frosh and Yalies.
-            </p>
-            <p>
-                Once Bulldog Days was over, the club got to work on officially becoming a club. The original
-                official name was YGames, and then later became Yale Game Devs. Eventually, the name
-                <span class="highlight">Amoriem Labs</span> was chosen as a homage to the first game
-                it created. The name is an anagram of <em>memoria</em> ("memory" in Latin), and includes
-                the words <em>amor</em> ("love" in Spanish) and <em>mori</em> ("to die" in Latin). These
-                were the three central themes of the club's pilot game. But more importantly, it has a nice ring to it.
-                :)
-            </p>
+        <div class="hv2-about-timeline">
+            <div class="hv2-about-timeline__rail" aria-hidden="true">
+                <div class="hv2-about-timeline__rail-fill"></div>
+            </div>
+
+            <section class="hv2-about-description">
+                <img class="hv2-about-timeline__star"
+                     src="static/images/decor/about-star-description.svg" alt="" aria-hidden="true">
+                <div class="hv2-about-row hv2-reveal">
+                    <div class="hv2-about-row__text">
+                        <p>
+                            We are <span class="hv2-about-highlight">Amoriem Labs</span> (or simply, <span class="hv2-about-highlight">Amoriem</span>):
+                            Yale's first and only video game development club! Led entirely by students,
+                            we unite passionate gamers, programmers, artists, musicians,
+                            storytellers, and designers to bring digital worlds to life.
+                            Amoriem was founded in 2019 and has been making video games
+                            ever since. We are the place for your game design ideas
+                            and visions.
+                        </p>
+                        <p>
+                            We meet <span class="hv2-about-highlight">every week in-person</span> and <span class="hv2-about-highlight">provide
+                            food</span> to fuel up members for a long and productive game-making session! In
+                            these meetings, project leaders will go over the previous
+                            week's accomplishments and work with members to set goals for
+                            the next week. The expectation is that members will be working
+                            at the weekly meetings and then throughout the week to
+                            meet their goals by the next meeting. A typical goal may be "design
+                            these two character animations by next week".
+                        </p>
+                        <p>
+                            <span class="hv2-about-highlight">No experience is required!</span> Our current members have experience in
+                            a wide variety of software (i.e. Unity) and will host robust training
+                            programs and tutorials so that you can get started quickly. This is
+                            the perfect chance to <span class="hv2-about-highlight">pick up new skills</span> and put them into practice to
+                            create real tangible games.
+                        </p>
+                        <p>
+                            In addition to making games, we also host <span class="hv2-about-highlight">game nights</span> and participate
+                            in <span class="hv2-about-highlight">game jams</span> throughout the year. If you are interested in any of
+                            the stuff mentioned so far, please join our <a class="hv2-about-highlight"
+                                href="mailto:yalegamedevs+subscribe@elilists.yale.edu">mailing list</a>. If you have
+                            questions or inquiries, please email us:
+                        </p>
+                        <p><a class="hv2-about-highlight" href="mailto:amoriemlabs@gmail.com">Email us!</a></p>
+                    </div>
+                    <div class="hv2-about-row__media">
+                        <div class="hv2-about-stack">
+                            <div class="hv2-about-stack__item"><img src="static/images/about/club-photo-26.jpg" alt="The Amoriem Labs club, 2026" loading="lazy" decoding="async"></div>
+                            <div class="hv2-about-stack__item"><img src="static/images/about/board-26.jpg" alt="The Amoriem Labs board, 2026" loading="lazy" decoding="async"></div>
+                            <div class="hv2-about-stack__item"><img src="static/images/about/club-fun-photo-26.jpg" alt="Amoriem Labs club members" loading="lazy" decoding="async"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hv2-about-below hv2-reveal">
+                    <span class="hv2-about-below__label">Fun photos</span>
+                    <div class="hv2-about-funstrip">
+                        <img src="static/images/about/fun-1.jpg" alt="Amoriem Labs members playing pool" loading="lazy" decoding="async">
+                        <img src="static/images/about/fun-2.jpg" alt="Amoriem Labs members at a meeting" loading="lazy" decoding="async">
+                        <img src="static/images/about/fun-3.jpg" alt="Amoriem Labs members hanging out" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </section>
+
+            <section class="hv2-about-mascot">
+                <img class="hv2-about-timeline__star"
+                     src="static/images/decor/about-star-mascot.svg" alt="" aria-hidden="true">
+                <div class="hv2-about-row hv2-reveal">
+                    <div class="hv2-about-row__text">
+                        <h2 class="hv2-about-heading">Mascot</h2>
+                        <p>
+                            Mori is our mascot! Designed by <span class="hv2-about-highlight">Chris Shia '27</span>,
+                            Mori is a cat&ndash;ghost fusion with a hot-air-balloon-like body that is powered by an
+                            internal flame. It deflates when sad, and inflates when happy!
+                        </p>
+                    </div>
+                    <div class="hv2-about-row__media hv2-about-row__media--mascot">
+                        <img src="static/images/about/mascot/mascot.webp" alt="Mori, the Amoriem Labs mascot" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="hv2-about-below hv2-reveal">
+                    <span class="hv2-about-below__label">Mori gallery</span>
+                    <div class="hv2-about-museum">
+                        <figure class="hv2-about-museum__item--lg hv2-about-museum__item--portrait">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-happy.png" alt="Happy Mori" loading="lazy" decoding="async"></div>
+                            <figcaption>Happy</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg hv2-about-museum__item--landscape">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-angry.png" alt="Angry Mori" loading="lazy" decoding="async"></div>
+                            <figcaption>Angry</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-neutral.png" alt="Neutral Mori" loading="lazy" decoding="async"></div>
+                            <figcaption>Neutral</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg hv2-about-museum__item--landscape">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-losing.png" alt="Losing Mori" loading="lazy" decoding="async"></div>
+                            <figcaption>Losing</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-top.png" alt="Mori from above" loading="lazy" decoding="async"></div>
+                            <figcaption>Top</figcaption>
+                        </figure>
+                        <figure>
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori.gif" alt="Animated Mori" loading="lazy" decoding="async"></div>
+                            <figcaption>Animated</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--wide">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/mori-stickers-2.png" alt="More Mori sticker concepts" loading="lazy" decoding="async"></div>
+                            <figcaption>More sticker concepts</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--shirt">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/t-shirt-26.jpg" alt="Mori on the 2026 club shirt" loading="lazy" decoding="async"></div>
+                            <figcaption>2026 club shirt</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg hv2-about-museum__item--wide-landscape">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/fanart-mandy-chen.jpg" alt="Fan art of Mori by Mandy Chen" loading="lazy" decoding="async"></div>
+                            <figcaption>Art by Mandy Chen</figcaption>
+                        </figure>
+                        <figure class="hv2-about-museum__item--lg">
+                            <div class="hv2-about-museum__frame"><img src="static/images/about/mascot/fanart-isabella-campisi.png" alt="Fan art of Mori by Isabella Campisi" loading="lazy" decoding="async"></div>
+                            <figcaption>Art by Isabella Campisi</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hv2-about-history">
+                <img class="hv2-about-timeline__star"
+                     src="static/images/decor/about-star-history.svg" alt="" aria-hidden="true">
+                <div class="hv2-about-row hv2-reveal">
+                    <div class="hv2-about-row__text">
+                        <h2 class="hv2-about-heading">History</h2>
+                        <p>
+                            Once upon a time, in an ordinary evening during the winter break of 2019,
+                            <span class="hv2-about-highlight">Christie Yu</span> ('22) was watching a playthrough
+                            of Toby Fox's <em>Deltarune</em>, the sequel to his megahit indie game <em>Undertale</em>.
+                            With just a few collaborators and a lot of hours during his college years, Toby Fox
+                            created one of the most influential indie games of all time. Christie, inspired by
+                            the video, sent out an email to the CS majors mailing list in order to scout for interest
+                            in a video game development club<span>&#8212;</span>the first and only on Yale's campus.
+                        </p>
+                        <p>
+                            After receiving over twenty responses, <span class="hv2-about-highlight">YGames</span> was born.
+                            The club was informal, but nonetheless met for the first time in the spring of 2019.
+                            These pioneer members worked on <span class="hv2-about-highlight"><em>Amoriem</em></span> the game,
+                            a dungeon-based local multiplayer game where two characters worked together to escape a
+                            complex labyrinth. The goal was to create a demo for <span class="hv2-about-highlight">Bulldog Days</span>
+                            in April, where Yale's admitted students come to campus and see what the university has to
+                            offer. With a time crunch of a few months, the initial take-off for <em>Amoriem</em> was challenging.
+                            However, after much hard work and tireless dedication, the game was successfully exhibited to
+                            eager pre-frosh and Yalies.
+                        </p>
+                        <p>
+                            Once Bulldog Days was over, the club got to work on officially becoming a club. The original
+                            official name was YGames, and then later became Yale Game Devs. Eventually, the name
+                            <span class="hv2-about-highlight">Amoriem Labs</span> was chosen as a homage to the first game
+                            it created. The name is an anagram of <em>memoria</em> ("memory" in Latin), and includes
+                            the words <em>amor</em> ("love" in Spanish) and <em>mori</em> ("to die" in Latin). These
+                            were the three central themes of the club's pilot game. But more importantly, it has a nice ring to it.
+                            :)
+                        </p>
+                    </div>
+                    <div class="hv2-about-row__media">
+                        <figure class="hv2-about-final-image">
+                            <img src="static/images/about/christie_email.jpg" alt="Christie Yu's 2019 email to the Yale CS mailing list proposing a video game development club" loading="lazy" decoding="async">
+                            <figcaption>Figure 1. <em>Foundational text of the Amoriem Labs canon.</em></figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="hv2-footer">
+        <div class="hv2-footer__lists">
+            <div class="hv2-footer__list">
+                <h3>Recent Games</h3>
+                <ul>
+                    <li><a href="games.html#game-27-photos">27 Photos</a></li>
+                    <li><a href="games.html#game-cursed-grounds">Cursed Grounds</a></li>
+                    <li><a href="games.html#game-boola-dash">Boola Dash</a></li>
+                    <li><a href="games.html#game-encore">Encore!</a></li>
+                    <li><a href="games.html#game-glyphbound">Glyphbound</a></li>
+                </ul>
+            </div>
+            <div class="hv2-footer__list">
+                <h3>Club</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="events.html">Events</a></li>
+                </ul>
+            </div>
         </div>
 
-        <figure>
-            <img id="about-us-image" src="static/images/about/christie_email.jpg">
-            <figcaption>
-                Figure 1. <em>Foundational text of the Amoriem Labs canon.</em>
-            </figcaption>
-        </figure>
+        <div class="hv2-footer__socials">
+            <a class="hv2-icon-btn" href="https://instagram.com/amoriemlabs" target="_blank" rel="noopener" aria-label="Instagram">
+                <img src="static/images/icons/instagram.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://amoriem-labs.itch.io" target="_blank" rel="noopener" aria-label="itch.io">
+                <img src="static/images/icons/itchio.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="mailto:amoriemlabs@gmail.com" aria-label="Email">
+                <img src="static/images/icons/mail.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://www.linkedin.com/company/amoriem-labs/?viewAsMember=true" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <img src="static/images/icons/linkedin.svg" alt="">
+            </a>
+            <a class="hv2-icon-btn" href="https://soundcloud.com/amoriem-labs" target="_blank" rel="noopener" aria-label="SoundCloud">
+                <img src="static/images/icons/soundcloud.svg" alt="">
+            </a>
+        </div>
 
-    </div>
-
-    <footer class="site-footer">
-        <p>This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
+        <p class="hv2-footer__disclaimer">This website is a student-run site, maintained, hosted, and operated independently of Yale University.</p>
     </footer>
+
+    <script src="static/scripts/home-v2.js"></script>
+    <script src="static/scripts/vendor/gsap.min.js"></script>
+    <script src="static/scripts/about-new.js"></script>
 </body>
 
 </html>
