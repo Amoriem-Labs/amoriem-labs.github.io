@@ -1362,39 +1362,41 @@ Reuses the site's existing fonts and "pressed paper" hover language
 }
 
 .hv2-games__gallery {
-  flex: 0 1 44rem;
+  flex: 0 1 34rem;
   /* pin the whole gallery to the right edge; the auto margin eats all the
        free space so the intro text and gallery sit far apart */
   margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.hv2-games__pages {
-  flex: 1;
-  min-width: 0;
-  max-width: 36rem;
-}
-
-.hv2-games__grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 0.85rem;
-  opacity: 1;
-  transition: opacity 220ms ease;
+  grid-template-columns: auto minmax(0, 24rem) auto;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem 1rem;
 }
 
-/* fade-out state applied by the pager before swapping pages */
-.hv2-games__page.is-leaving {
-  opacity: 0;
+/* One-card-at-a-time carousel: a clipped viewport over a flex track that
+   slides horizontally (translateX). home-v2.js auto-advances it, builds the
+   dot ticker, and wires the arrows / swipe / hover-pause. */
+.hv2-games__viewport {
+  overflow: hidden;
+  width: 100%;
 }
 
-/* `display: grid` above would otherwise override the UA [hidden] rule,
-   so the pager's hidden pages must be re-hidden explicitly. */
-.hv2-games__page[hidden] {
-  display: none;
+.hv2-games__track {
+  display: flex;
+  will-change: transform;
+  transition: transform 450ms var(--ease-out);
+}
+
+.hv2-games__track > .hv2-game-card {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hv2-games__track {
+    transition: none;
+  }
 }
 
 /* The cover art fills the whole card; the text sits in an overlay block on top
@@ -1559,9 +1561,11 @@ Reuses the site's existing fonts and "pressed paper" hover language
 /* Gallery page ticker: three dots, white when idle, purple when active */
 .hv2-games__ticker {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
   margin-top: 1rem;
+  grid-column: 1 / -1;
 }
 
 .hv2-games__dot {
@@ -1604,32 +1608,21 @@ Reuses the site's existing fonts and "pressed paper" hover language
     max-width: none;
   }
 
-  /* cards take their own full-width row; the two arrows sit centred beneath */
   .hv2-games__gallery {
-    flex: 1 1 auto;
     margin-left: 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .hv2-games__pages {
-    order: 1;
-    flex: 1 1 100%;
-    max-width: none;
-  }
-
-  .hv2-games__pager--prev {
-    order: 2;
-  }
-
-  .hv2-games__pager--next {
-    order: 3;
   }
 }
 
-@media (max-width: 480px) {
-  .hv2-games__grid {
-    grid-template-columns: 1fr;
+/* Tightest phones: card takes its own full-width row, the two arrows drop
+   below it side by side, ticker under that. */
+@media (max-width: 460px) {
+  .hv2-games__gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hv2-games__viewport {
+    grid-column: 1 / -1;
+    order: -1;
   }
 }
 
@@ -1964,7 +1957,7 @@ Reuses the site's existing fonts and "pressed paper" hover language
    two groups above where hover targets a child element -- so its transition
    list has to cover the hover properties too, or this rule's cascade win
    (it's more specific than the base .hv2-game-card rule) silently drops them. */
-.hv2-games__page > .hv2-game-card {
+.hv2-games__track > .hv2-game-card {
   opacity: 0;
   transform: translateY(16px);
   transition:
@@ -3514,6 +3507,65 @@ untouched). Everything generic (.hv2-page, .hv2-nav, .hv2-footer,
 .hv2-about-below.is-visible .hv2-about-museum figure:nth-child(9) { transition-delay: 400ms; }
 .hv2-about-below.is-visible .hv2-about-museum figure:nth-child(10) { transition-delay: 450ms; }
 
+/* ----- Mori gallery: full-width override -----
+   The Mascot section's gallery breaks out of the timeline's deep left
+   gutter and the 56rem cap and runs the full content width, inset only by
+   the site's standard page padding (same clamp as .hv2-about-hero). Tiles
+   are enlarged across every size tier, and flex-grow is switched on so
+   each wrapped row fills edge to edge (proportions between tiers held by
+   the matching flex-grow ratios) rather than leaving ragged trailing gaps.
+   Scoped to .hv2-about-mascot so the Description section's "Fun photos"
+   strip keeps its original gutter-aligned, max-width layout. */
+.hv2-about-mascot .hv2-about-below {
+  max-width: none;
+  padding-left: clamp(1.25rem, 4vw, 3.4rem);
+  padding-right: clamp(1.25rem, 4vw, 3.4rem);
+}
+
+.hv2-about-mascot .hv2-about-museum {
+  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+}
+
+/* flex-grow on (rows fill the full width) but every tier carries a
+   max-width so a tile left alone on the last row can't balloon. */
+.hv2-about-mascot .hv2-about-museum figure {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 clamp(96px, 11vw, 122px);
+  max-width: 175px;
+}
+
+.hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--lg {
+  flex: 1.9 1 clamp(155px, 19vw, 208px);
+  max-width: 290px;
+}
+
+.hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--wide {
+  flex: 2 1 clamp(165px, 20vw, 224px);
+  max-width: 300px;
+}
+
+.hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--shirt {
+  flex: 0.8 1 clamp(88px, 10vw, 112px);
+  max-width: 145px;
+}
+
+/* Phones: simple 2-up rows -- every tile the same width, no tier stays
+   so wide it swamps the column. */
+@media (max-width: 560px) {
+  .hv2-about-mascot .hv2-about-museum {
+    gap: 0.8rem;
+  }
+
+  .hv2-about-mascot .hv2-about-museum figure,
+  .hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--lg,
+  .hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--wide,
+  .hv2-about-mascot .hv2-about-museum .hv2-about-museum__item--shirt {
+    flex: 1 1 calc(50% - 0.8rem);
+    max-width: none;
+  }
+}
+
 /* ----- Closing image -----
    Natural width/auto height, no crop -- same treatment as
    .hv2-events-card__img (styles.css ~2967-2972) rather than the legacy
@@ -3606,8 +3658,27 @@ Everything generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn,
   color: var(--AmoriemWhite);
   font-size: clamp(1.8rem, 3.2vw, 2.625rem);
   text-shadow: 2px 2px 0px var(--AmoriemBrightPink);
+  text-align: left;
   margin: 0 0 1.5rem;
-  padding: 0 clamp(1.25rem, 4vw, 3.4rem);
+}
+
+.hv2-team-projects__intro,
+.hv2-team-board__note {
+  font-family: Exo, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 42rem;
+  margin: -0.75rem 0 1.5rem;
+}
+
+.hv2-team-board__note {
+  flex-basis: 100%;
+}
+
+.hv2-team-board__note a {
+  color: var(--AmoriemBrightPink);
+  text-decoration: underline;
 }
 
 .hv2-team-projects {
@@ -3655,8 +3726,18 @@ Everything generic (.hv2-page, .hv2-nav, .hv2-footer, .hv2-icon-btn,
 .hv2-team-board {
   padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.4rem);
   display: flex;
-  flex-direction: column;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  flex-flow: row wrap;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.hv2-team-board > .hv2-team-section__heading {
+  flex-basis: 100%;
+}
+
+.hv2-team-board__group {
+  flex: 0 1 auto;
+  min-width: 200px;
 }
 
 .hv2-team-board__group-heading {
@@ -3857,5 +3938,157 @@ the dark-theme pages themselves. */
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+/*
+====================================================================
+===== MOBILE NAV: hamburger menu (2026, site-wide) =====
+====================================================================
+Below 800px the horizontal Games/About/Events/Team row + the socials
+collapse behind a hamburger button. The .hv2-nav__menu wrapper is
+`display: contents` on desktop -- so the existing `logo | links | socials`
+flex layout of .hv2-nav is completely untouched -- and becomes an
+absolutely-positioned dropdown panel under the bar on mobile.
+home-v2.js toggles `.hv2-nav.is-open`.
+
+Placed at the very end of the file on purpose: the panel has to override
+both the homepage's scroll-reveal collapse (.hv2-nav__links width:0 /
+opacity:0) and every per-page `.hv2-<page>-page .hv2-nav__links`
+force-open rule (about/events/games/team, all 0,2,0 specificity). Matching
+those with a `.hv2-page`-prefixed selector here and winning on source
+order is the least invasive way to sit on top of all of them.
+*/
+
+.hv2-nav__menu {
+  display: contents;
+}
+
+.hv2-nav__toggle {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .hv2-nav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  /* square off the bar's bottom edge so the dropdown panel joins it flush */
+  .hv2-nav.is-open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .hv2-nav__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    width: 2.9rem;
+    height: 2.9rem;
+    padding: 0.7rem;
+    background: var(--AmoriemMauve);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .hv2-nav__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transition:
+      transform 250ms var(--ease-out),
+      opacity 180ms linear;
+  }
+
+  .hv2-nav.is-open .hv2-nav__toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hv2-nav.is-open .hv2-nav__toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hv2-nav.is-open .hv2-nav__toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .hv2-nav__toggle:focus-visible {
+    outline: 2px solid var(--AmoriemWhite);
+    outline-offset: 3px;
+  }
+
+  /* wrapper stops being display:contents and becomes the dropdown panel */
+  .hv2-nav__menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--AmoriemDeepPlum);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      max-height 320ms var(--ease-out),
+      opacity 200ms var(--ease-out);
+  }
+
+  .hv2-nav.is-open .hv2-nav__menu {
+    max-height: min(80vh, 32rem);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* neutralize both the homepage scroll-reveal state and the subpages'
+     forced width:auto -- inside the panel the links are a plain vertical
+     list. `.hv2-page` prefix ties specificity with the per-page rules;
+     this wins on source order. */
+  .hv2-page .hv2-nav__links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: auto;
+    opacity: 1;
+    transform: none;
+    overflow: visible;
+    pointer-events: auto;
+    padding: 0.4rem 0;
+  }
+
+  .hv2-nav__link {
+    padding: 0.95rem clamp(1.25rem, 5vw, 1.9rem);
+    font-size: 1.05rem;
+  }
+
+  /* undo the icon-only trim from the desktop @media (max-width: 800px) block */
+  .hv2-nav__menu .hv2-nav__link span {
+    display: inline;
+  }
+
+  .hv2-nav__socials {
+    margin: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    padding: 0.6rem 1rem 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* there's room for all five socials stacked in the panel -- undo the
+     <=600px nth-child(n+4) hide */
+  .hv2-nav__socials .hv2-icon-btn:nth-child(n + 4) {
+    display: flex;
   }
 }

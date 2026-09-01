@@ -27,6 +27,11 @@
             <img src="static/images/brand/logo-pink-stacked.png" alt="Amoriem Labs">
         </a>
 
+        <button class="hv2-nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="hv2-nav-menu">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="hv2-nav__menu" id="hv2-nav-menu">
         <div class="hv2-nav__links">
             <a class="hv2-nav__link" href="games.html">
                 <img src="static/images/icons/nav-games.svg" alt="">
@@ -63,6 +68,7 @@
                 <img src="static/images/icons/soundcloud.svg" alt="">
             </a>
         </div>
+        </div>
     </nav>
 
     <main>
@@ -73,22 +79,22 @@
         </header>
 
         <div class="hv2-events-tabs" role="tablist">
-            <button class="hv2-events-tab is-active" data-filter="hackathons" role="tab" aria-selected="true">Hackathons</button>
+            <button class="hv2-events-tab is-active" data-filter="hackathons" role="tab" aria-selected="true">Game Jams</button>
             <button class="hv2-events-tab" data-filter="social" role="tab" aria-selected="false">Social Events</button>
             <button class="hv2-events-tab" data-filter="speaker" role="tab" aria-selected="false">Speaker Events</button>
         </div>
 
         <div class="hv2-events-grid" data-category="hackathons">
             <div class="hv2-events-card">
-                <img class="hv2-events-card__img" src="static/images/hackathons/Girl_Pop.png" alt="Girly-Pop Game Jam" loading="lazy" decoding="async">
+                <img class="hv2-events-card__img" src="static/images/hackathons/Girl_Pop.png" alt="Girlypop Game Jam" loading="lazy" decoding="async">
                 <div class="hv2-events-card__caption">
-                    <strong>Girly-Pop Game Jam</strong>
+                    <strong>Girlypop Game Jam</strong>
                     <p>
                         <strong>Winner:</strong> Flower Mama &mdash; Chris Shia, Jennifer Chen &amp; Morgan Go
                     </p>
                     <p>
                         <strong>Other entries:</strong><br>
-                        Asset Bubble will GirlyPop &mdash; Sonam &amp; Chi<br>
+                        Asset Bubble will Girlypop &mdash; Sonam &amp; Chi<br>
                         Pop-Off! &mdash; Silas<br>
                         The Girlypop Show &mdash; Sebastian<br>
                         Diva's Inferno &mdash; Byron, Angela, Sebastian &amp; Kayle
@@ -100,6 +106,7 @@
                 <div class="hv2-events-card__caption">
                     <strong>Beginner Game Jam (Classical Elements)</strong>
                     <p>
+                        <strong>Entries:</strong><br>
                         Dice Magic &mdash; Alvin Shi &amp; Alexa Jeong<br>
                         In My Element &mdash; Sonam Wangchuck<br>
                         Element Joyride &mdash; Chloe Parke, David Liu &amp; Callum Legendre
@@ -130,7 +137,9 @@
                 <img class="hv2-events-card__img" src="static/images/Socials/XR Pediatrics.webp" alt="XR Pediatrics" loading="lazy" decoding="async">
                 <div class="hv2-events-card__caption">
                     <strong>XR Pediatrics</strong>
-                    <!-- TODO: add a one-sentence description of this event -->
+                    <p>A visit to XR Pediatrics, a Yale School of Medicine lab studying how
+                        XR and interactive media can support health, education, and
+                        psychology in pediatric care.</p>
                 </div>
             </div>
             <div class="hv2-events-card">
@@ -172,21 +181,25 @@
                 <img class="hv2-events-card__img" src="static/images/Speakers/Mike_Shah.webp" alt="Mike Shah" loading="lazy" decoding="async">
                 <div class="hv2-events-card__caption">
                     <strong>Mike Shah</strong>
-                    <!-- TODO: add a one-sentence description of this talk -->
+                    <p>An introduction to the games industry from Professor Mike Shah, who
+                        teaches Building Game Engines and Real-Time 3D.</p>
                 </div>
             </div>
             <div class="hv2-events-card">
                 <img class="hv2-events-card__img" src="static/images/Speakers/ZhenZhai.webp" alt="Zhen Zhai" loading="lazy" decoding="async">
                 <div class="hv2-events-card__caption">
                     <strong>Zhen Zhai</strong>
-                    <!-- TODO: add a one-sentence description of this talk -->
+                    <p>A look at machine learning in game development with Zhen Zhai, who
+                        works on AI/ML at Blizzard Entertainment.</p>
                 </div>
             </div>
             <div class="hv2-events-card">
                 <img class="hv2-events-card__img" src="static/images/Speakers/Elena_Bertozzi.webp" alt="Elena Bertozzi" loading="lazy" decoding="async">
                 <div class="hv2-events-card__caption">
                     <strong>Elena Bertozzi</strong>
-                    <!-- TODO: add a one-sentence description of this talk -->
+                    <p>Elena Bertozzi, head of the game design program at Quinnipiac and
+                        instructor of Art of the Game at Yale, on game design principles and
+                        working in the industry.</p>
                 </div>
             </div>
         </div>

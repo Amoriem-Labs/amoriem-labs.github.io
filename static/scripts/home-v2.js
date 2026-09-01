@@ -16,6 +16,42 @@ document.addEventListener("DOMContentLoaded", function () {
         navObserver.observe(hero);
     }
 
+    /* ----- Mobile hamburger: toggle the dropdown panel (.hv2-nav__menu) ----- */
+    var navToggle = document.querySelector(".hv2-nav__toggle");
+
+    if (nav && navToggle) {
+        function setNavOpen(open) {
+            nav.classList.toggle("is-open", open);
+            navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        }
+
+        navToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            setNavOpen(!nav.classList.contains("is-open"));
+        });
+
+        // close after choosing a destination, tapping outside, or pressing Esc
+        nav.querySelectorAll(".hv2-nav__link, .hv2-nav__socials a").forEach(function (link) {
+            link.addEventListener("click", function () { setNavOpen(false); });
+        });
+
+        document.addEventListener("click", function (e) {
+            if (nav.classList.contains("is-open") && !nav.contains(e.target)) {
+                setNavOpen(false);
+            }
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setNavOpen(false);
+        });
+
+        // returning to desktop width: drop the open state so the panel can't
+        // stay stuck across a resize/orientation change
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 800) setNavOpen(false);
+        });
+    }
+
     /* ----- Scroll reveal for content sections -----
        rootMargin shrinks the observer's effective viewport to a thin band
        straddling the vertical center, so a section reveals as it crosses the
@@ -38,63 +74,114 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* ----- Club Games gallery: 4 / 4 / 3 pages, cross-fading both directions ----- */
-    var pages = document.querySelectorAll(".hv2-games__page");
+    /* ----- Club Games carousel: one card at a time, auto-advancing -----
+       All game cards live in a single flex track; showGame() slides it with
+       translateX. Dots are generated here from the card names. Auto-advance
+       pauses on hover/focus, while the tab is hidden, and while the section
+       is off screen; arrows and swipe both reset the timer. ----- */
+    var gamesGallery = document.querySelector(".hv2-games__gallery");
+    var gamesTrack = document.querySelector(".hv2-games__track");
+    var gamesSlides = gamesTrack ? gamesTrack.querySelectorAll(".hv2-game-card") : [];
+    var gamesTicker = document.querySelector(".hv2-games__ticker");
     var prevBtn = document.querySelector(".hv2-games__pager--prev");
     var nextBtn = document.querySelector(".hv2-games__pager--next");
-    var dots = document.querySelectorAll(".hv2-games__dot");
 
-    if (pages.length) {
-        var currentPage = 0;
-        var swapping = false;
-        var PAGE_FADE_MS = 220;
+    if (gamesTrack && gamesSlides.length > 1) {
+        var gameIndex = 0;
+        var AUTO_ADVANCE_MS = 4500;
+        var autoTimer = null;
+        var gameDots = [];
 
-        function updateDots() {
-            for (var i = 0; i < dots.length; i++) {
-                dots[i].classList.toggle("is-active", i === currentPage);
-                dots[i].setAttribute("aria-current", i === currentPage ? "true" : "false");
+        for (var g = 0; g < gamesSlides.length; g++) {
+            (function (i) {
+                var dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = "hv2-games__dot";
+                var name = gamesSlides[i].querySelector(".hv2-game-card__name");
+                dot.setAttribute("aria-label",
+                    "Show " + (name ? name.textContent.trim() : "game " + (i + 1)));
+                dot.addEventListener("click", function () {
+                    showGame(i);
+                    restartAuto();
+                });
+                if (gamesTicker) gamesTicker.appendChild(dot);
+                gameDots.push(dot);
+            })(g);
+        }
+
+        function showGame(target) {
+            gameIndex = (target + gamesSlides.length) % gamesSlides.length;
+            gamesTrack.style.transform = "translateX(-" + (gameIndex * 100) + "%)";
+            for (var i = 0; i < gameDots.length; i++) {
+                gameDots[i].classList.toggle("is-active", i === gameIndex);
+                gameDots[i].setAttribute("aria-current", i === gameIndex ? "true" : "false");
             }
         }
 
-        function goToPage(target) {
-            target = (target + pages.length) % pages.length;
-            if (swapping || pages.length < 2 || target === currentPage) return;
-            swapping = true;
+        function startAuto() {
+            if (autoTimer || reduceMotion) return;
+            autoTimer = window.setInterval(function () {
+                showGame(gameIndex + 1);
+            }, AUTO_ADVANCE_MS);
+        }
 
-            var outgoing = pages[currentPage];
-            outgoing.classList.add("is-leaving");
+        function stopAuto() {
+            if (autoTimer) {
+                window.clearInterval(autoTimer);
+                autoTimer = null;
+            }
+        }
 
-            setTimeout(function () {
-                outgoing.hidden = true;
-                outgoing.classList.remove("is-leaving");
-
-                currentPage = target;
-
-                var incoming = pages[currentPage];
-                incoming.hidden = false;
-                incoming.classList.add("is-leaving"); // start transparent
-                void incoming.offsetWidth;            // force a reflow so the fade runs
-                incoming.classList.remove("is-leaving");
-
-                updateDots();
-
-                setTimeout(function () { swapping = false; }, PAGE_FADE_MS);
-            }, PAGE_FADE_MS);
+        function restartAuto() {
+            stopAuto();
+            startAuto();
         }
 
         if (nextBtn) {
-            nextBtn.addEventListener("click", function () { goToPage(currentPage + 1); });
+            nextBtn.addEventListener("click", function () { showGame(gameIndex + 1); restartAuto(); });
         }
         if (prevBtn) {
-            prevBtn.addEventListener("click", function () { goToPage(currentPage - 1); });
-        }
-        for (var d = 0; d < dots.length; d++) {
-            (function (index) {
-                dots[index].addEventListener("click", function () { goToPage(index); });
-            })(d);
+            prevBtn.addEventListener("click", function () { showGame(gameIndex - 1); restartAuto(); });
         }
 
-        updateDots();
+        if (gamesGallery) {
+            gamesGallery.addEventListener("mouseenter", stopAuto);
+            gamesGallery.addEventListener("mouseleave", startAuto);
+            gamesGallery.addEventListener("focusin", stopAuto);
+            gamesGallery.addEventListener("focusout", startAuto);
+        }
+
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) stopAuto();
+            else startAuto();
+        });
+
+        var touchX = null;
+        gamesTrack.addEventListener("touchstart", function (e) {
+            touchX = e.touches[0].clientX;
+            stopAuto();
+        }, { passive: true });
+        gamesTrack.addEventListener("touchend", function (e) {
+            if (touchX === null) return;
+            var dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 40) showGame(gameIndex + (dx < 0 ? 1 : -1));
+            touchX = null;
+            restartAuto();
+        });
+
+        if ("IntersectionObserver" in window) {
+            var carouselObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) startAuto();
+                    else stopAuto();
+                });
+            }, { threshold: 0.2 });
+            carouselObserver.observe(gamesTrack);
+        } else {
+            startAuto();
+        }
+
+        showGame(0);
     }
 
     /* ----- Hero trailer reel: cycles every clip in static/images/games/trailers/,
