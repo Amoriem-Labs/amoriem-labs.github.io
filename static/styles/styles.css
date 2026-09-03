@@ -1333,16 +1333,29 @@ Reuses the site's existing fonts and "pressed paper" hover language
 
 .hv2-games {
   background: var(--AmoriemMauve);
+  /* an inset panel rather than a full-bleed band -- 90% of the page, centred,
+     capped so it doesn't sprawl on very wide screens */
+  width: min(90%, 84rem);
+  margin: clamp(1rem, 3vw, 2.5rem) auto;
+  border-radius: clamp(0.75rem, 1.5vw, 1.5rem);
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(2rem, 5vw, 4rem);
+  /* a roomy gap so the intro + gallery span most of the panel width -- the
+     leftover goes to even side margins rather than a gulf down the middle */
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+/* the panel now carries its own inset, so trim the sitewide section padding
+   (it was tuned for a full-bleed band) to something snugger */
+.hv2-page .hv2-games {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.75rem, 3.5vw, 2.75rem);
 }
 
 .hv2-games__intro {
-  /* don't grow, so the leftover width becomes real space between the text
-       (left) and the gallery (right) rather than being absorbed here */
+  /* hold a compact column so the gallery beside it gets the bulk of the width;
+       don't grow, but the roomy gap above keeps the two blocks from clustering */
   flex: 0 1 28rem;
   max-width: 30rem;
 }
@@ -1362,24 +1375,31 @@ Reuses the site's existing fonts and "pressed paper" hover language
 }
 
 .hv2-games__gallery {
-  flex: 0 1 34rem;
-  /* pin the whole gallery to the right edge; the auto margin eats all the
-       free space so the intro text and gallery sit far apart */
-  margin-left: auto;
+  /* sized to its content (no grow) so the section's justify-content: center can
+     keep it snug against the intro instead of flinging it to the far edge */
+  flex: 0 1 44rem;
   width: 100%;
   display: grid;
-  grid-template-columns: auto minmax(0, 24rem) auto;
+  grid-template-columns: auto minmax(0, 36rem) auto;
   justify-content: center;
   align-items: center;
   gap: 0.9rem 1rem;
 }
 
-/* One-card-at-a-time carousel: a clipped viewport over a flex track that
-   slides horizontally (translateX). home-v2.js auto-advances it, builds the
-   dot ticker, and wires the arrows / swipe / hover-pause. */
+/* Dual-mode showcase. A clipped viewport over a flex track that slides
+   horizontally (translateX). By default the track holds three .hv2-games__page
+   grids (2x2 each) and pages 4 / 4 / 3 games at a time. Below 620px the page
+   wrappers collapse (display: contents) so every card becomes a full-width
+   slide and home-v2.js runs it as an auto-advancing one-at-a-time carousel. */
 .hv2-games__viewport {
   overflow: hidden;
   width: 100%;
+  /* Horizontal edges must clip flush to the card so no sliver of the adjacent
+     slide ever peeks through. Only the vertical edges get breathing room (with
+     negative margin to cancel it in layout) so a hovered card's lift/shadow in
+     the top and bottom rows isn't sheared off. */
+  padding-block: 8px 12px;
+  margin-block: -8px -12px;
 }
 
 .hv2-games__track {
@@ -1388,9 +1408,14 @@ Reuses the site's existing fonts and "pressed paper" hover language
   transition: transform 450ms var(--ease-out);
 }
 
-.hv2-games__track > .hv2-game-card {
+.hv2-games__page {
   flex: 0 0 100%;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  align-content: start;
+  gap: 0.85rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1596,26 +1621,36 @@ Reuses the site's existing fonts and "pressed paper" hover language
   outline-offset: 2px;
 }
 
-@media (max-width: 800px) {
+/* Once the inset panel is too narrow to hold the compact intro column and the
+   2x2 gallery side by side, stack them explicitly -- otherwise flex-wrap drops
+   the gallery onto its own line left-aligned and the panel's overflow clip
+   shears the arrows. */
+@media (max-width: 1500px) {
   .hv2-games {
     flex-direction: column;
     align-items: stretch;
   }
 
-  /* undo the wide-screen "push apart" so both blocks span the column */
+  /* let the text run the full column width instead of the compact 26rem block */
   .hv2-games__intro {
     flex: 1 1 auto;
     max-width: none;
   }
 
+  /* drop the row-mode width basis so the stacked gallery is only as tall as
+     its content (flex-basis would otherwise act as a min height here), and let
+     the cards grow toward the panel edges instead of a small block marooned in
+     the middle */
   .hv2-games__gallery {
-    margin-left: 0;
+    flex-basis: auto;
+    grid-template-columns: auto minmax(0, 48rem) auto;
   }
 }
 
-/* Tightest phones: card takes its own full-width row, the two arrows drop
-   below it side by side, ticker under that. */
-@media (max-width: 460px) {
+/* Smaller screens: drop the 2x2 grid for a one-card-at-a-time carousel.
+   The page wrappers vanish so all cards line up as direct flex children of
+   the track, each a full-width slide; home-v2.js auto-advances between them. */
+@media (max-width: 620px) {
   .hv2-games__gallery {
     grid-template-columns: 1fr 1fr;
   }
@@ -1623,6 +1658,15 @@ Reuses the site's existing fonts and "pressed paper" hover language
   .hv2-games__viewport {
     grid-column: 1 / -1;
     order: -1;
+  }
+
+  .hv2-games__page {
+    display: contents;
+  }
+
+  .hv2-games__track .hv2-game-card {
+    flex: 0 0 100%;
+    width: 100%;
   }
 }
 
@@ -1957,7 +2001,7 @@ Reuses the site's existing fonts and "pressed paper" hover language
    two groups above where hover targets a child element -- so its transition
    list has to cover the hover properties too, or this rule's cascade win
    (it's more specific than the base .hv2-game-card rule) silently drops them. */
-.hv2-games__track > .hv2-game-card {
+.hv2-games__track .hv2-game-card {
   opacity: 0;
   transform: translateY(16px);
   transition:

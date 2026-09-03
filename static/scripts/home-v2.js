@@ -74,54 +74,88 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* ----- Club Games carousel: one card at a time, auto-advancing -----
-       All game cards live in a single flex track; showGame() slides it with
-       translateX. Dots are generated here from the card names. Auto-advance
-       pauses on hover/focus, while the tab is hidden, and while the section
-       is off screen; arrows and swipe both reset the timer. ----- */
+    /* ----- Club Games showcase: dual mode -----
+       Wide screens: the track holds three .hv2-games__page grids (2x2 each) and
+       the arrows / ticker page 4 / 4 / 3 games at a time -- manual only.
+       Below 620px: the page wrappers collapse (CSS display: contents) so every
+       .hv2-game-card is a full-width slide, and it runs as a one-at-a-time
+       carousel that auto-advances. The (max-width: 620px) media query flips
+       between the two -- rebuild() re-reads the slide set and ticker on change.
+       Auto-advance (narrow mode only) pauses on hover/focus, while the tab is
+       hidden, and while the section is off screen; arrows / swipe reset it. --- */
     var gamesGallery = document.querySelector(".hv2-games__gallery");
     var gamesTrack = document.querySelector(".hv2-games__track");
-    var gamesSlides = gamesTrack ? gamesTrack.querySelectorAll(".hv2-game-card") : [];
+    var gamesPages = gamesTrack ? gamesTrack.querySelectorAll(".hv2-games__page") : [];
+    var gamesCards = gamesTrack ? gamesTrack.querySelectorAll(".hv2-game-card") : [];
     var gamesTicker = document.querySelector(".hv2-games__ticker");
     var prevBtn = document.querySelector(".hv2-games__pager--prev");
     var nextBtn = document.querySelector(".hv2-games__pager--next");
 
-    if (gamesTrack && gamesSlides.length > 1) {
-        var gameIndex = 0;
+    if (gamesTrack && gamesCards.length > 1) {
+        var CARDS_PER_PAGE = 4;
         var AUTO_ADVANCE_MS = 4500;
+        var narrowMQ = window.matchMedia("(max-width: 620px)");
+        var slideIndex = 0;
+        var slides = [];
+        var oneAtATime = false;
         var autoTimer = null;
         var gameDots = [];
 
-        for (var g = 0; g < gamesSlides.length; g++) {
-            (function (i) {
-                var dot = document.createElement("button");
-                dot.type = "button";
-                dot.className = "hv2-games__dot";
-                var name = gamesSlides[i].querySelector(".hv2-game-card__name");
-                dot.setAttribute("aria-label",
-                    "Show " + (name ? name.textContent.trim() : "game " + (i + 1)));
-                dot.addEventListener("click", function () {
-                    showGame(i);
-                    restartAuto();
-                });
-                if (gamesTicker) gamesTicker.appendChild(dot);
-                gameDots.push(dot);
-            })(g);
-        }
-
-        function showGame(target) {
-            gameIndex = (target + gamesSlides.length) % gamesSlides.length;
-            gamesTrack.style.transform = "translateX(-" + (gameIndex * 100) + "%)";
+        function showSlide(target) {
+            slideIndex = (target + slides.length) % slides.length;
+            gamesTrack.style.transform = "translateX(-" + (slideIndex * 100) + "%)";
             for (var i = 0; i < gameDots.length; i++) {
-                gameDots[i].classList.toggle("is-active", i === gameIndex);
-                gameDots[i].setAttribute("aria-current", i === gameIndex ? "true" : "false");
+                gameDots[i].classList.toggle("is-active", i === slideIndex);
+                gameDots[i].setAttribute("aria-current", i === slideIndex ? "true" : "false");
             }
         }
 
+        function buildTicker() {
+            gamesTicker.textContent = "";
+            gameDots = [];
+            for (var g = 0; g < slides.length; g++) {
+                (function (i) {
+                    var dot = document.createElement("button");
+                    dot.type = "button";
+                    dot.className = "hv2-games__dot";
+                    if (oneAtATime) {
+                        var name = slides[i].querySelector(".hv2-game-card__name");
+                        dot.setAttribute("aria-label",
+                            "Show " + (name ? name.textContent.trim() : "game " + (i + 1)));
+                    } else {
+                        dot.setAttribute("aria-label", "Go to games page " + (i + 1));
+                    }
+                    dot.addEventListener("click", function () {
+                        showSlide(i);
+                        restartAuto();
+                    });
+                    gamesTicker.appendChild(dot);
+                    gameDots.push(dot);
+                })(g);
+            }
+        }
+
+        function rebuild() {
+            var wasOneAtATime = oneAtATime;
+            oneAtATime = narrowMQ.matches;
+
+            // keep roughly the same game in view across a mode switch
+            if (oneAtATime && !wasOneAtATime) {
+                slideIndex = slideIndex * CARDS_PER_PAGE;
+            } else if (!oneAtATime && wasOneAtATime) {
+                slideIndex = Math.floor(slideIndex / CARDS_PER_PAGE);
+            }
+
+            slides = Array.prototype.slice.call(oneAtATime ? gamesCards : gamesPages);
+            buildTicker();
+            showSlide(Math.min(slideIndex, slides.length - 1));
+            restartAuto();
+        }
+
         function startAuto() {
-            if (autoTimer || reduceMotion) return;
+            if (autoTimer || reduceMotion || !oneAtATime) return;
             autoTimer = window.setInterval(function () {
-                showGame(gameIndex + 1);
+                showSlide(slideIndex + 1);
             }, AUTO_ADVANCE_MS);
         }
 
@@ -138,10 +172,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (nextBtn) {
-            nextBtn.addEventListener("click", function () { showGame(gameIndex + 1); restartAuto(); });
+            nextBtn.addEventListener("click", function () { showSlide(slideIndex + 1); restartAuto(); });
         }
         if (prevBtn) {
-            prevBtn.addEventListener("click", function () { showGame(gameIndex - 1); restartAuto(); });
+            prevBtn.addEventListener("click", function () { showSlide(slideIndex - 1); restartAuto(); });
         }
 
         if (gamesGallery) {
@@ -164,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gamesTrack.addEventListener("touchend", function (e) {
             if (touchX === null) return;
             var dx = e.changedTouches[0].clientX - touchX;
-            if (Math.abs(dx) > 40) showGame(gameIndex + (dx < 0 ? 1 : -1));
+            if (Math.abs(dx) > 40) showSlide(slideIndex + (dx < 0 ? 1 : -1));
             touchX = null;
             restartAuto();
         });
@@ -177,11 +211,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }, { threshold: 0.2 });
             carouselObserver.observe(gamesTrack);
-        } else {
-            startAuto();
         }
 
-        showGame(0);
+        if (narrowMQ.addEventListener) narrowMQ.addEventListener("change", rebuild);
+        else if (narrowMQ.addListener) narrowMQ.addListener(rebuild);
+
+        rebuild();
     }
 
     /* ----- Hero trailer reel: cycles every clip in static/images/games/trailers/,
