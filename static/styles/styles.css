@@ -1329,6 +1329,31 @@ Reuses the site's existing fonts and "pressed paper" hover language
   }
 }
 
+.hv2-join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--AmoriemMauve);
+  color: white;
+  font-family: Exo, sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition:
+    transform 250ms,
+    box-shadow 250ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hv2-join-btn:hover {
+    transform: translate(-3px, -2px);
+    box-shadow: 5px 3px 0px var(--AmoriemBlack);
+  }
+}
+
 /* ----- Club Games gallery ----- */
 
 .hv2-games {
